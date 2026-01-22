@@ -12,7 +12,11 @@ function App() {
     setGreetMsg(await invoke("greet", { name: name() }));
   }
 
-  return <div class="text-red-600">Hello world</div>;
+  return (
+    <main class="bg-transparent">
+      <div class="text-red-600">Hello world</div>
+    </main>
+  );
 }
 
 export default App;
