@@ -1,10 +1,7 @@
 import { open } from "@tauri-apps/plugin-dialog";
-import { Accessor, Setter } from "solid-js";
+import { Setter } from "solid-js";
 
-function FileSelect(props: {
-  filePath: Accessor<string>;
-  setFilePath: Setter<string>;
-}) {
+function FileSelect(props: { setFilePath: Setter<string> }) {
   const selectFile = async () => {
     const selected = await open({
       multiple: false,
@@ -20,7 +17,6 @@ function FileSelect(props: {
     });
 
     props.setFilePath(selected || "");
-    console.log(props.filePath());
   };
 
   return (
