@@ -1,1 +1,11 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+    --color-base-100: transparent;
+}
+
+html,
+body {
+    overflow: hidden;
+}
