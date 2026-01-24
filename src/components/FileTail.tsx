@@ -16,13 +16,14 @@ function FileTail(props: {
       }
     });
 
+    props.setZone(" ");
     await invoke("tail_file", { filePath: props.filePath() }).catch((err) => {
       console.error(err);
     });
   };
 
   return (
-    <button class="border p-2 text-white" onClick={startTailing}>
+    <button class="btn" onClick={startTailing}>
       Trail File
     </button>
   );

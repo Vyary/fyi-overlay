@@ -20,7 +20,7 @@ function FileSelect(props: { setFilePath: Setter<string> }) {
   };
 
   return (
-    <button class="border p-2" onClick={selectFile}>
+    <button class="btn" onClick={selectFile}>
       Select File
     </button>
   );

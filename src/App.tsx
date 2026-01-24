@@ -1,4 +1,4 @@
-import { createSignal, onMount } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 import "./App.css";
 import usePassthroughShortcut from "./hooks/usePassthroughShortcut";
 import FileSelect from "./components/FileSelect";
@@ -16,11 +16,19 @@ function App() {
   });
 
   return (
-    <main class="bg-transparent">
-      <div class="text-red-600">Hello world</div>
-      <FileSelect setFilePath={setFilePath} />
-      <FileTail filePath={filePath} setZone={setZone} />
-      <p>{zone()}</p>
+    <main
+      class="min-h-dvh min-w-dvw flex items-center justify-center gap-2"
+      classList={{
+        "bg-gray-600/25": !passthrough(),
+        "bg-[repeating-linear-gradient(-45deg,rgba(0,0,0,0.08)_0px,rgba(0,0,0,0.08)_1px,transparent_2px,transparent_12px)]":
+          !passthrough(),
+      }}
+    >
+      <Show when={!zone()}>
+        <FileSelect setFilePath={setFilePath} />
+        <FileTail filePath={filePath} setZone={setZone} />
+      </Show>
+      <p class="text-write">Zone: {zone()}</p>
     </main>
   );
 }
