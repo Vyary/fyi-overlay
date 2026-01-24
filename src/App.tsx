@@ -5,6 +5,7 @@ import FileSelect from "./components/FileSelect";
 import FileTail from "./components/FileTail";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import ZoneWidget from "./components/ZoneWidget";
+import initTrayIcon from "./components/TrayIcon";
 
 function App() {
   const [passthrough, setPassthrough] = createSignal(false);
@@ -13,6 +14,7 @@ function App() {
   const [prevZones, setPrevZones] = createSignal<string[]>([]);
 
   onMount(() => {
+    initTrayIcon();
     getCurrentWindow().maximize();
     usePassthroughShortcut(passthrough, setPassthrough);
   });

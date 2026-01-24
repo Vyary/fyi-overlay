@@ -17,6 +17,7 @@
         "hiddenTitle": true,
         "transparent": true,
         "alwaysOnTop": true,
+        "skipTaskbar": true,
         "decorations": false,
         "focusable": false,
         "shadow": false,
