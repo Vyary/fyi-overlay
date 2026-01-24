@@ -10,6 +10,8 @@
     "global-shortcut:allow-register",
     "global-shortcut:allow-unregister",
     "dialog:allow-open",
-    "core:window:allow-maximize"
+    "core:window:allow-maximize",
+    "core:app:allow-default-window-icon",
+    "process:allow-exit"
   ]
 }
