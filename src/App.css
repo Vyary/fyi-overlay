@@ -1,5 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@theme {
+    --color-poe-unique: #af6025;
+    --color-poe-quest: #90ee90;
+}
 
 :root {
     --color-base-100: transparent;

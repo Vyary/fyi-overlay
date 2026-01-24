@@ -4,11 +4,13 @@ import usePassthroughShortcut from "./hooks/usePassthroughShortcut";
 import FileSelect from "./components/FileSelect";
 import FileTail from "./components/FileTail";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import ZoneWidget from "./components/ZoneWidget";
 
 function App() {
   const [passthrough, setPassthrough] = createSignal(false);
   const [filePath, setFilePath] = createSignal("");
   const [zone, setZone] = createSignal("");
+  const [prevZones, setPrevZones] = createSignal<string[]>([]);
 
   onMount(() => {
     getCurrentWindow().maximize();
@@ -26,9 +28,14 @@ function App() {
     >
       <Show when={!zone()}>
         <FileSelect setFilePath={setFilePath} />
-        <FileTail filePath={filePath} setZone={setZone} />
+        <FileTail
+          filePath={filePath}
+          setZone={setZone}
+          setPrevZones={setPrevZones}
+          setPassthrough={setPassthrough}
+        />
       </Show>
-      <p class="text-write">Zone: {zone()}</p>
+      <ZoneWidget zone={zone} prevZones={prevZones} />
     </main>
   );
 }
