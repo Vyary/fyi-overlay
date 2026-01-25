@@ -6,17 +6,22 @@ import FileTail from "./components/FileTail";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import ZoneWidget from "./components/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
+import { listen } from "@tauri-apps/api/event";
+import { invoke } from "@tauri-apps/api/core";
+import useTitleTracker from "./hooks/useTitleTracker";
 
 function App() {
   const [passthrough, setPassthrough] = createSignal(false);
   const [filePath, setFilePath] = createSignal("");
   const [zone, setZone] = createSignal("");
   const [prevZones, setPrevZones] = createSignal<string[]>([]);
+  const [title, setTitle] = createSignal("");
 
-  onMount(() => {
+  onMount(async () => {
     initTrayIcon();
     getCurrentWindow().maximize();
     usePassthroughShortcut(passthrough, setPassthrough);
+    useTitleTracker(setTitle);
   });
 
   return (
@@ -37,7 +42,9 @@ function App() {
           setPassthrough={setPassthrough}
         />
       </Show>
-      <ZoneWidget zone={zone} prevZones={prevZones} />
+      <Show when={title().includes("Path of Exile 2")}>
+        <ZoneWidget zone={zone} prevZones={prevZones} />
+      </Show>
     </main>
   );
 }
