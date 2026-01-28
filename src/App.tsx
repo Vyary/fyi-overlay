@@ -6,8 +6,6 @@ import FileTail from "./components/FileTail";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import ZoneWidget from "./components/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
-import { listen } from "@tauri-apps/api/event";
-import { invoke } from "@tauri-apps/api/core";
 import useTitleTracker from "./hooks/useTitleTracker";
 
 function App() {
@@ -16,6 +14,7 @@ function App() {
   const [zone, setZone] = createSignal("");
   const [prevZones, setPrevZones] = createSignal<string[]>([]);
   const [title, setTitle] = createSignal("");
+  const [watching, setWatching] = createSignal(false);
 
   onMount(async () => {
     initTrayIcon();
@@ -33,11 +32,13 @@ function App() {
           !passthrough(),
       }}
     >
-      <Show when={!zone()}>
+      <Show when={!watching()}>
         <FileSelect setFilePath={setFilePath} />
         <FileTail
           filePath={filePath}
+          setWatching={setWatching}
           setZone={setZone}
+          prevZones={prevZones}
           setPrevZones={setPrevZones}
           setPassthrough={setPassthrough}
         />
