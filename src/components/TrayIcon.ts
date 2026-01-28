@@ -7,6 +7,14 @@ async function initTrayIcon() {
   const menu = await Menu.new({
     items: [
       {
+        id: "clear cache",
+        text: "Clear Cache",
+        action: () => {
+          localStorage.removeItem("zone");
+          localStorage.removeItem("prevZones");
+        },
+      },
+      {
         id: "quit",
         text: "Quit",
         action: async () => await exit(0),
