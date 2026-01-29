@@ -1,4 +1,11 @@
-import { Accessor, createSignal, For, onCleanup, onMount } from "solid-js";
+import {
+  Accessor,
+  createMemo,
+  createSignal,
+  For,
+  onCleanup,
+  onMount,
+} from "solid-js";
 import { actGuides } from "../data/guide";
 
 function ZoneWidget(props: {
@@ -6,12 +13,22 @@ function ZoneWidget(props: {
   prevZones: Accessor<string[]>;
 }) {
   const [pos, setPos] = createSignal({ x: 10, y: 90 });
-  const content = () =>
-    actGuides[props.zone()]?.find(
-      (z) =>
-        z.preq.every((i) => props.prevZones().includes(i)) ||
-        z.preq.length === 0,
-    )?.tasks;
+  const content = createMemo((prev) => {
+    const found = actGuides[props.zone()]?.find((z) => {
+      const prevCheck =
+        z.prev == props.prevZones()[props.prevZones().length - 2];
+      const preqCheck = z.preq?.every((zone) =>
+        props.prevZones().includes(zone),
+      );
+
+      if (prevCheck && preqCheck) return z;
+      if (prevCheck && !z.preq) return z;
+      if (!z.prev && preqCheck) return z;
+      if (!z.prev && !z.preq) return z;
+    })?.tasks;
+
+    return found ?? prev;
+  }, null);
   let offset = { x: 0, y: 0 };
 
   const onMove = (e: MouseEvent) => {
@@ -45,6 +62,7 @@ function ZoneWidget(props: {
       }}
     >
       <div class="space-y-1">
+        <div>Zone: {props.zone()}</div>
         <For each={content()}>
           {(task) => (
             <div
