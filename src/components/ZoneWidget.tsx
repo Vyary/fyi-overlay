@@ -6,7 +6,7 @@ import {
   onCleanup,
   onMount,
 } from "solid-js";
-import { actGuides } from "../data/guide";
+import { actGuides, Guide } from "../data/guide";
 
 function ZoneWidget(props: {
   zone: Accessor<string>;
@@ -25,7 +25,7 @@ function ZoneWidget(props: {
       if (prevCheck && !z.preq) return z;
       if (!z.prev && preqCheck) return z;
       if (!z.prev && !z.preq) return z;
-    })?.tasks;
+    }) as Guide;
 
     return found ?? prev;
   }, null);
@@ -63,7 +63,9 @@ function ZoneWidget(props: {
     >
       <div class="space-y-1">
         <div>Zone: {props.zone()}</div>
-        <For each={content()}>
+        <div>{content().zone}</div>
+        <div class="divider" />
+        <For each={content().tasks}>
           {(task) => (
             <div
               class="text-base-content text-shadow-lg leading-relaxed"
