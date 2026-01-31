@@ -1,5 +1,5 @@
 import { open } from "@tauri-apps/plugin-dialog";
-import { Setter } from "solid-js";
+import { onMount, Setter } from "solid-js";
 
 function FileSelect(props: { setFilePath: Setter<string> }) {
   const selectFile = async () => {
@@ -17,7 +17,18 @@ function FileSelect(props: { setFilePath: Setter<string> }) {
     });
 
     props.setFilePath(selected || "");
+    if (selected) {
+      localStorage.setItem("filePath", selected);
+    }
   };
+
+  onMount(() => {
+    const filePath = localStorage.getItem("filePath");
+    if (filePath) {
+      props.setFilePath(filePath);
+      console.log(filePath);
+    }
+  });
 
   return (
     <button class="btn" onClick={selectFile}>

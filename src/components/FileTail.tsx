@@ -40,6 +40,7 @@ function FileTail(props: {
     props.setZone(localStorage.getItem("zone") || "");
     const prevZones = localStorage.getItem("prevZones");
     if (prevZones) props.setPrevZones(JSON.parse(prevZones));
+    if (props.filePath()) startTailing();
   });
 
   return (
