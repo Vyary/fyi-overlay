@@ -19,7 +19,7 @@ async fn tail_file(window: Window, file_path: String) -> Result<(), String> {
             }
             Err(e) => return Err(e.to_string()),
         }
-        tokio::time::sleep(tokio::time::Duration::from_millis(500)).await;
+        tokio::time::sleep(tokio::time::Duration::from_millis(300)).await;
     }
 }
 

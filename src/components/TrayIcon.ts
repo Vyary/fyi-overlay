@@ -1,6 +1,6 @@
 import { TrayIcon } from "@tauri-apps/api/tray";
 import { Menu } from "@tauri-apps/api/menu";
-import { exit } from "@tauri-apps/plugin-process";
+import { exit, relaunch } from "@tauri-apps/plugin-process";
 import { defaultWindowIcon } from "@tauri-apps/api/app";
 
 async function initTrayIcon() {
@@ -9,9 +9,18 @@ async function initTrayIcon() {
       {
         id: "clear cache",
         text: "Clear Cache",
-        action: () => {
+        action: async () => {
           localStorage.removeItem("zone");
           localStorage.removeItem("prevZones");
+          await relaunch();
+        },
+      },
+      {
+        id: "reset file path",
+        text: "Reset file path",
+        action: async () => {
+          localStorage.removeItem("filePath");
+          await relaunch();
         },
       },
       {

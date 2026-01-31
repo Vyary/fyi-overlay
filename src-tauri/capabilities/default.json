@@ -12,6 +12,7 @@
     "dialog:allow-open",
     "core:window:allow-maximize",
     "core:app:allow-default-window-icon",
-    "process:allow-exit"
+    "process:allow-exit",
+    "process:allow-restart"
   ]
 }
