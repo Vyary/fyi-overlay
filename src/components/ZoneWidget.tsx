@@ -1,34 +1,16 @@
 import {
   Accessor,
-  createMemo,
   createSignal,
   For,
   onCleanup,
   onMount,
+  Show,
 } from "solid-js";
-import { actGuides, Guide } from "../data/guide";
+import { Guide } from "../data/guide";
 
-function ZoneWidget(props: {
-  zone: Accessor<string>;
-  prevZones: Accessor<string[]>;
-}) {
-  const [pos, setPos] = createSignal({ x: 10, y: 90 });
-  const content = createMemo((prev) => {
-    const found = actGuides[props.zone()]?.find((z) => {
-      const prevCheck =
-        z.prev == props.prevZones()[props.prevZones().length - 2];
-      const preqCheck = z.preq?.every((zone) =>
-        props.prevZones().includes(zone),
-      );
+function ZoneWidget(props: { content: Accessor<Guide> }) {
+  const [pos, setPos] = createSignal({ x: 10, y: 160 });
 
-      if (prevCheck && preqCheck) return z;
-      if (prevCheck && !z.preq) return z;
-      if (!z.prev && preqCheck) return z;
-      if (!z.prev && !z.preq) return z;
-    }) as Guide;
-
-    return found ?? prev;
-  }, null);
   let offset = { x: 0, y: 0 };
 
   const onMove = (e: MouseEvent) => {
@@ -55,20 +37,23 @@ function ZoneWidget(props: {
   return (
     <div
       onMouseDown={onDown}
-      class="absolute w-96 cursor-move bg-base-200/30 shadow-lg p-4"
+      class="absolute w-72 cursor-move bg-base-200/30 shadow-lg p-4"
       style={{
         left: `${pos().x}px`,
         top: `${pos().y}px`,
       }}
     >
       <div class="space-y-1">
-        <div>Zone: {props.zone()}</div>
-        <div>{content().zone}</div>
-        <div class="divider" />
-        <For each={content().tasks}>
+        <Show when={props.content().zone}>
+          <div class="text-base-content text-shadow-lg leading-relaxed text-sm">
+            {props.content().zone}
+          </div>
+          <div class="divider" />
+        </Show>
+        <For each={props.content().tasks}>
           {(task) => (
             <div
-              class="text-base-content text-shadow-lg leading-relaxed"
+              class="text-base-content text-shadow-lg leading-relaxed text-sm"
               innerHTML={task}
             />
           )}
