@@ -1,24 +1,29 @@
 use active_win_pos_rs::get_active_window;
-use std::fs;
+use std::fs::File;
+use std::io::{BufRead, BufReader, Seek, SeekFrom};
 use std::time::Duration;
 use tauri::{Emitter, Window};
 
 #[tauri::command]
 async fn tail_file(window: Window, file_path: String) -> Result<(), String> {
-    let mut last_line = String::new();
+    let file = File::open(&file_path).map_err(|e| e.to_string())?;
+    let mut reader = BufReader::new(file);
+
+    // Seek to end
+    reader.seek(SeekFrom::End(0)).map_err(|e| e.to_string())?;
 
     loop {
-        match fs::read_to_string(&file_path) {
-            Ok(contents) => {
-                if let Some(line) = contents.lines().last() {
-                    if line != last_line {
-                        last_line = line.to_string();
-                        let _ = window.emit("tail-line", line);
-                    }
+        let mut line = String::new();
+        match reader.read_line(&mut line) {
+            Ok(0) => {} // No new data
+            Ok(_) => {
+                if !line.trim().is_empty() {
+                    let _ = window.emit("tail-line", line.trim());
                 }
             }
             Err(e) => return Err(e.to_string()),
         }
+
         tokio::time::sleep(tokio::time::Duration::from_millis(300)).await;
     }
 }
