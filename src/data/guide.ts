@@ -20,8 +20,36 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G1_town: [
     {
-      prev: "G1_1",
-      tasks: ["Speak to Renly", "Cut the Uncut Skill Gem", "Enter Clearfell"],
+      prev: "G1_15",
+      tasks: ["Speak to Una, Finn, Leitis and The Hooded One"],
+    },
+    {
+      prev: "G1_14",
+      tasks: ["Return to The Manor Ramparts"],
+    },
+    {
+      prev: "G1_13_2",
+      tasks: ["Return to Ogham Village"],
+    },
+    {
+      prev: "G1_13_1",
+      tasks: ["Return to Ogham Farmlands"],
+    },
+    {
+      prev: "G1_12",
+      tasks: ["Travel or Find Ogham Farmlands"],
+    },
+    {
+      preq: ["G1_12"],
+      tasks: ["Find the entrance to Ogham Farmlands"],
+    },
+    {
+      prev: "G1_11",
+      tasks: ["Return to Hunting Grounds"],
+    },
+    {
+      prev: "G1_6",
+      tasks: ["Return to The Grim Tangle"],
     },
     {
       prev: "G1_5",
@@ -33,20 +61,21 @@ export const actGuides: Record<string, Guide[]> = {
       tasks: ["Speak to Una", "Travel to or Find The Grim Tangle"],
     },
     {
-      prev: "G1_12",
-      tasks: [
-        "Travel or Find Ogham Farmlands",
-        "Find <span class='text-poe-quest'>Una's Lute</span>",
-        "Find the entrance to the Ogham Village",
-      ],
+      prev: "G1_4",
+      tasks: ["Return to The Grelwood"],
     },
     {
-      prev: "G1_15",
-      tasks: ["Speak to Una, Finn, Leitis and The Hooded One"],
+      prev: "G1_2",
+      tasks: ["Return to Clearfell"],
+    },
+    {
+      prev: "G1_1",
+      tasks: ["Speak to Renly", "Cut the Uncut Skill Gem", "Enter Clearfell"],
     },
   ],
   G1_2: [
     {
+      zone: "Clearfell",
       tasks: [
         "Take the Uncut Skill Gem from the Mysterious Campsite (optional)",
         "Kill <span class='text-poe-unique font-semibold'>Beira of the Rotten Pack</span>",
@@ -56,6 +85,7 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G1_3: [
     {
+      zone: "Mud Burrow",
       tasks: [
         "Kill <span class='text-poe-unique font-semibold'>The Devourer</span> (optional)",
       ],
@@ -64,6 +94,7 @@ export const actGuides: Record<string, Guide[]> = {
   G1_4: [
     {
       preq: ["G1_5", "G1_town"],
+      zone: "The Grelwood",
       tasks: [
         "Break the Runic Seals on the Tree of Souls",
         "Travel to Town",
@@ -72,6 +103,7 @@ export const actGuides: Record<string, Guide[]> = {
       ],
     },
     {
+      zone: "The Grelwood",
       tasks: [
         "<span class='text-info'>The four points of interest are arranged in a diamond shape</span>",
         "Find the waypoint near the Tree of Souls or The Grim Tangle",
@@ -81,6 +113,7 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G1_5: [
     {
+      zone: "The Red Vale",
       tasks: [
         "Complete all 3 Obelisk of Rust",
         "Portal to Town",
@@ -92,6 +125,7 @@ export const actGuides: Record<string, Guide[]> = {
   G1_6: [
     {
       preq: ["G1_5"],
+      zone: "The Grim Tangle",
       tasks: [
         "Speak to Una",
         "Use Respawn at Checkpoint to skip animation (optional)",
@@ -100,6 +134,7 @@ export const actGuides: Record<string, Guide[]> = {
       ],
     },
     {
+      zone: "The Grim Tangle",
       tasks: [
         "Light up the Waypoint",
         "Go back to The Grelwood",
@@ -109,7 +144,13 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G1_7: [
     {
+      prev: "G1_11",
+      zone: "Cemetery of the Eternals",
+      tasks: ["Enter Hunting Grounds"],
+    },
+    {
       preq: ["G1_8", "G1_9"],
+      zone: "Cemetery of the Eternals",
       tasks: [
         "Open the Memorial Gate",
         "Use Respawn at Checkpoint to skip animation (optional)",
@@ -118,6 +159,7 @@ export const actGuides: Record<string, Guide[]> = {
       ],
     },
     {
+      zone: "Cemetery of the Eternals",
       tasks: [
         "Find Tomb of the Consort and Defeat <span class='text-poe-unique font-semibold'>Asinia, the Praetor's Consort</span>",
         "Find Mausoleum of the Praetor and Defeat <span class='text-poe-unique font-semibold'>Draven, the Eternal Praetor</span>",
@@ -126,6 +168,7 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G1_8: [
     {
+      zone: "Mausoleum of the Praetor",
       tasks: [
         "Defeat <span class='text-poe-unique font-semibold'>Draven, the Eternal Praetor</span>",
         "Return to the Cemetery of the Eternals",
@@ -134,6 +177,7 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G1_9: [
     {
+      zone: "Tomb of the Consort",
       tasks: [
         "Defeat <span class='text-poe-unique font-semibold'>Asinia, the Praetor's Consort</span>",
         "Return to the Cemetery of the Eternals",
@@ -142,38 +186,74 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G1_11: [
     {
+      preq: ["G1_12, G1_13_1"],
+      zone: "Hunting Grounds",
+      tasks: ["Travel to Ogham Farmlands"],
+    },
+    {
+      prev: "G1_12",
+      zone: "Hunting Grounds",
       tasks: [
         "<span class='text-info'>Directions: The points of interest are in the corners</span>",
-        "Find Ogham Farmlands, activate the waypoint and go back",
         "Kill <span class='text-poe-unique font-semibold'>Crowbell</span>",
+        "Find the entrance to Ogham Farmlands",
+      ],
+    },
+    {
+      prev: "G1_13_1",
+      preq: ["G1_12"],
+      zone: "Hunting Grounds",
+      tasks: [
+        "<span class='text-info'>Directions: The points of interest are in the corners</span>",
+        "Kill <span class='text-poe-unique font-semibold'>Crowbell</span>",
+      ],
+    },
+    {
+      prev: "G1_13_1",
+      zone: "Hunting Grounds",
+      tasks: [
+        "<span class='text-info'>Directions: The points of interest are in the corners</span>",
+        "Kill <span class='text-poe-unique font-semibold'>Crowbell</span>",
+        "Find the entrance to Freythorn",
+      ],
+    },
+    {
+      zone: "Hunting Grounds",
+      tasks: [
+        "<span class='text-info'>Directions: The points of interest are in the corners</span>",
+        "Kill <span class='text-poe-unique font-semibold'>Crowbell</span>",
+        "Find Ogham Farmlands, activate the waypoint and go back",
         "Find the entrance to Freythorn",
       ],
     },
   ],
   G1_12: [
     {
+      zone: "Freythorn",
       tasks: [
         "Clear the 3 Rituals",
         "Defeat <span class='text-poe-unique font-semibold'>King of the Mists</span>",
         "Portal to Town",
-        "Travel to Ogham Farmlands",
       ],
     },
   ],
   G1_13_1: [
     {
       preq: ["G1_12"],
+      zone: "Ogham Farmlands",
       tasks: [
         "Find <span class='text-poe-quest'>Una's Lute</span>",
         "Find the entrance to the Ogham Village",
       ],
     },
     {
+      zone: "Ogham Farmlands",
       tasks: ["Activate the waypoint", "Go back to Hunting Grounds"],
     },
   ],
   G1_13_2: [
     {
+      zone: "Ogham Village",
       tasks: [
         "<span class='text-info'>Directions: Go Up-Left</span>",
         "Kill <span class='text-poe-unique font-semibold'>The Executioner</span>",
@@ -184,6 +264,7 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G1_14: [
     {
+      zone: "The Manor Ramparts",
       tasks: [
         "<span class='text-info'>Directions: The zone has a U-shape</span>",
         "Find the entrance to Ogham Manor",
@@ -192,6 +273,7 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G1_15: [
     {
+      zone: "Ogham Manor",
       tasks: [
         "<span class='text-info'>Directions: Go Up-Right</span>",
         "Kill <span class='text-poe-unique font-semibold'>Candlemass, The Living Rite</span>",
@@ -206,6 +288,7 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G2_1: [
     {
+      zone: "Vastiri Outskirts",
       tasks: [
         "Kill <span class='text-poe-unique font-semibold'>The Rathbreaker</span>",
         "Portal to Town",
@@ -223,11 +306,27 @@ export const actGuides: Record<string, Guide[]> = {
       ],
     },
     {
+      prev: "G2_12_1",
+      tasks: ["Return to The Dreadnought"],
+    },
+    {
+      prev: "G2_10_1",
+      tasks: ["Return to Mawdun Quarry"],
+    },
+    {
       prev: "G2_9_2",
       tasks: [
         "Speak with Shambrin",
         "Use the Desert Map and travel to The Dreadnought",
       ],
+    },
+    {
+      prev: "G2_9_1",
+      tasks: ["Return to Path of Mourning"],
+    },
+    {
+      prev: "G2_8",
+      tasks: ["Return to Deshar"],
     },
     {
       prev: "G2_7",
@@ -241,13 +340,28 @@ export const actGuides: Record<string, Guide[]> = {
       ],
     },
     {
+      prev: "G2_6",
+      tasks: ["Return to Valley of the Titans"],
+    },
+    {
       prev: "G2_4_3",
       tasks: ["Use the Desert Map and travel to Valley of the Titans"],
     },
     {
+      prev: "G2_4_2",
+      tasks: ["Return to The Lost City"],
+    },
+    {
+      prev: "G2_4_1",
+      tasks: ["Return to Keth"],
+    },
+    {
       prev: "G2_5_2",
-      zone: "The Ardura Caravan",
       tasks: ["Use the Desert Map and travel to Keth"],
+    },
+    {
+      prev: "G2_5_1",
+      tasks: ["Return to Mastodon Badlands"],
     },
     {
       prev: "G2_3",
@@ -272,28 +386,24 @@ export const actGuides: Record<string, Guide[]> = {
       tasks: [
         "Speak with Sekhema Asala",
         "Use the Desert Map and travel to Halani Gates",
-        "Speak with Sekhema Asala",
-        "Portal to Town",
-        "Use the Desert Map and travel to Mawdun Quarry",
       ],
     },
   ],
   G2_3a: [
     {
-      tasks: [
-        "Speak with Sekhema Asala",
-        "Portal to Town",
-        "Use the Desert Map and travel to Mawdun Quarry",
-      ],
+      zone: "The Halani Gates",
+      tasks: ["Speak with Sekhema Asala", "Portal to Town"],
     },
   ],
   G2_10_1: [
     {
+      zone: "Mawdun Quarry",
       tasks: ["Find the entrance to the Mawdun Mine"],
     },
   ],
   G2_10_2: [
     {
+      zone: "Mawdun Mine",
       tasks: [
         "<span class='text-info'>Directions: Boss is located on top-right of the map</span>",
         "Kill <span class='text-poe-unique font-semibold'>Rudja, the Dread Engineer</span>",
@@ -304,6 +414,7 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G2_2: [
     {
+      zone: "Traitor's Passage",
       tasks: [
         "Find Forgotten Prison of the Traitor and Break the Ancient and Runic Seals",
         "Kill <span class='text-poe-unique font-semibold'>Balbala, the Traitor</span>",
@@ -320,8 +431,6 @@ export const actGuides: Record<string, Guide[]> = {
         "Defeat <span class='text-poe-unique font-semibold'>Jamanra, the Risen King</span>",
         "Go downstairs",
         "Portal to Town",
-        "Speak Sekhema Asala",
-        "Use the Desert Map and travel to Mastodon Badlands",
       ],
     },
   ],
@@ -398,14 +507,14 @@ export const actGuides: Record<string, Guide[]> = {
       zone: "Deshar",
       tasks: [
         "Find the <span class='text-poe-quest'>Fallen Dekhara</span>",
-        "Find the entrace to Path of Mourning",
+        "Find the entrance to Path of Mourning",
       ],
     },
   ],
   G2_9_1: [
     {
       zone: "Path of Mourning",
-      tasks: ["Find the entrace to The Spires of Deshar"],
+      tasks: ["Find the entrance to The Spires of Deshar"],
     },
   ],
   G2_9_2: [
@@ -421,7 +530,7 @@ export const actGuides: Record<string, Guide[]> = {
   G2_12_1: [
     {
       zone: "The Dreadnought",
-      tasks: ["Find the entrace to the Dreadnought Vanguard"],
+      tasks: ["Find the entrance to the Dreadnought Vanguard"],
     },
   ],
   G2_12_2: [
@@ -497,7 +606,7 @@ export const actGuides: Record<string, Guide[]> = {
       zone: "Jungle Ruins",
       tasks: [
         "Kill the <span class='text-poe-unique font-semibold'>Mighty Silverfist</span>",
-        "Find the entrace to The Venom Crypts",
+        "Find the entrance to The Venom Crypts",
       ],
     },
   ],
@@ -645,6 +754,18 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G4_town: [
     {
+      prev: "P3_Town",
+      tasks: ["Speak with The Hooded One"],
+    },
+    {
+      prev: "P2_Town",
+      tasks: ["Speak with The Hooded One"],
+    },
+    {
+      prev: "P1_Town",
+      tasks: ["Speak with The Hooded One"],
+    },
+    {
       prev: "G4_11_2",
       tasks: ["Speak with The Hooded One"],
     },
@@ -654,10 +775,14 @@ export const actGuides: Record<string, Guide[]> = {
     },
     {
       prev: "G4_10",
-      tasks: ["Return to The Excavation"],
+      tasks: ["Set Sail to Ngakanu"],
     },
     {
       prev: "G4_8b",
+      tasks: ["Return to Arastas"],
+    },
+    {
+      prev: "G4_8a",
       tasks: ["Return to Arastas"],
     },
     {
@@ -822,6 +947,11 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G4_3_1: [
     {
+      prev: "G4_3_2",
+      zone: "Whakapanu Island",
+      tasks: ["Set Sail to Eye of Hinekora"],
+    },
+    {
       zone: "Whakapanu Island",
       tasks: ["Find the entrance to the Singing Caverns"],
     },
@@ -838,6 +968,11 @@ export const actGuides: Record<string, Guide[]> = {
     },
   ],
   G4_4_1: [
+    {
+      prev: "G4_4_3",
+      zone: "Eye of Hinekora",
+      tasks: ["Set Sail to Arastas"],
+    },
     {
       zone: "Eye of Hinekora",
       tasks: [
@@ -866,14 +1001,25 @@ export const actGuides: Record<string, Guide[]> = {
   G4_4_3: [
     {
       zone: "Trial of the Ancestors",
-      tasks: ["Speak with Navali", "Return to Ship", "Set Sail to Arastas"],
+      tasks: [
+        "Speak with Navali",
+        "Return to Ship",
+        "Speak with Makoru",
+        "Set Sail to Arastas",
+      ],
+    },
+  ],
+  G4_8a: [
+    {
+      zone: "Arastas",
+      tasks: ["Speak with Makoru"],
     },
   ],
   G4_8b: [
     {
       zone: "Arastas",
       tasks: [
-        "Speak with Missionary Lorandis",
+        "Speak with Missionary Lorandis and follow him",
         "Find and Kill <span class='text-poe-unique font-semibold'>Torvian, Hand of the Saviour</span>",
         "Enter The Excavation",
       ],
@@ -900,6 +1046,250 @@ export const actGuides: Record<string, Guide[]> = {
       zone: "Heart of the Tribe",
       tasks: [
         "Defeat <span class='text-poe-unique font-semibold'>Tavakai, the Fallen</span>",
+        "Return to Kingsmarch",
+      ],
+    },
+  ],
+  P1_Town: [
+    {
+      preq: ["P1_6"],
+      tasks: ["Speak with Renly", "Speak with The Hooded One"],
+    },
+    {
+      tasks: ["Enter Scorched Farmlands"],
+    },
+  ],
+  P1_1: [
+    {
+      preq: ["P1_2"],
+      zone: "Scorched Farmlands",
+      tasks: ["Find the entrance to The Blackwood"],
+    },
+    {
+      zone: "Scorched Farmlands",
+      tasks: [
+        "Defeat <span class='text-poe-unique font-semibold'>Isolde of the White Shroud</span> and <span class='text-poe-unique font-semibold'>Heldra of the Black Pyre</span>",
+        "Find the entrance to Stones of Serle",
+      ],
+    },
+  ],
+  P1_2: [
+    {
+      zone: "Stones of Serle",
+      tasks: [
+        "Activate all Magaliths",
+        "Defeat <span class='text-poe-unique font-semibold'>Siora, Blade of the Mists</span>",
+        "Go back to Scorched Farmlands",
+      ],
+    },
+  ],
+  P1_3: [
+    {
+      zone: "The Blackwood",
+      tasks: ["Find the entrance to Holten"],
+    },
+  ],
+  P1_4: [
+    {
+      preq: ["P1_6"],
+      zone: "Holten",
+      tasks: ["Find the entrance to Wolvenhold"],
+    },
+    {
+      zone: "Holten",
+      tasks: [
+        "Find the entrance to Wolvenhold",
+        "Find the entrance to Holten Estate",
+      ],
+    },
+  ],
+  P1_5: [
+    {
+      zone: "Wolvenhold",
+      tasks: [
+        "Defeat <span class='text-poe-unique font-semibold'>Oswin, The Dread Warden</span>",
+      ],
+    },
+  ],
+  P1_6: [
+    {
+      zone: "Holten Estate",
+      tasks: [
+        "Find the Stairs to level 2",
+        "Find the Stairs to enter the courtyard",
+        "Defeat <span class='text-poe-unique font-semibold'>Thane Wulfric</span> and <span class='text-poe-unique font-semibold'>Lady Elswyth</span>",
+        "Portal to Town",
+      ],
+    },
+  ],
+  P2_Town: [
+    {
+      preq: ["P2_7"],
+      tasks: ["Speak with Risu", "Speak with The Hooded One"],
+    },
+    {
+      prev: "P2_3",
+      tasks: ["Enter The Khari Crossing from Top-Left"],
+    },
+    {
+      tasks: [
+        "<span class='text-info'>Directions: Enter The Khari Crossing from Down-Right for Bonuses</span>",
+        "<span class='text-info'>Directions: Enter The Khari Crossing from Down-Left for Pools of Khatal</span>",
+      ],
+    },
+  ],
+  P2_1: [
+    {
+      preq: ["P2_3"],
+      zone: "The Khari Crossing",
+      tasks: [
+        "<span class='text-info'>Directions: Go streight from Top-Left exit from The Khari Bazaar</span>",
+        "Find the entrance to The Galai Gates",
+      ],
+    },
+    {
+      zone: "The Khari Crossing",
+      tasks: [
+        "<span class='text-info'>Directions: Go Up-Right for Akthi and Anundr</span>",
+        "Find and Defeat <span class='text-poe-unique font-semibold'>Akthi, the Final Sting</span> and <span class='text-poe-unique font-semibold'>Anundr, the Sandworm</span>",
+        "<span class='text-info'>Directions: Go Up-Left for Skullmaw Stairway</span>",
+        "Find the Skullmaw Stairway",
+        "Take the <span class='text-poe-quest'>Molten One's Gift</span>",
+        "Portal to Town",
+        "Find the entrance to Pools of Khatal",
+      ],
+    },
+  ],
+  P2_2: [
+    {
+      zone: "Pools of Khatal",
+      tasks: ["Find the entrance to Sel Khari Sanctuary"],
+    },
+  ],
+  P2_3: [
+    {
+      zone: "Sel Khari Sanctuary",
+      tasks: [
+        "Defeat <span class='text-poe-unique font-semibold'>Elzarah, the Cobra Lord</span>",
+        "Speak with Sekhema Asala",
+        "Portal to Town",
+      ],
+    },
+  ],
+  P2_5: [
+    {
+      zone: "The Khari Crossing",
+      tasks: [
+        "Defeat <span class='text-poe-unique font-semibold'>Vornas, the Fell Flame</span>",
+        "Enter Qimah",
+      ],
+    },
+  ],
+  P2_6: [
+    {
+      zone: "Qimah",
+      tasks: [
+        "Find the Seven Pillars and choose a Boon",
+        "Summon and Speak with Jado",
+        "Enter Qimah Reservoir",
+      ],
+    },
+  ],
+  P2_7: [
+    {
+      zone: "Qimah Reservoir",
+      tasks: [
+        "Defeat <span class='text-poe-unique font-semibold'>Azmadi, the Faridun Prince</span>",
+        "Click on Grand Barya",
+        "Speak with Jado",
+        "Portal to Town",
+      ],
+    },
+  ],
+  P3_Town: [
+    {
+      prev: "P3_7",
+      tasks: ["Travel to Kingsmarch"],
+    },
+    {
+      prev: "P3_3",
+      tasks: ["Return to Glacial Tarn"],
+    },
+    {
+      prev: "P3_4",
+      tasks: ["Speak with Hilda", "Travel to Glacial Tarn"],
+    },
+    {
+      tasks: ["Enter Ashen Forest"],
+    },
+  ],
+  P3_1: [
+    {
+      zone: "Ashen Forest",
+      tasks: ["Find the entrance to Kriar Village"],
+    },
+  ],
+  P3_2: [
+    {
+      zone: "Kriar Village",
+      tasks: [
+        "Find and Defeat <span class='text-poe-unique font-semibold'>Lythara, the Wayward Spear</span>",
+        "Enter Glacial Tarn",
+      ],
+    },
+  ],
+  P3_3: [
+    {
+      preq: ["P3_4"],
+      zone: "Glacial Tarn",
+      tasks: [
+        "Find and Defeat <span class='text-poe-unique font-semibold'>Rakkar, the Frozen Talon</span>",
+        "Enter Kriar Peaks",
+      ],
+    },
+    {
+      zone: "Glacial Tarn",
+      tasks: [
+        "Find the entrance to Howling Caves",
+        "Find and Defeat <span class='text-poe-unique font-semibold'>Rakkar, the Frozen Talon</span>",
+        "Enter Kriar Peaks",
+      ],
+    },
+  ],
+  P3_4: [
+    {
+      zone: "Howling Caves",
+      tasks: [
+        "Find and Defeat <span class='text-poe-unique font-semibold'>The Abominable Yeti</span>",
+        "Portal to Town",
+      ],
+    },
+  ],
+  P3_5: [
+    {
+      zone: "Kriar Peaks",
+      tasks: [
+        "Speak with Elder Madox for an unique item (optional)",
+        "Find the entrance Etched Ravine",
+      ],
+    },
+  ],
+  P3_6: [
+    {
+      zone: "Etched Ravine",
+      tasks: [
+        "Find and Defeat <span class='text-poe-unique font-semibold'>Stormgore, the Guardian</span>",
+        "Enter the Cuachic Vault",
+      ],
+    },
+  ],
+  P3_7: [
+    {
+      zone: "Cuachic Vault",
+      tasks: [
+        "Find and Defeat <span class='text-poe-unique font-semibold'>Zelina, Blood Priestess</span> and <span class='text-poe-unique font-semibold'>Zolin, Blood Priest</span>",
+        "Summon and Speak with Doryani",
+        "Portal to Town",
       ],
     },
   ],
