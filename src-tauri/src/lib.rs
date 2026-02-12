@@ -32,7 +32,7 @@ async fn tail_file(window: Window, file_path: String) -> Result<(), String> {
 async fn window_monitor(app: tauri::AppHandle) -> Result<(), String> {
     tokio::spawn(async move {
         loop {
-            tokio::time::sleep(Duration::from_millis(1000)).await;
+            tokio::time::sleep(Duration::from_millis(300)).await;
 
             match get_active_window() {
                 Ok(active_window) => {
