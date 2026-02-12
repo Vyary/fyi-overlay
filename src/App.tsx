@@ -41,32 +41,29 @@ function App() {
   });
 
   return (
-    <>
-      <div class="ml-96">{zone()}</div>
-      <main
-        class="min-h-dvh min-w-dvw flex items-center justify-center gap-2"
-        classList={{
-          "bg-gray-600/25": !passthrough(),
-          "bg-[repeating-linear-gradient(-45deg,rgba(0,0,0,0.08)_0px,rgba(0,0,0,0.08)_1px,transparent_2px,transparent_12px)]":
-            !passthrough(),
-        }}
-      >
-        <Show when={!watching()}>
-          <FileSelect setFilePath={setFilePath} />
-          <FileTail
-            filePath={filePath}
-            setWatching={setWatching}
-            setZone={setZone}
-            prevZones={prevZones}
-            setPrevZones={setPrevZones}
-            setPassthrough={setPassthrough}
-          />
-        </Show>
-        <Show when={title().includes("Path of Exile 2")}>
-          <ZoneWidget content={content} />
-        </Show>
-      </main>
-    </>
+    <main
+      class="min-h-dvh min-w-dvw flex items-center justify-center gap-2"
+      classList={{
+        "bg-gray-600/25": !passthrough(),
+        "bg-[repeating-linear-gradient(-45deg,rgba(0,0,0,0.08)_0px,rgba(0,0,0,0.08)_1px,transparent_2px,transparent_12px)]":
+          !passthrough(),
+      }}
+    >
+      <Show when={!watching()}>
+        <FileSelect setFilePath={setFilePath} />
+        <FileTail
+          filePath={filePath}
+          setWatching={setWatching}
+          setZone={setZone}
+          prevZones={prevZones}
+          setPrevZones={setPrevZones}
+          setPassthrough={setPassthrough}
+        />
+      </Show>
+      <Show when={title().includes("Path of Exile 2")}>
+        <ZoneWidget content={content} />
+      </Show>
+    </main>
   );
 }
 

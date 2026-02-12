@@ -35,31 +35,33 @@ function ZoneWidget(props: { content: Accessor<Guide> }) {
   onCleanup(() => onUp());
 
   return (
-    <div
-      onMouseDown={onDown}
-      class="absolute w-72 cursor-move bg-base-200/30 shadow-lg p-4"
-      style={{
-        left: `${pos().x}px`,
-        top: `${pos().y}px`,
-      }}
-    >
-      <div class="space-y-1">
-        <Show when={props.content().zone}>
-          <div class="text-base-content text-shadow-lg leading-relaxed text-sm">
-            {props.content().zone}
-          </div>
-          <div class="divider" />
-        </Show>
-        <For each={props.content().tasks}>
-          {(task) => (
-            <div
-              class="text-base-content text-shadow-lg leading-relaxed text-sm"
-              innerHTML={task}
-            />
-          )}
-        </For>
+    <Show when={props.content().tasks}>
+      <div
+        onMouseDown={onDown}
+        class="absolute w-72 cursor-move bg-base-200/30 shadow-lg p-4"
+        style={{
+          left: `${pos().x}px`,
+          top: `${pos().y}px`,
+        }}
+      >
+        <div class="space-y-1">
+          <Show when={props.content().zone}>
+            <div class="text-base-content text-shadow-lg leading-relaxed text-sm">
+              {props.content().zone}
+            </div>
+            <div class="divider" />
+          </Show>
+          <For each={props.content().tasks}>
+            {(task) => (
+              <div
+                class="text-base-content text-shadow-lg leading-relaxed text-sm"
+                innerHTML={task}
+              />
+            )}
+          </For>
+        </div>
       </div>
-    </div>
+    </Show>
   );
 }
 
