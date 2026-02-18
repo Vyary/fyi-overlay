@@ -8,8 +8,12 @@ import {
 } from "solid-js";
 import { Guide } from "../data/guide";
 
-function ZoneWidget(props: { content: Accessor<Guide> }) {
+function ZoneWidget(props: {
+  content: Accessor<Guide>;
+  passthrough: Accessor<boolean>;
+}) {
   const [pos, setPos] = createSignal({ x: 10, y: 160 });
+  const [size, setSize] = createSignal({ w: 300 });
 
   let offset = { x: 0, y: 0 };
 
@@ -29,19 +33,51 @@ function ZoneWidget(props: { content: Accessor<Guide> }) {
     window.addEventListener("mouseup", onUp);
   };
 
-  onMount(() =>
-    setPos(JSON.parse(localStorage.getItem("pos") || "{ x: 50, y: 50 }")),
-  );
-  onCleanup(() => onUp());
+  let start = { w: 0, h: 0, x: 0, y: 0 };
+
+  const onResizeMove = (e: MouseEvent) => {
+    setSize({
+      w: start.w + (e.clientX - start.x),
+    });
+  };
+
+  const onResizeUp = () => {
+    window.removeEventListener("mousemove", onResizeMove);
+    window.removeEventListener("mouseup", onResizeUp);
+    localStorage.setItem("size", JSON.stringify(size()));
+  };
+
+  const onResizeDown = (e: MouseEvent) => {
+    e.stopPropagation();
+    start.w = size().w;
+    start.x = e.clientX;
+
+    window.addEventListener("mousemove", onResizeMove);
+    window.addEventListener("mouseup", onResizeUp);
+  };
+
+  onMount(() => {
+    const pos = localStorage.getItem("pos");
+    if (pos) setPos(JSON.parse(pos));
+
+    const size = localStorage.getItem("size");
+    if (size) setSize(JSON.parse(size));
+  });
+
+  onCleanup(() => {
+    onUp();
+    onResizeUp();
+  });
 
   return (
     <Show when={props.content().tasks}>
       <div
         onMouseDown={onDown}
-        class="absolute w-72 cursor-move bg-base-200/30 shadow-lg p-4"
+        class="absolute cursor-move bg-base-200/30 shadow-lg p-4 overflow-auto h-auto"
         style={{
           left: `${pos().x}px`,
           top: `${pos().y}px`,
+          width: `${size().w}px`,
         }}
       >
         <div class="space-y-1">
@@ -60,6 +96,17 @@ function ZoneWidget(props: { content: Accessor<Guide> }) {
             )}
           </For>
         </div>
+
+        <Show when={!props.passthrough()}>
+          <div
+            class="absolute top-1/2 -translate-y-1/2 right-1 h-5 w-1 cursor-e-resize p-1 text-white/50 hover:text-white transition-colors"
+            onMouseDown={onResizeDown}
+          >
+            <svg viewBox="0 0 8 40" class="h-5 w-1" fill="currentColor">
+              <rect x="0" y="0" width="8" height="40" rx="4" />
+            </svg>
+          </div>
+        </Show>
       </div>
     </Show>
   );

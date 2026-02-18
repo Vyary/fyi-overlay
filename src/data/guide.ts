@@ -8,6 +8,7 @@ export interface Guide {
 export const actGuides: Record<string, Guide[]> = {
   G1_1: [
     {
+      zone: "The Riverbank",
       tasks: [
         "<span class='text-info'>Directions: Follow the river upstream</span>",
         "Kill <span class='text-poe-unique font-semibold'>The Bloated Miller</span>",
