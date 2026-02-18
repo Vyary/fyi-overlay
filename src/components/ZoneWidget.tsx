@@ -14,8 +14,13 @@ function ZoneWidget(props: {
 }) {
   const [pos, setPos] = createSignal({ x: 10, y: 160 });
   const [size, setSize] = createSignal({ w: 300 });
+  const [textSizeValue, setTextSizeValue] = createSignal(1);
+
+  const sizes = ["text-xs", "text-sm", "text-base"];
+  const textSize = () => sizes[textSizeValue()];
 
   let offset = { x: 0, y: 0 };
+  let start = { w: 0, h: 0, x: 0, y: 0 };
 
   const onMove = (e: MouseEvent) => {
     setPos({ x: e.clientX - offset.x, y: e.clientY - offset.y });
@@ -32,8 +37,6 @@ function ZoneWidget(props: {
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
   };
-
-  let start = { w: 0, h: 0, x: 0, y: 0 };
 
   const onResizeMove = (e: MouseEvent) => {
     setSize({
@@ -56,12 +59,20 @@ function ZoneWidget(props: {
     window.addEventListener("mouseup", onResizeUp);
   };
 
+  const onTextSizeChange = (e: any) => {
+    setTextSizeValue(e.currentTarget.value);
+    localStorage.setItem("textSize", textSizeValue().toString());
+  };
+
   onMount(() => {
     const pos = localStorage.getItem("pos");
     if (pos) setPos(JSON.parse(pos));
 
     const size = localStorage.getItem("size");
     if (size) setSize(JSON.parse(size));
+
+    const textSize = localStorage.getItem("textSize");
+    if (textSize) setTextSizeValue(Number(textSize));
   });
 
   onCleanup(() => {
@@ -72,17 +83,18 @@ function ZoneWidget(props: {
   return (
     <Show when={props.content().tasks}>
       <div
-        onMouseDown={onDown}
-        class="absolute cursor-move bg-base-200/30 shadow-lg p-4 overflow-auto h-auto"
+        class="absolute bg-base-200/30 shadow-lg p-4 overflow-auto h-auto"
         style={{
           left: `${pos().x}px`,
           top: `${pos().y}px`,
           width: `${size().w}px`,
         }}
       >
-        <div class="space-y-1">
+        <div class="space-y-1 cursor-move" onMouseDown={onDown}>
           <Show when={props.content().zone}>
-            <div class="text-base-content text-shadow-lg leading-relaxed text-sm">
+            <div
+              class={`text-base-content text-shadow-lg leading-relaxed ${textSize()}`}
+            >
               {props.content().zone}
             </div>
             <div class="divider" />
@@ -90,7 +102,7 @@ function ZoneWidget(props: {
           <For each={props.content().tasks}>
             {(task) => (
               <div
-                class="text-base-content text-shadow-lg leading-relaxed text-sm"
+                class={`text-base-content text-shadow-lg leading-relaxed ${textSize()}`}
                 innerHTML={task}
               />
             )}
@@ -99,12 +111,28 @@ function ZoneWidget(props: {
 
         <Show when={!props.passthrough()}>
           <div
-            class="absolute top-1/2 -translate-y-1/2 right-1 h-5 w-1 cursor-e-resize p-1 text-white/50 hover:text-white transition-colors"
+            class="absolute top-1/2 -translate-y-1/2 right-2 h-5 w-1 cursor-e-resize p-1 text-white/50 hover:text-white transition-colors"
             onMouseDown={onResizeDown}
           >
             <svg viewBox="0 0 8 40" class="h-5 w-1" fill="currentColor">
               <rect x="0" y="0" width="8" height="40" rx="4" />
             </svg>
+          </div>
+        </Show>
+
+        <Show when={!props.passthrough()}>
+          <div class="divider" />
+          <div class="max-w-xs">
+            <p class={`${textSize()}`}>Text Size</p>
+            <input
+              type="range"
+              min="0"
+              max="2"
+              value={textSizeValue()}
+              class="range range-xs"
+              step="1"
+              onInput={onTextSizeChange}
+            />
           </div>
         </Show>
       </div>

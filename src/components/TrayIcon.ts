@@ -49,7 +49,7 @@ async function initTrayIcon() {
 
   const options = {
     menu,
-    menuOnLeftClick: true,
+    menuOnLeftClick: false,
     icon: await defaultWindowIcon(),
   };
 
