@@ -7,6 +7,22 @@ async function initTrayIcon() {
   const menu = await Menu.new({
     items: [
       {
+        id: "reset widget position",
+        text: "Reset Widget Position",
+        action: async () => {
+          localStorage.removeItem("pos");
+          await relaunch();
+        },
+      },
+      {
+        id: "reset widget size",
+        text: "Reset Widget Size",
+        action: async () => {
+          localStorage.removeItem("size");
+          await relaunch();
+        },
+      },
+      {
         id: "clear cache",
         text: "Clear Cache",
         action: async () => {

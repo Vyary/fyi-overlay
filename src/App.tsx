@@ -7,7 +7,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import ZoneWidget from "./components/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
 import useTitleTracker from "./hooks/useTitleTracker";
-import { actGuides, Guide } from "./data/guide";
+import { actGuides } from "./data/guide";
 
 function App() {
   const [passthrough, setPassthrough] = createSignal(false);
@@ -61,7 +61,7 @@ function App() {
         />
       </Show>
       <Show when={title().includes("Path of Exile 2")}>
-        <ZoneWidget content={content} />
+        <ZoneWidget content={content} passthrough={passthrough} />
       </Show>
     </main>
   );
