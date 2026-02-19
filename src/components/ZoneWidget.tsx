@@ -93,7 +93,7 @@ function ZoneWidget(props: {
         <div class="space-y-1 cursor-move" onMouseDown={onDown}>
           <Show when={props.content().zone}>
             <div
-              class={`text-base-content text-shadow-lg leading-relaxed ${textSize()}`}
+              class={`text-base-content text-shadow-lg leading-relaxed select-none ${textSize()}`}
             >
               {props.content().zone}
             </div>
@@ -102,7 +102,7 @@ function ZoneWidget(props: {
           <For each={props.content().tasks}>
             {(task) => (
               <div
-                class={`text-base-content text-shadow-lg leading-relaxed ${textSize()}`}
+                class={`text-base-content text-shadow-lg leading-relaxed select-none ${textSize()}`}
                 innerHTML={task}
               />
             )}
@@ -122,7 +122,7 @@ function ZoneWidget(props: {
 
         <Show when={!props.passthrough()}>
           <div class="divider" />
-          <div class="max-w-xs">
+          <div class="max-w-xs select-none">
             <p class={`${textSize()}`}>Text Size</p>
             <input
               type="range"
