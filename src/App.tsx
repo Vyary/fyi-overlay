@@ -8,6 +8,7 @@ import ZoneWidget from "./components/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
 import useTitleTracker from "./hooks/useTitleTracker";
 import { actGuides } from "./data/guide";
+import TimerWidget from "./components/TimerWidget";
 
 function App() {
   const [passthrough, setPassthrough] = createSignal(false);
@@ -60,9 +61,15 @@ function App() {
           setPassthrough={setPassthrough}
         />
       </Show>
-      <Show when={title().includes("Path of Exile 2")}>
+      <div
+        classList={{
+          hidden: !title().includes("Path of Exile 2"),
+        }}
+      >
         <ZoneWidget content={content} passthrough={passthrough} />
-      </Show>
+
+        <TimerWidget passthrough={passthrough} />
+      </div>
     </main>
   );
 }
