@@ -1,15 +1,17 @@
 import {
   Accessor,
+  createMemo,
   createSignal,
   For,
   onCleanup,
   onMount,
   Show,
 } from "solid-js";
-import { Guide } from "../data/guide";
+import { actGuides, Guide } from "../data/guide";
 
 function ZoneWidget(props: {
-  content: Accessor<Guide>;
+  zone: Accessor<string>;
+  prevZones: Accessor<string[]>;
   passthrough: Accessor<boolean>;
 }) {
   const [pos, setPos] = createSignal({ x: 10, y: 160 });
@@ -21,6 +23,24 @@ function ZoneWidget(props: {
 
   let offset = { x: 0, y: 0 };
   let start = { w: 0, h: 0, x: 0, y: 0 };
+
+  const content = createMemo<Guide>((prev) => {
+    const found = actGuides[props.zone()]?.find((z) => {
+      const prevCheck = z.prev == props.prevZones()[props.prevZones().length - 2];
+      const preqCheck = z.preq?.every((zone) => props.prevZones().includes(zone));
+
+      if (prevCheck && preqCheck) return true;
+      if (prevCheck && !z.preq) return true;
+      if (!z.prev && preqCheck) return true;
+      if (!z.prev && !z.preq) return true;
+
+      return false;
+    });
+
+    return found?.tasks ? found : prev;
+  }, { tasks: [] });
+
+
 
   const onMove = (e: MouseEvent) => {
     setPos({ x: e.clientX - offset.x, y: e.clientY - offset.y });
@@ -81,7 +101,7 @@ function ZoneWidget(props: {
   });
 
   return (
-    <Show when={props.content().tasks}>
+    <Show when={content().tasks}>
       <div
         class="absolute bg-base-200/30 shadow-lg p-4 overflow-auto h-auto"
         style={{
@@ -91,15 +111,15 @@ function ZoneWidget(props: {
         }}
       >
         <div class="space-y-1 cursor-move" onMouseDown={onDown}>
-          <Show when={props.content().zone}>
+          <Show when={content().zone}>
             <div
               class={`text-base-content text-shadow-lg leading-relaxed select-none ${textSize()}`}
             >
-              {props.content().zone}
+              {content().zone}
             </div>
             <div class="divider" />
           </Show>
-          <For each={props.content().tasks}>
+          <For each={content().tasks}>
             {(task) => (
               <div
                 class={`text-base-content text-shadow-lg leading-relaxed select-none ${textSize()}`}

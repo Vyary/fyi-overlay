@@ -1,4 +1,4 @@
-import { createMemo, createSignal, onMount, Show } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 import "./App.css";
 import usePassthroughShortcut from "./hooks/usePassthroughShortcut";
 import FileSelect from "./components/FileSelect";
@@ -7,7 +7,6 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import ZoneWidget from "./components/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
 import useTitleTracker from "./hooks/useTitleTracker";
-import { actGuides } from "./data/guide";
 import TimerWidget from "./components/TimerWidget";
 
 function App() {
@@ -17,22 +16,6 @@ function App() {
   const [prevZones, setPrevZones] = createSignal<string[]>([]);
   const [title, setTitle] = createSignal("");
   const [watching, setWatching] = createSignal(false);
-
-  const content = createMemo((prev) => {
-    const found = actGuides[zone()]?.find((z) => {
-      const prevCheck = z.prev == prevZones()[prevZones().length - 2];
-      const preqCheck = z.preq?.every((zone) => prevZones().includes(zone));
-
-      if (prevCheck && preqCheck) return true;
-      if (prevCheck && !z.preq) return true;
-      if (!z.prev && preqCheck) return true;
-      if (!z.prev && !z.preq) return true;
-
-      return false;
-    });
-
-    return found?.tasks ? found : prev;
-  }, {});
 
   onMount(async () => {
     initTrayIcon();
@@ -63,10 +46,10 @@ function App() {
       </Show>
       <div
         classList={{
-          hidden: !title().includes("Path of Exile 2"),
+          hidden: !title().includes("Path of Exile 2") && passthrough()
         }}
       >
-        <ZoneWidget content={content} passthrough={passthrough} />
+        <ZoneWidget zone={zone} prevZones={prevZones} passthrough={passthrough} />
 
         <TimerWidget passthrough={passthrough} />
       </div>
