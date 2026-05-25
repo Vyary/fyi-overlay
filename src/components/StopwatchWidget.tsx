@@ -153,6 +153,5 @@ export {
   stopTimer,
   resetTimer,
   activeSw,
-  setActiveSw,
   Stopwatch,
 };
