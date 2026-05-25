@@ -1,4 +1,4 @@
-import { Accessor, createSignal, Setter, Show } from "solid-js";
+import { Accessor, createSignal, onMount, Setter, Show } from "solid-js";
 import { filePath, selectFile, startTailing, watching } from "./FileState";
 import { resetPosition, resetTextSize, resetWidth } from "./ZoneWidget";
 import { getCurrentWindow } from "@tauri-apps/api/window";
@@ -22,6 +22,14 @@ function SettingsWidget(props: {
   const [PtScErr, setPtScErr] = createSignal(false);
   const [SwScErr, setSwScErr] = createSignal(false);
   const [SwScResetErr, setSwScResetErr] = createSignal(false);
+
+  onMount(() => {
+    const szw = localStorage.getItem("showZw");
+    if (szw) props.setShowZw(JSON.parse(szw));
+
+    const ssw = localStorage.getItem("showSw");
+    if (ssw) props.setShowSw(JSON.parse(ssw));
+  });
 
   return (
     <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 absolute right-20 top-1/4 select-none">

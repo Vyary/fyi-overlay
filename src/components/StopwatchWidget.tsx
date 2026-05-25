@@ -4,6 +4,7 @@ import {
   registerStopwatchShortcutReset,
   unregisterStopwatchShortcuts,
 } from "./StopwatchShortcutState";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 const [posSw, setPosSw] = createSignal({ x: 350, y: 850 });
 const [countSw, setCountSw] = createSignal(0);
@@ -21,15 +22,19 @@ const resetPositionSw = () => {
 };
 
 const startTimer = () => {
-  setActiveSw(true);
-  interval = setInterval(() => {
-    setCountSw((prev) => prev + 1);
-  }, 1000);
+  if (!activeSw()) {
+    setActiveSw(true);
+    interval = setInterval(() => {
+      setCountSw((prev) => prev + 1);
+    }, 1000);
+  }
 };
 
 const stopTimer = () => {
-  setActiveSw(false);
-  clearInterval(interval);
+  if (activeSw()) {
+    setActiveSw(false);
+    clearInterval(interval);
+  }
 };
 
 const resetTimer = () => {
@@ -43,6 +48,13 @@ const loadStateSw = () => {
 
   const p = localStorage.getItem("posSw");
   if (p) setPosSw(JSON.parse(p));
+};
+
+const cleanUp = () => {
+  clearInterval(interval);
+  localStorage.setItem("timer", countSw().toString());
+  savePositionSw();
+  unregisterStopwatchShortcuts();
 };
 
 function Stopwatch(props: { passthrough: Accessor<boolean> }) {
@@ -72,13 +84,15 @@ function Stopwatch(props: { passthrough: Accessor<boolean> }) {
     registerStopwatchShortcut();
     registerStopwatchShortcutReset();
     loadStateSw();
+
+    const unlisten = await getCurrentWindow().onCloseRequested(async () => {
+      cleanUp();
+    });
+    return () => unlisten();
   });
 
   onCleanup(() => {
-    localStorage.setItem("timer", countSw().toString());
-    onUp();
-    clearInterval(interval);
-    unregisterStopwatchShortcuts();
+    cleanUp();
   });
 
   return (

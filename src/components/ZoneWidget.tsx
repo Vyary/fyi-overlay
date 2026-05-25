@@ -9,6 +9,7 @@ import {
 } from "solid-js";
 import { actGuides, Guide } from "../data/guide";
 import { prevZones, zone } from "./FileState";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 const [posZw, setPosZw] = createSignal({ x: 30, y: 160 });
 const [widthZw, setWidthZw] = createSignal({ w: 300 });
@@ -52,6 +53,12 @@ const loadState = () => {
   if (ts) setTextSizeZw(Number(ts));
 };
 
+const cleanUp = () => {
+  savePosition();
+  saveWidth();
+  saveTextSize();
+};
+
 function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
   const sizes = ["text-xs", "text-sm", "text-base", "text-lg", "text-xl"];
   const textSize = () => sizes[textSizeZw()];
@@ -75,7 +82,7 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
 
       return found?.tasks ? found : prev;
     },
-    { tasks: ["Open Path of Exile 2"] },
+    { tasks: ["Open Path of Exile 2 and change zone"] },
   );
 
   const onMove = (e: MouseEvent) => {
@@ -120,14 +127,16 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
     saveTextSize();
   };
 
-  onMount(() => {
+  onMount(async () => {
     loadState();
+
+    const unlisten = await getCurrentWindow().onCloseRequested(async () => {
+      cleanUp();
+    });
+    return () => unlisten();
   });
 
-  onCleanup(() => {
-    onUp();
-    onResizeUp();
-  });
+  onCleanup(() => cleanUp());
 
   return (
     <Show when={content().tasks}>

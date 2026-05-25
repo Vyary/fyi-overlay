@@ -1,10 +1,13 @@
-import { createSignal, onCleanup, onMount, Show } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 import "./App.css";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { ZoneWidget } from "./components/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
 import useTitleTracker from "./hooks/useTitleTracker";
 import { Stopwatch } from "./components/StopwatchWidget";
+import SettingsWidget from "./components/SettingsWidget";
+import { registerPasstroughShortcut } from "./components/PassthroughShortcutState";
+import { unregisterAll } from "@tauri-apps/plugin-global-shortcut";
 import {
   filePath,
   setFilePath,
@@ -12,9 +15,6 @@ import {
   setZone,
   startTailing,
 } from "./components/FileState";
-import SettingsWidget from "./components/SettingsWidget";
-import { registerPasstroughShortcut } from "./components/PassthroughShortcutState";
-import { unregisterAll } from "@tauri-apps/plugin-global-shortcut";
 
 function App() {
   const [passthrough, setPassthrough] = createSignal(false);
@@ -28,12 +28,6 @@ function App() {
     registerPasstroughShortcut(passthrough, setPassthrough);
     useTitleTracker(setTitle);
 
-    const szw = localStorage.getItem("showZw");
-    if (szw) setShowZw(JSON.parse(szw));
-
-    const ssw = localStorage.getItem("showSw");
-    if (ssw) setShowSw(JSON.parse(ssw));
-
     setZone(localStorage.getItem("zone") || "");
     const prevZones = localStorage.getItem("prevZones");
     if (prevZones) setPrevZones(JSON.parse(prevZones));
@@ -45,10 +39,11 @@ function App() {
       setPassthrough(true);
       getCurrentWindow().setIgnoreCursorEvents(true);
     }
-  });
 
-  onCleanup(() => {
-    unregisterAll();
+    const unlisten = await getCurrentWindow().onCloseRequested(async () => {
+      unregisterAll();
+    });
+    return () => unlisten();
   });
 
   return (

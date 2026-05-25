@@ -1,7 +1,8 @@
 import { TrayIcon } from "@tauri-apps/api/tray";
 import { Menu } from "@tauri-apps/api/menu";
-import { exit, relaunch } from "@tauri-apps/plugin-process";
+import { relaunch } from "@tauri-apps/plugin-process";
 import { defaultWindowIcon } from "@tauri-apps/api/app";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 async function initTrayIcon() {
   const menu = await Menu.new({
@@ -26,7 +27,7 @@ async function initTrayIcon() {
       {
         id: "quit",
         text: "Quit",
-        action: async () => await exit(0),
+        action: async () => await getCurrentWindow().close(),
       },
       {
         id: " ",
