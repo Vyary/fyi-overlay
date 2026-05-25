@@ -1,12 +1,6 @@
 import { register, unregister } from "@tauri-apps/plugin-global-shortcut";
 import { createStore } from "solid-js/store";
-import {
-  activeSw,
-  resetTimer,
-  setActiveSw,
-  startTimer,
-  stopTimer,
-} from "./StopwatchWidget";
+import { activeSw, resetTimer, startTimer, stopTimer } from "./StopwatchWidget";
 
 const buildShortcutString = (state: Record<string, any>) => {
   const mods = Object.entries(state)
@@ -35,13 +29,11 @@ const registerStopwatchShortcut = async () => {
       if (e.state === "Pressed") {
         if (!activeSw()) {
           startTimer();
-          setActiveSw(true);
           return;
         }
 
         if (activeSw()) {
           stopTimer();
-          setActiveSw(false);
         }
       }
     });
@@ -83,7 +75,6 @@ const registerStopwatchShortcutReset = async () => {
   try {
     await register(buildShortcutString(SwScReset), (e) => {
       if (e.state === "Pressed") {
-        setActiveSw(false);
         resetTimer();
       }
     });
