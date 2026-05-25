@@ -1,27 +1,54 @@
-import { createSignal, onMount, Show } from "solid-js";
+import { createSignal, onCleanup, onMount, Show } from "solid-js";
 import "./App.css";
-import usePassthroughShortcut from "./hooks/usePassthroughShortcut";
-import FileSelect from "./components/FileSelect";
-import FileTail from "./components/FileTail";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import ZoneWidget from "./components/ZoneWidget";
+import { ZoneWidget } from "./components/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
 import useTitleTracker from "./hooks/useTitleTracker";
-import TimerWidget from "./components/TimerWidget";
+import { Stopwatch } from "./components/StopwatchWidget";
+import {
+  filePath,
+  setFilePath,
+  setPrevZones,
+  setZone,
+  startTailing,
+} from "./components/FileState";
+import SettingsWidget from "./components/SettingsWidget";
+import { registerPasstroughShortcut } from "./components/PassthroughShortcutState";
+import { unregisterAll } from "@tauri-apps/plugin-global-shortcut";
 
 function App() {
   const [passthrough, setPassthrough] = createSignal(false);
-  const [filePath, setFilePath] = createSignal("");
-  const [zone, setZone] = createSignal("");
-  const [prevZones, setPrevZones] = createSignal<string[]>([]);
   const [title, setTitle] = createSignal("");
-  const [watching, setWatching] = createSignal(false);
+  const [showZw, setShowZw] = createSignal(true);
+  const [showSw, setShowSw] = createSignal(true);
 
   onMount(async () => {
     initTrayIcon();
     getCurrentWindow().maximize();
-    usePassthroughShortcut(passthrough, setPassthrough);
+    registerPasstroughShortcut(passthrough, setPassthrough);
     useTitleTracker(setTitle);
+
+    const szw = localStorage.getItem("showZw");
+    if (szw) setShowZw(JSON.parse(szw));
+
+    const ssw = localStorage.getItem("showSw");
+    if (ssw) setShowSw(JSON.parse(ssw));
+
+    setZone(localStorage.getItem("zone") || "");
+    const prevZones = localStorage.getItem("prevZones");
+    if (prevZones) setPrevZones(JSON.parse(prevZones));
+
+    const fp = localStorage.getItem("filePath");
+    if (fp) setFilePath(fp);
+    if (filePath()) {
+      startTailing();
+      setPassthrough(true);
+      getCurrentWindow().setIgnoreCursorEvents(true);
+    }
+  });
+
+  onCleanup(() => {
+    unregisterAll();
   });
 
   return (
@@ -33,25 +60,32 @@ function App() {
           !passthrough(),
       }}
     >
-      <Show when={!watching()}>
-        <FileSelect setFilePath={setFilePath} />
-        <FileTail
-          filePath={filePath}
-          setWatching={setWatching}
-          setZone={setZone}
-          prevZones={prevZones}
-          setPrevZones={setPrevZones}
-          setPassthrough={setPassthrough}
-        />
-      </Show>
       <div
         classList={{
-          hidden: !title().includes("Path of Exile 2") && passthrough()
+          hidden: !title().includes("Path of Exile 2") && passthrough(),
         }}
       >
-        <ZoneWidget zone={zone} prevZones={prevZones} passthrough={passthrough} />
+        <Show when={showZw()}>
+          <ZoneWidget passthrough={passthrough} />
+        </Show>
 
-        <TimerWidget passthrough={passthrough} />
+        <Show when={showSw()}>
+          <Stopwatch passthrough={passthrough} />
+        </Show>
+      </div>
+      <div
+        classList={{
+          hidden: passthrough(),
+        }}
+      >
+        <SettingsWidget
+          showZw={showZw}
+          setShowZw={setShowZw}
+          showSw={showSw}
+          setShowSw={setShowSw}
+          passthrough={passthrough}
+          setPassthrough={setPassthrough}
+        />
       </div>
     </main>
   );

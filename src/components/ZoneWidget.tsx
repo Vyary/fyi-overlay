@@ -8,58 +8,94 @@ import {
   Show,
 } from "solid-js";
 import { actGuides, Guide } from "../data/guide";
+import { prevZones, zone } from "./FileState";
 
-function ZoneWidget(props: {
-  zone: Accessor<string>;
-  prevZones: Accessor<string[]>;
-  passthrough: Accessor<boolean>;
-}) {
-  const [pos, setPos] = createSignal({ x: 10, y: 160 });
-  const [size, setSize] = createSignal({ w: 300 });
-  const [textSizeValue, setTextSizeValue] = createSignal(1);
+const [posZw, setPosZw] = createSignal({ x: 30, y: 160 });
+const [widthZw, setWidthZw] = createSignal({ w: 300 });
+const [textSizeZw, setTextSizeZw] = createSignal(2);
 
-  const sizes = ["text-xs", "text-sm", "text-base"];
-  const textSize = () => sizes[textSizeValue()];
+const savePosition = () => {
+  localStorage.setItem("posZw", JSON.stringify(posZw()));
+};
+
+const resetPosition = () => {
+  setPosZw({ x: 30, y: 160 });
+  localStorage.removeItem("posZw");
+};
+
+const saveWidth = () => {
+  localStorage.setItem("widthZw", JSON.stringify(widthZw()));
+};
+
+const resetWidth = () => {
+  setWidthZw({ w: 300 });
+  localStorage.removeItem("widthZw");
+};
+
+const saveTextSize = () => {
+  localStorage.setItem("textSizeZw", JSON.stringify(textSizeZw()));
+};
+
+const resetTextSize = () => {
+  setTextSizeZw(2);
+  localStorage.removeItem("textSizeZw");
+};
+
+const loadState = () => {
+  const p = localStorage.getItem("posZw");
+  if (p) setPosZw(JSON.parse(p));
+
+  const s = localStorage.getItem("widthZw");
+  if (s) setWidthZw(JSON.parse(s));
+
+  const ts = localStorage.getItem("textSizeZw");
+  if (ts) setTextSizeZw(Number(ts));
+};
+
+function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
+  const sizes = ["text-xs", "text-sm", "text-base", "text-lg", "text-xl"];
+  const textSize = () => sizes[textSizeZw()];
 
   let offset = { x: 0, y: 0 };
   let start = { w: 0, h: 0, x: 0, y: 0 };
 
-  const content = createMemo<Guide>((prev) => {
-    const found = actGuides[props.zone()]?.find((z) => {
-      const prevCheck = z.prev == props.prevZones()[props.prevZones().length - 2];
-      const preqCheck = z.preq?.every((zone) => props.prevZones().includes(zone));
+  const content = createMemo<Guide>(
+    (prev) => {
+      const found = actGuides[zone()]?.find((z) => {
+        const prevCheck = z.prev == prevZones()[prevZones().length - 2];
+        const preqCheck = z.preq?.every((zone) => prevZones().includes(zone));
 
-      if (prevCheck && preqCheck) return true;
-      if (prevCheck && !z.preq) return true;
-      if (!z.prev && preqCheck) return true;
-      if (!z.prev && !z.preq) return true;
+        if (prevCheck && preqCheck) return true;
+        if (prevCheck && !z.preq) return true;
+        if (!z.prev && preqCheck) return true;
+        if (!z.prev && !z.preq) return true;
 
-      return false;
-    });
+        return false;
+      });
 
-    return found?.tasks ? found : prev;
-  }, { tasks: [] });
-
-
+      return found?.tasks ? found : prev;
+    },
+    { tasks: ["Open Path of Exile 2"] },
+  );
 
   const onMove = (e: MouseEvent) => {
-    setPos({ x: e.clientX - offset.x, y: e.clientY - offset.y });
+    setPosZw({ x: e.clientX - offset.x, y: e.clientY - offset.y });
   };
 
   const onUp = () => {
     window.removeEventListener("mousemove", onMove);
     window.removeEventListener("mouseup", onUp);
-    localStorage.setItem("pos", JSON.stringify(pos()));
+    savePosition();
   };
 
   const onDown = (e: MouseEvent) => {
-    offset = { x: e.clientX - pos().x, y: e.clientY - pos().y };
+    offset = { x: e.clientX - posZw().x, y: e.clientY - posZw().y };
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
   };
 
   const onResizeMove = (e: MouseEvent) => {
-    setSize({
+    setWidthZw({
       w: start.w + (e.clientX - start.x),
     });
   };
@@ -67,12 +103,12 @@ function ZoneWidget(props: {
   const onResizeUp = () => {
     window.removeEventListener("mousemove", onResizeMove);
     window.removeEventListener("mouseup", onResizeUp);
-    localStorage.setItem("size", JSON.stringify(size()));
+    saveWidth();
   };
 
   const onResizeDown = (e: MouseEvent) => {
     e.stopPropagation();
-    start.w = size().w;
+    start.w = widthZw().w;
     start.x = e.clientX;
 
     window.addEventListener("mousemove", onResizeMove);
@@ -80,19 +116,12 @@ function ZoneWidget(props: {
   };
 
   const onTextSizeChange = (e: any) => {
-    setTextSizeValue(e.currentTarget.value);
-    localStorage.setItem("textSize", textSizeValue().toString());
+    setTextSizeZw(e.currentTarget.value);
+    saveTextSize();
   };
 
   onMount(() => {
-    const pos = localStorage.getItem("pos");
-    if (pos) setPos(JSON.parse(pos));
-
-    const size = localStorage.getItem("size");
-    if (size) setSize(JSON.parse(size));
-
-    const textSize = localStorage.getItem("textSize");
-    if (textSize) setTextSizeValue(Number(textSize));
+    loadState();
   });
 
   onCleanup(() => {
@@ -105,9 +134,9 @@ function ZoneWidget(props: {
       <div
         class="absolute bg-base-200/30 shadow-lg p-4 overflow-auto h-auto"
         style={{
-          left: `${pos().x}px`,
-          top: `${pos().y}px`,
-          width: `${size().w}px`,
+          left: `${posZw().x}px`,
+          top: `${posZw().y}px`,
+          width: `${widthZw().w}px`,
         }}
       >
         <div class="space-y-1 cursor-move" onMouseDown={onDown}>
@@ -141,14 +170,12 @@ function ZoneWidget(props: {
         </Show>
 
         <Show when={!props.passthrough()}>
-          <div class="divider" />
           <div class="max-w-xs select-none">
-            <p class={`${textSize()}`}>Text Size</p>
             <input
               type="range"
               min="0"
-              max="2"
-              value={textSizeValue()}
+              max={sizes.length - 1}
+              value={textSizeZw()}
               class="range range-xs"
               step="1"
               onInput={onTextSizeChange}
@@ -160,4 +187,4 @@ function ZoneWidget(props: {
   );
 }
 
-export default ZoneWidget;
+export { ZoneWidget, resetPosition, resetWidth, resetTextSize };
