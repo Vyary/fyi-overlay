@@ -1,30 +1,33 @@
 use active_win_pos_rs::get_active_window;
-use std::fs::File;
-use std::io::{BufRead, BufReader, Seek, SeekFrom};
 use std::time::Duration;
 use tauri::{Emitter, Window};
+use tokio::fs::File;
+use tokio::io::{AsyncBufReadExt, AsyncSeekExt, BufReader, SeekFrom};
 
 #[tauri::command]
 async fn tail_file(window: Window, file_path: String) -> Result<(), String> {
-    let file = File::open(&file_path).map_err(|e| e.to_string())?;
+    let file = File::open(&file_path).await.map_err(|e| e.to_string())?;
     let mut reader = BufReader::new(file);
 
-    // Seek to end
-    reader.seek(SeekFrom::End(0)).map_err(|e| e.to_string())?;
+    reader
+        .seek(SeekFrom::End(0))
+        .await
+        .map_err(|e| e.to_string())?;
 
     loop {
         let mut line = String::new();
-        match reader.read_line(&mut line) {
+        match reader.read_line(&mut line).await {
             Ok(0) => {} // No new data
             Ok(_) => {
-                if !line.trim().is_empty() {
-                    let _ = window.emit("tail-line", line.trim());
+                let trimmed = line.trim();
+                if !trimmed.is_empty() {
+                    let _ = window.emit("tail-line", trimmed);
                 }
             }
             Err(e) => return Err(e.to_string()),
         }
 
-        tokio::time::sleep(tokio::time::Duration::from_millis(300)).await;
+        tokio::time::sleep(Duration::from_millis(200)).await;
     }
 }
 

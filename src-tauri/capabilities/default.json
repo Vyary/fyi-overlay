@@ -9,6 +9,7 @@
     "core:window:allow-set-ignore-cursor-events",
     "global-shortcut:allow-register",
     "global-shortcut:allow-unregister",
+    "global-shortcut:allow-unregister-all",
     "dialog:allow-open",
     "core:window:allow-maximize",
     "core:app:allow-default-window-icon",

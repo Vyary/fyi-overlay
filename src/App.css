@@ -1,5 +1,42 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+    themes: custom --default;
+}
+@plugin "daisyui/theme" {
+    name: "custom";
+    default: true;
+    prefersdark: false;
+    color-scheme: "dark";
+    --color-base-100: oklch(0% 0 0);
+    --color-base-200: oklch(19% 0 0);
+    --color-base-300: oklch(22% 0 0);
+    --color-base-content: oklch(87.609% 0 0);
+    --color-primary: oklch(35% 0 0);
+    --color-primary-content: oklch(100% 0 0);
+    --color-secondary: oklch(35% 0 0);
+    --color-secondary-content: oklch(100% 0 0);
+    --color-accent: oklch(35% 0 0);
+    --color-accent-content: oklch(100% 0 0);
+    --color-neutral: oklch(35% 0 0);
+    --color-neutral-content: oklch(100% 0 0);
+    --color-info: oklch(85.559% 0.085 206.015);
+    --color-info-content: oklch(17.111% 0.017 206.015);
+    --color-success: oklch(85.56% 0.085 144.778);
+    --color-success-content: oklch(17.112% 0.017 144.778);
+    --color-warning: oklch(85.569% 0.084 74.427);
+    --color-warning-content: oklch(17.113% 0.016 74.427);
+    --color-error: oklch(85.511% 0.078 16.886);
+    --color-error-content: oklch(17.102% 0.015 16.886);
+    --radius-selector: 2rem;
+    --radius-field: 2rem;
+    --radius-box: 2rem;
+    --size-selector: 0.21875rem;
+    --size-field: 0.21875rem;
+    --border: 1px;
+    --depth: 0;
+    --noise: 1;
+}
+
 @theme {
     --color-poe-unique: #af6025;
     --color-poe-quest: #90ee90;

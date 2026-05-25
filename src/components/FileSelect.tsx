@@ -23,11 +23,8 @@ function FileSelect(props: { setFilePath: Setter<string> }) {
   };
 
   onMount(() => {
-    const filePath = localStorage.getItem("filePath");
-    if (filePath) {
-      props.setFilePath(filePath);
-      console.log(filePath);
-    }
+    const fp = localStorage.getItem("filePath");
+    if (fp) props.setFilePath(fp);
   });
 
   return (
