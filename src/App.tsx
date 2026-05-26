@@ -15,6 +15,7 @@ import {
   setZone,
   startTailing,
 } from "./components/FileState";
+import Updater from "./components/Updater";
 
 function App() {
   const [passthrough, setPassthrough] = createSignal(false);
@@ -82,6 +83,8 @@ function App() {
           setPassthrough={setPassthrough}
         />
       </div>
+
+      <Updater />
     </main>
   );
 }

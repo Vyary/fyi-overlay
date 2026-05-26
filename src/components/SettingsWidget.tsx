@@ -32,7 +32,7 @@ function SettingsWidget(props: {
   });
 
   return (
-    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 absolute right-20 top-1/4 select-none">
+    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 absolute right-20 top-1/10 select-none">
       <legend class="fieldset-legend">Settings</legend>
 
       <label class="text-base px-1">Overlay Toggle</label>

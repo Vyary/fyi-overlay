@@ -11,7 +11,7 @@ import { actGuides, Guide } from "../data/guide";
 import { prevZones, zone } from "./FileState";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 
-const [posZw, setPosZw] = createSignal({ x: 30, y: 160 });
+const [posZw, setPosZw] = createSignal({ x: 28, y: 160 });
 const [widthZw, setWidthZw] = createSignal({ w: 300 });
 const [textSizeZw, setTextSizeZw] = createSignal(2);
 
@@ -20,7 +20,7 @@ const savePosition = () => {
 };
 
 const resetPosition = () => {
-  setPosZw({ x: 30, y: 160 });
+  setPosZw({ x: 28, y: 160 });
   localStorage.removeItem("posZw");
 };
 
@@ -82,7 +82,7 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
 
       return found?.tasks ? found : prev;
     },
-    { tasks: ["Open Path of Exile 2 and change zone"] },
+    { tasks: ["Awaiting game data... Enter a new zone"] },
   );
 
   const onMove = (e: MouseEvent) => {
@@ -141,7 +141,7 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
   return (
     <Show when={content().tasks}>
       <div
-        class="absolute bg-base-200/30 shadow-lg p-4 overflow-auto h-auto"
+        class="absolute h-auto overflow-auto bg-base-200/30 backdrop-blur-md rounded-2xl ring-1 ring-base-content/5 px-5 py-3"
         style={{
           left: `${posZw().x}px`,
           top: `${posZw().y}px`,

@@ -97,7 +97,7 @@ function Stopwatch(props: { passthrough: Accessor<boolean> }) {
 
   return (
     <div
-      class="absolute bg-base-200/30 shadow-lg p-4 h-auto flex items-center gap-4 cursor-move"
+      class="absolute h-auto flex items-center gap-4 cursor-move bg-base-200/30 backdrop-blur-md rounded-2xl ring-1 ring-base-content/5 px-5 py-3"
       style={{
         left: `${posSw().x}px`,
         top: `${posSw().y}px`,
