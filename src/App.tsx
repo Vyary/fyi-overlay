@@ -25,6 +25,7 @@ function App() {
   const [title, setTitle] = createSignal("");
   const [showZw, setShowZw] = createSignal(true);
   const [showSw, setShowSw] = createSignal(true);
+  const [autoUpdate, setAutoUpdate] = createSignal(true);
 
   onMount(async () => {
     initTrayIcon();
@@ -81,10 +82,14 @@ function App() {
           setShowZw={setShowZw}
           showSw={showSw}
           setShowSw={setShowSw}
+          autoUpdate={autoUpdate}
+          setAutoUpdate={setAutoUpdate}
         />
       </div>
 
-      <Updater />
+      <Show when={autoUpdate()}>
+        <Updater />
+      </Show>
     </main>
   );
 }
