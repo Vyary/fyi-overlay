@@ -19,6 +19,8 @@ function SettingsWidget(props: {
   setShowZw: Setter<boolean>;
   showSw: Accessor<boolean>;
   setShowSw: Setter<boolean>;
+  autoUpdate: Accessor<boolean>;
+  setAutoUpdate: Setter<boolean>;
 }) {
   const [PtScErr, setPtScErr] = createSignal(false);
   const [SwScErr, setSwScErr] = createSignal(false);
@@ -30,6 +32,9 @@ function SettingsWidget(props: {
 
     const ssw = localStorage.getItem("showSw");
     if (ssw) props.setShowSw(JSON.parse(ssw));
+
+    const au = localStorage.getItem("autoUpdate");
+    if (au) props.setAutoUpdate(JSON.parse(au));
   });
 
   return (
@@ -293,6 +298,29 @@ function SettingsWidget(props: {
           </button>
         </div>
       </Show>
+
+      <div class="flex items-center justify-between px-1 pt-2">
+        <label
+          class="cursor-pointer text-base"
+          onClick={() => {
+            const isEnabled = !props.autoUpdate();
+            props.setAutoUpdate(isEnabled);
+            localStorage.setItem("autoUpdate", JSON.stringify(isEnabled));
+          }}
+        >
+          Auto Update
+        </label>
+        <input
+          type="checkbox"
+          checked={props.autoUpdate()}
+          onClick={() => {
+            const isEnabled = !props.autoUpdate();
+            props.setAutoUpdate(isEnabled);
+            localStorage.setItem("autoUpdate", JSON.stringify(isEnabled));
+          }}
+          class="toggle toggle-md"
+        />
+      </div>
 
       <button
         class="btn"
