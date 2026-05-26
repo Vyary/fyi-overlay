@@ -1,9 +1,12 @@
 import { Accessor, createSignal, onMount, Setter, Show } from "solid-js";
 import { filePath, selectFile, startTailing, watching } from "./FileState";
 import { resetPosition, resetTextSize, resetWidth } from "./ZoneWidget";
-import { getCurrentWindow } from "@tauri-apps/api/window";
 import { resetPositionSw } from "./StopwatchWidget";
-import { PtSc, updatePasstroughShortcut } from "./PassthroughShortcutState";
+import {
+  enablePassthrough,
+  PtSc,
+  updatePasstroughShortcut,
+} from "./PassthroughState";
 import {
   SwSc,
   SwScReset,
@@ -16,8 +19,6 @@ function SettingsWidget(props: {
   setShowZw: Setter<boolean>;
   showSw: Accessor<boolean>;
   setShowSw: Setter<boolean>;
-  passthrough: Accessor<boolean>;
-  setPassthrough: Setter<boolean>;
 }) {
   const [PtScErr, setPtScErr] = createSignal(false);
   const [SwScErr, setSwScErr] = createSignal(false);
@@ -46,11 +47,7 @@ function SettingsWidget(props: {
             value="Ctrl"
             checked={PtSc.Ctrl}
             onChange={(e) => {
-              updatePasstroughShortcut(
-                e,
-                props.passthrough,
-                props.setPassthrough,
-              );
+              updatePasstroughShortcut(e);
             }}
           />
           <input
@@ -61,11 +58,7 @@ function SettingsWidget(props: {
             value="Shift"
             checked={PtSc.Shift}
             onChange={(e) => {
-              updatePasstroughShortcut(
-                e,
-                props.passthrough,
-                props.setPassthrough,
-              );
+              updatePasstroughShortcut(e);
             }}
           />
           <input
@@ -76,11 +69,7 @@ function SettingsWidget(props: {
             value="Alt"
             checked={PtSc.Alt}
             onChange={(e) => {
-              updatePasstroughShortcut(
-                e,
-                props.passthrough,
-                props.setPassthrough,
-              );
+              updatePasstroughShortcut(e);
             }}
           />
           <input
@@ -97,12 +86,7 @@ function SettingsWidget(props: {
                 return;
               }
               setPtScErr(false);
-              updatePasstroughShortcut(
-                e,
-                props.passthrough,
-                props.setPassthrough,
-                true,
-              );
+              updatePasstroughShortcut(e, true);
             }}
           />
         </form>
@@ -317,12 +301,10 @@ function SettingsWidget(props: {
             if (!watching()) {
               startTailing();
             }
-            props.setPassthrough(true);
-            getCurrentWindow().setIgnoreCursorEvents(true);
+            enablePassthrough();
           }
           if (!props.showZw()) {
-            props.setPassthrough(true);
-            getCurrentWindow().setIgnoreCursorEvents(true);
+            enablePassthrough();
           }
         }}
       >

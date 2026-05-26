@@ -6,7 +6,11 @@ import initTrayIcon from "./components/TrayIcon";
 import useTitleTracker from "./hooks/useTitleTracker";
 import { Stopwatch } from "./components/StopwatchWidget";
 import SettingsWidget from "./components/SettingsWidget";
-import { registerPasstroughShortcut } from "./components/PassthroughShortcutState";
+import {
+  enablePassthrough,
+  passthrough,
+  registerPasstroughShortcut,
+} from "./components/PassthroughState";
 import { unregisterAll } from "@tauri-apps/plugin-global-shortcut";
 import {
   filePath,
@@ -18,7 +22,6 @@ import {
 import Updater from "./components/Updater";
 
 function App() {
-  const [passthrough, setPassthrough] = createSignal(false);
   const [title, setTitle] = createSignal("");
   const [showZw, setShowZw] = createSignal(true);
   const [showSw, setShowSw] = createSignal(true);
@@ -26,7 +29,7 @@ function App() {
   onMount(async () => {
     initTrayIcon();
     getCurrentWindow().maximize();
-    registerPasstroughShortcut(passthrough, setPassthrough);
+    registerPasstroughShortcut();
     useTitleTracker(setTitle);
 
     setZone(localStorage.getItem("zone") || "");
@@ -37,8 +40,7 @@ function App() {
     if (fp) setFilePath(fp);
     if (filePath()) {
       startTailing();
-      setPassthrough(true);
-      getCurrentWindow().setIgnoreCursorEvents(true);
+      enablePassthrough();
     }
 
     const unlisten = await getCurrentWindow().onCloseRequested(async () => {
@@ -79,8 +81,6 @@ function App() {
           setShowZw={setShowZw}
           showSw={showSw}
           setShowSw={setShowSw}
-          passthrough={passthrough}
-          setPassthrough={setPassthrough}
         />
       </div>
 

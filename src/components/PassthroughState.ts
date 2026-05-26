@@ -1,7 +1,19 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { register, unregister } from "@tauri-apps/plugin-global-shortcut";
-import { Accessor, Setter } from "solid-js";
+import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
+
+const [passthrough, setPassthrough] = createSignal(false);
+
+const enablePassthrough = () => {
+  setPassthrough(true);
+  getCurrentWindow().setIgnoreCursorEvents(true);
+};
+
+const togglePassthrough = () => {
+  setPassthrough(!passthrough());
+  getCurrentWindow().setIgnoreCursorEvents(passthrough());
+};
 
 const buildShortcutString = (state: Record<string, any>) => {
   const mods = Object.entries(state)
@@ -21,18 +33,14 @@ const [PtSc, setPtSc] = createStore({
   Key: "F",
 });
 
-const registerPasstroughShortcut = async (
-  passthrough: Accessor<boolean>,
-  setPassthrough: Setter<boolean>,
-) => {
+const registerPasstroughShortcut = async () => {
   const sc = localStorage.getItem("OverlayToggle");
   if (sc) setPtSc(JSON.parse(sc));
 
   try {
     await register(buildShortcutString(PtSc), (e) => {
       if (e.state === "Pressed") {
-        setPassthrough(!passthrough());
-        getCurrentWindow().setIgnoreCursorEvents(passthrough());
+        togglePassthrough();
       }
     });
   } catch (e) {
@@ -41,12 +49,7 @@ const registerPasstroughShortcut = async (
   }
 };
 
-const updatePasstroughShortcut = async (
-  e: any,
-  passthrough: Accessor<boolean>,
-  setPassthrough: Setter<boolean>,
-  input: boolean = false,
-) => {
+const updatePasstroughShortcut = async (e: any, input: boolean = false) => {
   try {
     await unregister(buildShortcutString(PtSc));
   } catch (e) {
@@ -61,7 +64,15 @@ const updatePasstroughShortcut = async (
 
   localStorage.setItem("OverlayToggle", JSON.stringify(PtSc));
 
-  registerPasstroughShortcut(passthrough, setPassthrough);
+  registerPasstroughShortcut();
 };
 
-export { PtSc, registerPasstroughShortcut, updatePasstroughShortcut };
+export {
+  passthrough,
+  setPassthrough,
+  enablePassthrough,
+  togglePassthrough,
+  PtSc,
+  registerPasstroughShortcut,
+  updatePasstroughShortcut,
+};
