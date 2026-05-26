@@ -3,10 +3,18 @@ import { Menu } from "@tauri-apps/api/menu";
 import { relaunch } from "@tauri-apps/plugin-process";
 import { defaultWindowIcon } from "@tauri-apps/api/app";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { togglePassthrough } from "./PassthroughState";
 
 async function initTrayIcon() {
   const menu = await Menu.new({
     items: [
+      {
+        id: "settings",
+        text: "Settings",
+        action: async () => {
+          togglePassthrough();
+        },
+      },
       {
         id: "clear cache",
         text: "Clear Cache",
