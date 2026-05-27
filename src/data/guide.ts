@@ -184,7 +184,7 @@ export const actGuides: Record<string, Guide[]> = {
   ],
   G1_11: [
     {
-      preq: ["G1_12, G1_13_1"],
+      preq: ["G1_12", "G1_13_1"],
       zone: "Hunting Grounds",
       tasks: ["Travel to Ogham Farmlands"],
     },
