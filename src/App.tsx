@@ -24,7 +24,7 @@ import Updater from "./components/Updater";
 function App() {
   const [title, setTitle] = createSignal("");
   const [showZw, setShowZw] = createSignal(true);
-  const [showSw, setShowSw] = createSignal(true);
+  const [showSw, setShowSw] = createSignal(false);
   const [autoUpdate, setAutoUpdate] = createSignal(true);
 
   onMount(async () => {
