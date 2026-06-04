@@ -3,7 +3,7 @@ name = "fyi-overlay"
 version = "0.2.8"
 description = "Path of Exile 2 leveling overlay"
 authors = ["Vyary"]
-edition = "2026"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
