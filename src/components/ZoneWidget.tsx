@@ -34,7 +34,7 @@ const resetWidth = () => {
 };
 
 const saveTextSize = () => {
-  localStorage.setItem("textSizeZw", JSON.stringify(textSizeZw()));
+  localStorage.setItem("textSizeZw", textSizeZw().toString());
 };
 
 const resetTextSize = () => {
