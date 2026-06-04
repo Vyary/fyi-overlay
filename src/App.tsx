@@ -3,7 +3,6 @@ import "./App.css";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { ZoneWidget } from "./components/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
-import useTitleTracker from "./hooks/useTitleTracker";
 import { Stopwatch } from "./components/StopwatchWidget";
 import SettingsWidget from "./components/SettingsWidget";
 import {
@@ -17,12 +16,12 @@ import {
   setFilePath,
   setPrevZones,
   setZone,
+  showOverlay,
   startTailing,
 } from "./components/FileState";
 import Updater from "./components/Updater";
 
 function App() {
-  const [title, setTitle] = createSignal("");
   const [showZw, setShowZw] = createSignal(true);
   const [showSw, setShowSw] = createSignal(false);
   const [autoUpdate, setAutoUpdate] = createSignal(true);
@@ -31,7 +30,6 @@ function App() {
     initTrayIcon();
     getCurrentWindow().maximize();
     registerPasstroughShortcut();
-    useTitleTracker(setTitle);
 
     setZone(localStorage.getItem("zone") || "");
     const prevZones = localStorage.getItem("prevZones");
@@ -61,7 +59,7 @@ function App() {
     >
       <div
         classList={{
-          hidden: !title().includes("Path of Exile 2") && passthrough(),
+          hidden: !showOverlay() && passthrough(),
         }}
       >
         <Show when={showZw()}>

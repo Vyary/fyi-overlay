@@ -7,10 +7,19 @@ const [filePath, setFilePath] = createSignal("");
 const [zone, setZone] = createSignal("");
 const [prevZones, setPrevZones] = createSignal<string[]>([]);
 const [watching, setWatching] = createSignal(false);
+const [showOverlay, setShowOverlay] = createSignal(false);
 
 const startTailing = async () => {
   await listen("tail-line", (event) => {
     const line = event.payload as string;
+    if (line.includes("[WINDOW] Gained focus")) {
+      setShowOverlay(true);
+    }
+
+    if (line.includes("[WINDOW] Lost focus")) {
+      setShowOverlay(false);
+    }
+
     if (line.includes("area")) {
       const match = line.match(/"([^"]*)"/);
       const zone = match ? match[1] : line;
@@ -66,4 +75,5 @@ export {
   setPrevZones,
   startTailing,
   selectFile,
+  showOverlay,
 };
