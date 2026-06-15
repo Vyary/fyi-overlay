@@ -1424,11 +1424,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Speak with Renly",
-          condition: "",
         },
         {
           text: "Speak with The Hooded One",
-          condition: "",
         },
       ],
       preq: ["P1_6"],
@@ -1485,7 +1483,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "Speak with Una",
-          condition: "",
         },
         {
           text: "Go back to Scorched Farmlands",
@@ -1557,7 +1554,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-info'>Directions: Exit from the North for The Galai Gates</span>",
-          condition: "",
         },
       ],
       preq: ["P2_3"],
@@ -1569,7 +1565,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "<span class='text-info'>Directions: Exit from the West for the Pools of Khatal</span>",
-          condition: "",
         },
       ],
     },
@@ -1938,6 +1933,15 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       tasks: [
         {
+          text: "Speak with Tujen",
+        },
+      ],
+      preq: ["G_Endgame_Town"],
+      prev: "",
+    },
+    {
+      tasks: [
+        {
           text: "Set Sail to Ngakanu",
           condition: "G4_11_2",
           show: false,
@@ -1957,11 +1961,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Speak with Dannig",
-          condition: "",
         },
         {
           text: "Use the Waypoint to Journey's End",
-          condition: "",
         },
       ],
       prev: "G4_2_2",
@@ -2423,15 +2425,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "Survive the Madness",
-          condition: "",
         },
         {
           text: "Return to Ship",
-          condition: "",
         },
         {
           text: "Set Sail to Whakapanu Island",
-          condition: "",
         },
       ],
       prev: "G4_town",
@@ -2458,7 +2457,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "Portal to Town",
-          condition: "",
         },
       ],
     },
@@ -2474,15 +2472,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "Explore the Forge",
-          condition: "",
         },
         {
           text: "Portal to Town",
-          condition: "",
         },
         {
           text: "Set Sail to Ngakanu",
-          condition: "",
         },
       ],
     },
@@ -2507,7 +2502,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "Return to Kingsmarch",
-          condition: "",
         },
       ],
     },
@@ -2517,7 +2511,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Enter Deserted Post",
-          condition: "",
         },
       ],
     },
@@ -2526,7 +2519,13 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       tasks: [
         {
-          text: "",
+          text: "<span class='text-info'>Directions: Speak with The Hooded One (northeast from the waypoint)</span>",
+        },
+        {
+          text: "Speak with Farrow",
+        },
+        {
+          text: "Travel to Kingsmarch",
         },
       ],
     },

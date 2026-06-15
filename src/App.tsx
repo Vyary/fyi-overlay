@@ -62,11 +62,9 @@ function App() {
       }}
     >
       <div
-        classList={
-          {
-            // hidden: !showOverlay() && passthrough(),
-          }
-        }
+        classList={{
+          hidden: !showOverlay() && passthrough(),
+        }}
       >
         <Show when={showZw()}>
           <ZoneWidget passthrough={passthrough} />

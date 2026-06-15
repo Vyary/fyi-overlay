@@ -212,11 +212,9 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
 
       <Show when={openEditor()}>
         <div
-          classList={
-            {
-              // hidden: passthrough(),
-            }
-          }
+          classList={{
+            hidden: passthrough(),
+          }}
         >
           <ZoneEditor
             left={`${posZw().x + widthZw().w + 6}px`}
