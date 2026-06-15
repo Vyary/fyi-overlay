@@ -88,6 +88,11 @@ const selectFile = async () => {
       ],
     })) || "";
 
+  if (!selected) {
+    console.log("Client file selecting cancelled");
+    return;
+  }
+
   if (selected.endsWith("\\Client.txt") || selected.endsWith("/Client.txt")) {
     setFilePath(selected);
     if (selected) {

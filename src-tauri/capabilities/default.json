@@ -13,9 +13,12 @@
     "global-shortcut:allow-unregister",
     "global-shortcut:allow-unregister-all",
     "dialog:allow-open",
+    "dialog:allow-save",
     "core:window:allow-maximize",
     "core:app:allow-default-window-icon",
     "process:allow-restart",
-    "updater:default"
+    "updater:default",
+    "fs:allow-write-text-file",
+    "fs:allow-read-text-file"
   ]
 }

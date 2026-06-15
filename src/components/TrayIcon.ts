@@ -4,6 +4,7 @@ import { relaunch } from "@tauri-apps/plugin-process";
 import { defaultWindowIcon } from "@tauri-apps/api/app";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { togglePassthrough } from "./PassthroughState";
+import { exportGuide, importGuide } from "../state/Guide";
 
 async function initTrayIcon() {
   const menu = await Menu.new({
@@ -13,6 +14,20 @@ async function initTrayIcon() {
         text: "Settings",
         action: async () => {
           togglePassthrough();
+        },
+      },
+      {
+        id: "export-guid",
+        text: "Export Guide",
+        action: async () => {
+          exportGuide();
+        },
+      },
+      {
+        id: "import-guid",
+        text: "Import Guide",
+        action: async () => {
+          importGuide();
         },
       },
       {
