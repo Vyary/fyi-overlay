@@ -14,12 +14,13 @@ import { unregisterAll } from "@tauri-apps/plugin-global-shortcut";
 import {
   filePath,
   setFilePath,
-  setPrevZones,
-  setZone,
   showOverlay,
   startTailing,
 } from "./components/FileState";
 import Updater from "./components/Updater";
+import { loadTracker, saveTracker } from "./state/Tracker";
+import { loadGuide, saveGuide } from "./state/Guide";
+import { loadTowns, saveTowns } from "./state/Towns";
 
 function App() {
   const [showZw, setShowZw] = createSignal(true);
@@ -31,9 +32,9 @@ function App() {
     getCurrentWindow().maximize();
     registerPasstroughShortcut();
 
-    setZone(localStorage.getItem("zone") || "");
-    const prevZones = localStorage.getItem("prevZones");
-    if (prevZones) setPrevZones(JSON.parse(prevZones));
+    loadTracker();
+    loadGuide();
+    loadTowns();
 
     const fp = localStorage.getItem("filePath");
     if (fp) setFilePath(fp);
@@ -43,6 +44,9 @@ function App() {
     }
 
     const unlisten = await getCurrentWindow().onCloseRequested(async () => {
+      saveTracker();
+      saveGuide();
+      saveTowns();
       unregisterAll();
     });
     return () => unlisten();

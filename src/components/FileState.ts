@@ -2,33 +2,60 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { createSignal } from "solid-js";
+import { setFlag, setZone, setZoneLevel, tracker } from "../state/Tracker";
+import { addTown, quotes } from "../state/Guide";
+import { addTownName } from "../state/Towns";
 
 const [filePath, setFilePath] = createSignal("");
-const [zone, setZone] = createSignal("");
-const [prevZones, setPrevZones] = createSignal<string[]>([]);
 const [watching, setWatching] = createSignal(false);
 const [showOverlay, setShowOverlay] = createSignal(false);
 
 const startTailing = async () => {
   await listen("tail-line", (event) => {
-    const line = event.payload as string;
-    if (line.includes("[WINDOW] Gained focus")) {
-      setShowOverlay(true);
-    }
+    try {
+      const line = event.payload as string;
+      if (line.includes("[WINDOW] Gained focus")) {
+        setShowOverlay(true);
+      }
 
-    if (line.includes("[WINDOW] Lost focus")) {
-      setShowOverlay(false);
-    }
+      if (line.includes("[WINDOW] Lost focus")) {
+        setShowOverlay(false);
+      }
 
-    if (line.includes("area")) {
-      const match = line.match(/"([^"]*)"/);
-      const zone = match ? match[1] : line;
+      if (line.includes("Closing game gracefully")) {
+        setShowOverlay(false);
+      }
 
-      setPrevZones((prev) => [...prev, zone]);
-      setZone(zone);
+      if (line.includes("area")) {
+        const match = line.match(/level (?<level>\d+) area "(?<zone>\w+)"/)!;
+        const { level, zone } = match.groups!;
 
-      localStorage.setItem("zone", zone);
-      localStorage.setItem("prevZones", JSON.stringify(prevZones()));
+        if (!zone.toLowerCase().includes("hideout")) {
+          setZone(zone);
+          setZoneLevel(Number(level));
+          addTown(zone);
+        }
+      }
+
+      if (line.includes("Set Source")) {
+        const match = line.match(/Set Source \[(?<zoneName>[\w\W]*)]/)!;
+        const { zoneName } = match.groups!;
+        if (zoneName !== "(null)") addTownName(tracker.zone, zoneName);
+      }
+
+      const quoteArray = line.split(": ");
+      const quote = quoteArray[quoteArray.length - 1];
+      // console.log(
+      //   quotes["G4_8b"]["Your timing is quite remarkable, you know!"],
+      // );
+      // console.log(tracker.zone);
+      // console.log(quote);
+      // console.log(quotes?.[tracker.zone]?.[quote]);
+      if (quotes?.[tracker.zone]?.[quote]) {
+        setFlag(quote);
+      }
+    } catch (e) {
+      console.log(e);
     }
   });
 
@@ -67,12 +94,8 @@ const selectFile = async () => {
 export {
   filePath,
   setFilePath,
-  zone,
-  setZone,
-  prevZones,
   watching,
   setWatching,
-  setPrevZones,
   startTailing,
   selectFile,
   showOverlay,

@@ -1,6 +1,6 @@
 [package]
 name = "fyi-overlay"
-version = "0.2.8"
+version = "0.3.0"
 description = "Path of Exile 2 leveling overlay"
 authors = ["Vyary"]
 edition = "2021"
