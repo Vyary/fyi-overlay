@@ -19,8 +19,7 @@ async function initTrayIcon() {
         id: "clear cache",
         text: "Clear Cache",
         action: async () => {
-          localStorage.removeItem("zone");
-          localStorage.removeItem("prevZones");
+          localStorage.removeItem("tracker");
           await relaunch();
         },
       },

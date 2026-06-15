@@ -1,19 +1,23 @@
 import {
   Accessor,
-  createMemo,
   createSignal,
   For,
   onCleanup,
   onMount,
   Show,
 } from "solid-js";
-import { actGuides, Guide } from "../data/guide";
-import { prevZones, zone } from "./FileState";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { TransitionGroup } from "solid-transition-group";
+import { tracker } from "../state/Tracker";
+import { towns } from "../state/Towns";
+import { ZoneEditor } from "./ZoneEditor";
+import { passthrough } from "./PassthroughState";
+import { content } from "../state/Content";
 
 const [posZw, setPosZw] = createSignal({ x: 28, y: 160 });
 const [widthZw, setWidthZw] = createSignal({ w: 300 });
 const [textSizeZw, setTextSizeZw] = createSignal(2);
+const [openEditor, setOpenEditor] = createSignal(false);
 
 const savePosition = () => {
   localStorage.setItem("posZw", JSON.stringify(posZw()));
@@ -65,25 +69,6 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
 
   let offset = { x: 0, y: 0 };
   let start = { w: 0, h: 0, x: 0, y: 0 };
-
-  const content = createMemo<Guide>(
-    (prev) => {
-      const found = actGuides[zone()]?.find((z) => {
-        const prevCheck = z.prev == prevZones()[prevZones().length - 2];
-        const preqCheck = z.preq?.every((zone) => prevZones().includes(zone));
-
-        if (prevCheck && preqCheck) return true;
-        if (prevCheck && !z.preq) return true;
-        if (!z.prev && preqCheck) return true;
-        if (!z.prev && !z.preq) return true;
-
-        return false;
-      });
-
-      return found?.tasks ? found : prev;
-    },
-    { tasks: ["Awaiting game data... Enter a new zone"] },
-  );
 
   const onMove = (e: MouseEvent) => {
     setPosZw({ x: e.clientX - offset.x, y: e.clientY - offset.y });
@@ -139,60 +124,107 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
   onCleanup(() => cleanUp());
 
   return (
-    <Show when={content().tasks}>
-      <div
-        class="absolute h-auto overflow-auto bg-base-200/30 backdrop-blur-md rounded-2xl ring-1 ring-base-content/5 px-5 py-3"
-        style={{
-          left: `${posZw().x}px`,
-          top: `${posZw().y}px`,
-          width: `${widthZw().w}px`,
-        }}
-      >
-        <div class="space-y-1 cursor-move" onMouseDown={onDown}>
-          <Show when={content().zone}>
-            <div
-              class={`text-base-content text-shadow-lg leading-relaxed select-none ${textSize()}`}
-            >
-              {content().zone}
-            </div>
-            <div class="divider" />
-          </Show>
-          <For each={content().tasks}>
-            {(task) => (
+    <div class="flex">
+      <Show when={content().tasks.length > 0}>
+        <div
+          class="absolute h-auto overflow-auto bg-base-200/30 backdrop-blur-md rounded-2xl ring-1 ring-base-content/5 px-5 py-3"
+          style={{
+            left: `${posZw().x}px`,
+            top: `${posZw().y}px`,
+            width: `${widthZw().w}px`,
+          }}
+        >
+          <div class="space-y-1 cursor-move" onMouseDown={onDown}>
+            <Show when={towns[tracker.zone]}>
               <div
                 class={`text-base-content text-shadow-lg leading-relaxed select-none ${textSize()}`}
-                innerHTML={task}
+              >
+                {`${towns[tracker.zone]} - Zone Level: ${tracker.zoneLevel}`}
+              </div>
+              <div class="divider" />
+            </Show>
+
+            <For each={[towns[tracker.zone]]}>
+              {() => (
+                <TransitionGroup name="slide-fade">
+                  <For each={content().tasks}>
+                    {(task) => (
+                      <div
+                        class={`text-base-content text-shadow-lg leading-relaxed select-none ${textSize()}`}
+                        innerHTML={task.text}
+                      />
+                    )}
+                  </For>
+                </TransitionGroup>
+              )}
+            </For>
+          </div>
+
+          <Show when={!props.passthrough()}>
+            <div
+              class="absolute top-1/2 -translate-y-1/2 right-2 h-5 w-1 cursor-e-resize p-1 text-white/50 hover:text-white transition-colors"
+              onMouseDown={onResizeDown}
+            >
+              <svg viewBox="0 0 8 40" class="h-5 w-1" fill="currentColor">
+                <rect x="0" y="0" width="8" height="40" rx="4" />
+              </svg>
+            </div>
+          </Show>
+
+          <Show when={!props.passthrough()}>
+            <div class="max-w-xs select-none">
+              <input
+                type="range"
+                min="0"
+                max={sizes.length - 1}
+                value={textSizeZw()}
+                class="range range-xs"
+                step="1"
+                onInput={onTextSizeChange}
               />
-            )}
-          </For>
+            </div>
+          </Show>
+
+          <Show when={!props.passthrough()}>
+            <div
+              class="absolute top-1 right-7 h-5 w-1 cursor-pointer p-1 text-white/50 hover:text-white transition-colors"
+              onMouseDown={() => setOpenEditor(!openEditor())}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-square-pen-icon lucide-square-pen"
+              >
+                <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
+              </svg>
+            </div>
+          </Show>
         </div>
+      </Show>
 
-        <Show when={!props.passthrough()}>
-          <div
-            class="absolute top-1/2 -translate-y-1/2 right-2 h-5 w-1 cursor-e-resize p-1 text-white/50 hover:text-white transition-colors"
-            onMouseDown={onResizeDown}
-          >
-            <svg viewBox="0 0 8 40" class="h-5 w-1" fill="currentColor">
-              <rect x="0" y="0" width="8" height="40" rx="4" />
-            </svg>
-          </div>
-        </Show>
-
-        <Show when={!props.passthrough()}>
-          <div class="max-w-xs select-none">
-            <input
-              type="range"
-              min="0"
-              max={sizes.length - 1}
-              value={textSizeZw()}
-              class="range range-xs"
-              step="1"
-              onInput={onTextSizeChange}
-            />
-          </div>
-        </Show>
-      </div>
-    </Show>
+      <Show when={openEditor()}>
+        <div
+          classList={
+            {
+              // hidden: passthrough(),
+            }
+          }
+        >
+          <ZoneEditor
+            left={`${posZw().x + widthZw().w + 6}px`}
+            top={`${posZw().y}px`}
+          />
+        </div>
+      </Show>
+    </div>
   );
 }
 
