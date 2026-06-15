@@ -13,6 +13,7 @@ import {
   updateStopwatchShortcut,
   updateStopwatchShortcutReset,
 } from "./StopwatchShortcutState";
+import { character, setCharacterName } from "../state/Character";
 
 function SettingsWidget(props: {
   showZw: Accessor<boolean>;
@@ -93,6 +94,19 @@ function SettingsWidget(props: {
               setPtScErr(false);
               updatePasstroughShortcut(e, true);
             }}
+          />
+        </form>
+      </div>
+
+      <label class="text-base px-1 pt-2">Character Name</label>
+      <div class="flex flex-row items-center">
+        <form class="flex flex-row">
+          <input
+            type="text"
+            placeholder="Character Name"
+            class="input"
+            value={character.name}
+            onInput={(e) => setCharacterName(e.target.value.trim())}
           />
         </form>
       </div>

@@ -13,6 +13,7 @@ import { towns } from "../state/Towns";
 import { ZoneEditor } from "./ZoneEditor";
 import { passthrough } from "./PassthroughState";
 import { content } from "../state/Content";
+import { character } from "../state/Character";
 
 const [posZw, setPosZw] = createSignal({ x: 28, y: 160 });
 const [widthZw, setWidthZw] = createSignal({ w: 300 });
@@ -66,6 +67,13 @@ const cleanUp = () => {
 function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
   const sizes = ["text-xs", "text-sm", "text-base", "text-lg", "text-xl"];
   const textSize = () => sizes[textSizeZw()];
+  const [isNegative, setIsNegative] = createSignal(false);
+  const levelDiff = () => {
+    const ld = tracker.zoneLevel - character.level;
+    setIsNegative(ld < 0);
+    return Math.abs(ld);
+  };
+  const penalty = () => 4 + Math.floor(character.level / 16);
 
   let offset = { x: 0, y: 0 };
   let start = { w: 0, h: 0, x: 0, y: 0 };
@@ -142,6 +150,18 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
                 {`${towns[tracker.zone]} - Zone Level: ${tracker.zoneLevel}`}
               </div>
               <div class="divider" />
+              <Show when={levelDiff() >= penalty()}>
+                <div
+                  classList={{
+                    "text-warning": levelDiff() == penalty(),
+                    "text-error": levelDiff() > penalty(),
+                  }}
+                >
+                  XP Penalty move to {isNegative() ? "Higher" : "Lower"} level
+                  zone
+                </div>
+                <div class="divider" />
+              </Show>
             </Show>
 
             <For each={[towns[tracker.zone]]}>

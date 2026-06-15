@@ -2741,7 +2741,7 @@ const deleteZone = (zone: string, index: number) => {
 const addTask = (zone: string, zoneIndex: number) => {
   setGuide(
     produce((s) => {
-      s[zone][zoneIndex].tasks.push({ text: "", condition: "" });
+      s[zone][zoneIndex].tasks.push({ text: "" });
     }),
   );
 };
