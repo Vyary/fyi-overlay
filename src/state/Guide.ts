@@ -1,3 +1,6 @@
+import { open } from "@tauri-apps/plugin-dialog";
+import { save } from "@tauri-apps/plugin-dialog";
+import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { createStore, produce, reconcile } from "solid-js/store";
 
 export interface Guide {
@@ -2872,6 +2875,55 @@ const loadGuide = () => {
   if (q) setQuotes(reconcile(JSON.parse(q)));
 };
 
+const exportGuide = async () => {
+  try {
+    const filePath = await save({
+      filters: [
+        {
+          name: "JSON",
+          extensions: ["json"],
+        },
+      ],
+      defaultPath: "guide.json",
+    });
+
+    if (!filePath) {
+      console.log("Export cancelled");
+      return;
+    }
+
+    await writeTextFile(filePath, JSON.stringify(guide));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const importGuide = async () => {
+  try {
+    const filePath = await open({
+      multiple: false,
+      directory: false,
+      filters: [
+        {
+          name: "JSON",
+          extensions: ["json"],
+        },
+      ],
+    });
+
+    if (!filePath) {
+      console.log("Import cancelled");
+      return;
+    }
+
+    const file = await readTextFile(filePath);
+
+    setGuide(JSON.parse(file));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export {
   quotes,
   guide,
@@ -2891,4 +2943,6 @@ export {
   changePreq,
   saveGuide,
   loadGuide,
+  exportGuide,
+  importGuide,
 };
