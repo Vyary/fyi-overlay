@@ -5,6 +5,7 @@ import { createSignal } from "solid-js";
 import { setFlag, setZone, setZoneLevel, tracker } from "../state/Tracker";
 import { addTown, quotes } from "../state/Guide";
 import { addTownName } from "../state/Towns";
+import { character, updateCharacterLevel } from "../state/Character";
 
 const [filePath, setFilePath] = createSignal("");
 const [watching, setWatching] = createSignal(false);
@@ -35,6 +36,12 @@ const startTailing = async () => {
           setZoneLevel(Number(level));
           addTown(zone);
         }
+      }
+
+      if (line.includes(character.name) && line.includes("is now level")) {
+        const match = line.match(/level (?<charLevel>\d*)/)!;
+        const { charLevel } = match?.groups!;
+        updateCharacterLevel(Number(charLevel));
       }
 
       if (line.includes("Set Source")) {

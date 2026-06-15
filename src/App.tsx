@@ -21,6 +21,7 @@ import Updater from "./components/Updater";
 import { loadTracker, saveTracker } from "./state/Tracker";
 import { loadGuide, saveGuide } from "./state/Guide";
 import { loadTowns, saveTowns } from "./state/Towns";
+import { loadCharacter, saveCharacter } from "./state/Character";
 
 function App() {
   const [showZw, setShowZw] = createSignal(true);
@@ -35,6 +36,7 @@ function App() {
     loadTracker();
     loadGuide();
     loadTowns();
+    loadCharacter();
 
     const fp = localStorage.getItem("filePath");
     if (fp) setFilePath(fp);
@@ -47,6 +49,7 @@ function App() {
       saveTracker();
       saveGuide();
       saveTowns();
+      saveCharacter();
       unregisterAll();
     });
     return () => unlisten();
