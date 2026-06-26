@@ -28,9 +28,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "Well done! Please come inside.",
         },
-        {
-          text: "Enter Clearfell Encampment",
-        },
+        { text: "Enter Clearfell Encampment" },
       ],
     },
   ],
@@ -38,118 +36,42 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       prev: "G1_15",
       tasks: [
-        {
-          text: "Speak to Una, Finn, Leitis, Farrow and The Hooded One",
-        },
+        { text: "Speak to Una, Finn, Leitis, Farrow and The Hooded One" },
       ],
     },
-    {
-      prev: "G1_14",
-      tasks: [
-        {
-          text: "Return to The Manor Ramparts",
-        },
-      ],
-    },
-    {
-      prev: "G1_13_2",
-      tasks: [
-        {
-          text: "Return to Ogham Village",
-        },
-      ],
-    },
-    {
-      prev: "G1_13_1",
-      tasks: [
-        {
-          text: "Return to Ogham Farmlands",
-        },
-      ],
-    },
+    { prev: "G1_14", tasks: [{ text: "Return to The Manor Ramparts" }] },
+    { prev: "G1_13_2", tasks: [{ text: "Return to Ogham Village" }] },
+    { prev: "G1_13_1", tasks: [{ text: "Return to Ogham Farmlands" }] },
     {
       prev: "G1_12",
-      tasks: [
-        {
-          text: "Travel or Find Ogham Farmlands",
-        },
-      ],
+      tasks: [{ text: "Travel or Find Ogham Farmlands" }],
     },
     {
       preq: ["G1_12"],
-      tasks: [
-        {
-          text: "Find the entrance to Ogham Farmlands",
-        },
-      ],
+      tasks: [{ text: "Find the entrance to Ogham Farmlands" }],
     },
-    {
-      prev: "G1_11",
-      tasks: [
-        {
-          text: "Return to Hunting Grounds",
-        },
-      ],
-    },
-    {
-      prev: "G1_6",
-      tasks: [
-        {
-          text: "Return to The Grim Tangle",
-        },
-      ],
-    },
+    { prev: "G1_11", tasks: [{ text: "Return to Hunting Grounds" }] },
+    { prev: "G1_6", tasks: [{ text: "Return to The Grim Tangle" }] },
     {
       prev: "G1_5",
-      tasks: [
-        {
-          text: "Speak to Renly",
-        },
-        {
-          text: "Travel to The Grelwood",
-        },
-      ],
+      tasks: [{ text: "Speak to Renly" }, { text: "Travel to The Grelwood" }],
     },
     {
       prev: "G1_4",
       preq: ["G1_5"],
       tasks: [
-        {
-          text: "Speak to Una",
-        },
-        {
-          text: "Travel to or Find The Grim Tangle",
-        },
+        { text: "Speak to Una" },
+        { text: "Travel to or Find The Grim Tangle" },
       ],
     },
-    {
-      prev: "G1_4",
-      tasks: [
-        {
-          text: "Return to The Grelwood",
-        },
-      ],
-    },
-    {
-      prev: "G1_2",
-      tasks: [
-        {
-          text: "Return to Clearfell",
-        },
-      ],
-    },
+    { prev: "G1_4", tasks: [{ text: "Return to The Grelwood" }] },
+    { prev: "G1_2", tasks: [{ text: "Return to Clearfell" }] },
     {
       prev: "G1_1",
       tasks: [
-        {
-          text: "Speak to Renly",
-        },
-        {
-          text: "Cut the Uncut Skill Gem",
-        },
-        {
-          text: "Enter Clearfell",
-        },
+        { text: "Speak to Renly" },
+        { text: "Cut the Uncut Skill Gem" },
+        { text: "Enter Clearfell" },
       ],
     },
   ],
@@ -177,9 +99,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           condition:
             "TheMindlessSeer has received +10% to [Resistances|Cold Resistance].",
         },
-        {
-          text: "Find the entrance to The Grelwood",
-        },
+        { text: "Find the entrance to The Grelwood" },
       ],
     },
   ],
@@ -195,27 +115,15 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
   G1_4: [
     {
       preq: ["G1_6", "G1_11", "G1_13_1"],
-      tasks: [
-        {
-          text: "Summon Farrow and Enter the Lost Catacombs",
-        },
-      ],
+      tasks: [{ text: "Summon Farrow and Enter the Lost Catacombs" }],
     },
     {
       preq: ["G1_5", "G1_town"],
       tasks: [
-        {
-          text: "Break the Runic Seals on the Tree of Souls",
-        },
-        {
-          text: "Travel to Town",
-        },
-        {
-          text: "Speak to Una",
-        },
-        {
-          text: "Travel to or Find The Grim Tangle",
-        },
+        { text: "Break the Runic Seals on the Tree of Souls" },
+        { text: "Travel to Town" },
+        { text: "Speak to Una" },
+        { text: "Travel to or Find The Grim Tangle" },
       ],
     },
     {
@@ -226,27 +134,17 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find the waypoint near the Tree of Souls or The Grim Tangle",
         },
-        {
-          text: "Find the entrance to The Red Vale",
-        },
+        { text: "Find the entrance to The Red Vale" },
       ],
     },
   ],
   G1_5: [
     {
       tasks: [
-        {
-          text: "Complete all 3 Obelisk of Rust",
-        },
-        {
-          text: "Portal to Town",
-        },
-        {
-          text: "Speak to Renly",
-        },
-        {
-          text: "Travel to The Grelwood or The Grim Tangle",
-        },
+        { text: "Complete all 3 Obelisk of Rust" },
+        { text: "Portal to Town" },
+        { text: "Speak to Renly" },
+        { text: "Travel to The Grelwood or The Grim Tangle" },
       ],
     },
   ],
@@ -271,34 +169,19 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "Keep up the search.",
         },
-        {
-          text: "Find the entrance to the Cemetery of the Eternals",
-        },
+        { text: "Find the entrance to the Cemetery of the Eternals" },
       ],
     },
     {
       tasks: [
-        {
-          text: "Light up the Waypoint",
-        },
-        {
-          text: "Go back to The Grelwood",
-        },
-        {
-          text: "Find the entrance to The Red Vale",
-        },
+        { text: "Light up the Waypoint" },
+        { text: "Go back to The Grelwood" },
+        { text: "Find the entrance to The Red Vale" },
       ],
     },
   ],
   G1_7: [
-    {
-      prev: "G1_11",
-      tasks: [
-        {
-          text: "Enter Hunting Grounds",
-        },
-      ],
-    },
+    { prev: "G1_11", tasks: [{ text: "Enter Hunting Grounds" }] },
     {
       preq: ["G1_8", "G1_9"],
       tasks: [
@@ -317,9 +200,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "Together... at last...",
         },
-        {
-          text: "Enter Hunting Grounds",
-        },
+        { text: "Enter Hunting Grounds" },
       ],
     },
     {
@@ -355,9 +236,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Draven, the Eternal Praetor</span>",
         },
-        {
-          text: "Return to the Cemetery of the Eternals",
-        },
+        { text: "Return to the Cemetery of the Eternals" },
       ],
     },
   ],
@@ -367,9 +246,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Asinia, the Praetor's Consort</span>",
         },
-        {
-          text: "Return to the Cemetery of the Eternals",
-        },
+        { text: "Return to the Cemetery of the Eternals" },
       ],
     },
   ],
@@ -382,9 +259,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "Good Work!",
         },
-        {
-          text: "Travel to Ogham Farmlands",
-        },
+        { text: "Travel to Ogham Farmlands" },
       ],
     },
     {
@@ -403,9 +278,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "You have received 2 Passive Skill Points.",
         },
-        {
-          text: "Find the entrance to Ogham Farmlands",
-        },
+        { text: "Find the entrance to Ogham Farmlands" },
       ],
     },
     {
@@ -443,9 +316,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "You have received 2 Passive Skill Points.",
         },
-        {
-          text: "Find the entrance to Freythorn",
-        },
+        { text: "Find the entrance to Freythorn" },
       ],
     },
     {
@@ -463,12 +334,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "You have received 2 Passive Skill Points.",
         },
-        {
-          text: "Find Ogham Farmlands, activate the waypoint and go back",
-        },
-        {
-          text: "Find the entrance to Freythorn",
-        },
+        { text: "Find Ogham Farmlands, activate the waypoint and go back" },
+        { text: "Find the entrance to Freythorn" },
       ],
     },
   ],
@@ -488,9 +355,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>King of the Mists</span>",
         },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Portal to Town" },
       ],
     },
   ],
@@ -498,28 +363,18 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       preq: ["G1_12"],
       tasks: [
-        {
-          text: "Find the Runestones (Farrow quest)",
-        },
+        { text: "Find the Runestones (Farrow quest)" },
         {
           text: '<span class="text-warning">If you have found all 3 Runestones sites you can go back to The Grelwood and enter the Lost Catacombs</span>',
         },
-        {
-          text: 'Find <span class="text-poe-quest">Una\'s Lute</span>',
-        },
-        {
-          text: "Find the entrance to the Ogham Village",
-        },
+        { text: 'Find <span class="text-poe-quest">Una\'s Lute</span>' },
+        { text: "Find the entrance to the Ogham Village" },
       ],
     },
     {
       tasks: [
-        {
-          text: "Activate the waypoint",
-        },
-        {
-          text: "Go back to Hunting Grounds",
-        },
+        { text: "Activate the waypoint" },
+        { text: "Go back to Hunting Grounds" },
       ],
     },
   ],
@@ -529,18 +384,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "<span class='text-poe-quest'>Find the Smithing Tools</span>",
         },
-        {
-          text: "<span class='text-info'>Directions: Go Up-Left</span>",
-        },
+        { text: "<span class='text-info'>Directions: Go Up-Left</span>" },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>The Executioner</span>",
         },
-        {
-          text: "Pull the Leaver",
-        },
-        {
-          text: "Enter The Manor Ramparts",
-        },
+        { text: "Pull the Leaver" },
+        { text: "Enter The Manor Ramparts" },
       ],
     },
   ],
@@ -550,9 +399,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "<span class='text-info'>Directions: The zone has a U-shape</span>",
         },
-        {
-          text: "Find the entrance to Ogham Manor",
-        },
+        { text: "Find the entrance to Ogham Manor" },
       ],
     },
   ],
@@ -574,12 +421,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "Allow me to clear your mind, if only for a moment.",
         },
-        {
-          text: "Portal to Town",
-        },
-        {
-          text: "Speak to Una, Finn, Leitis and The Hooded One",
-        },
+        { text: "Portal to Town" },
+        { text: "Speak to Una, Finn, Leitis and The Hooded One" },
       ],
     },
   ],
@@ -589,15 +432,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill <span class='text-poe-unique font-semibold'>The Rathbreaker</span>",
         },
-        {
-          text: "Portal to Town",
-        },
-        {
-          text: "Speak with Zarka",
-        },
-        {
-          text: "Enter The Ardura Caravan",
-        },
+        { text: "Portal to Town" },
+        { text: "Speak with Zarka" },
+        { text: "Enter The Ardura Caravan" },
       ],
     },
   ],
@@ -605,186 +442,78 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       prev: "G2_12",
       tasks: [
-        {
-          text: "Exit the Caravan and Speak with The Hooded One",
-        },
-        {
-          text: "Speak with Sekhema Asala",
-        },
+        { text: "Exit the Caravan and Speak with The Hooded One" },
+        { text: "Speak with Sekhema Asala" },
       ],
     },
-    {
-      prev: "G2_10_1",
-      tasks: [
-        {
-          text: "Return to Mawdun Quarry",
-        },
-      ],
-    },
+    { prev: "G2_10_1", tasks: [{ text: "Return to Mawdun Quarry" }] },
     {
       prev: "G2_9_2",
       tasks: [
-        {
-          text: "Speak with Shambrin",
-        },
-        {
-          text: "Use the Desert Map and travel to The Dreadnought",
-        },
+        { text: "Speak with Shambrin" },
+        { text: "Use the Desert Map and travel to The Dreadnought" },
       ],
     },
-    {
-      prev: "G2_9_1",
-      tasks: [
-        {
-          text: "Return to Path of Mourning",
-        },
-      ],
-    },
-    {
-      prev: "G2_8",
-      tasks: [
-        {
-          text: "Return to Deshar",
-        },
-      ],
-    },
+    { prev: "G2_9_1", tasks: [{ text: "Return to Path of Mourning" }] },
+    { prev: "G2_8", tasks: [{ text: "Return to Deshar" }] },
     {
       prev: "G2_7",
       tasks: [
-        {
-          text: "Speak with Zarka",
-        },
-        {
-          text: "Speak with Sekhema Asala",
-        },
-        {
-          text: "Use the Desert Map and travel to Traitor's Passage",
-        },
-        {
-          text: "Use the Horn of the Vastiri",
-        },
-        {
-          text: "Speak with Sekhema Asala",
-        },
-        {
-          text: "Use the Desert Map and travel to Deshar",
-        },
+        { text: "Speak with Zarka" },
+        { text: "Speak with Sekhema Asala" },
+        { text: "Use the Desert Map and travel to Traitor's Passage" },
+        { text: "Use the Horn of the Vastiri" },
+        { text: "Speak with Sekhema Asala" },
+        { text: "Use the Desert Map and travel to Deshar" },
       ],
     },
-    {
-      prev: "G2_6",
-      tasks: [
-        {
-          text: "Return to Valley of the Titans",
-        },
-      ],
-    },
+    { prev: "G2_6", tasks: [{ text: "Return to Valley of the Titans" }] },
     {
       prev: "G2_4_3",
       tasks: [
-        {
-          text: "Use the Desert Map and travel to Valley of the Titans",
-        },
+        { text: "Use the Desert Map and travel to Valley of the Titans" },
       ],
     },
-    {
-      prev: "G2_4_2",
-      tasks: [
-        {
-          text: "Return to The Lost City",
-        },
-      ],
-    },
-    {
-      prev: "G2_4_1",
-      tasks: [
-        {
-          text: "Return to Keth",
-        },
-      ],
-    },
+    { prev: "G2_4_2", tasks: [{ text: "Return to The Lost City" }] },
+    { prev: "G2_4_1", tasks: [{ text: "Return to Keth" }] },
     {
       prev: "G2_5_2",
-      tasks: [
-        {
-          text: "Use the Desert Map and travel to Keth",
-        },
-      ],
+      tasks: [{ text: "Use the Desert Map and travel to Keth" }],
     },
-    {
-      prev: "G2_5_1",
-      tasks: [
-        {
-          text: "Return to Mastodon Badlands",
-        },
-      ],
-    },
+    { prev: "G2_5_1", tasks: [{ text: "Return to Mastodon Badlands" }] },
     {
       prev: "G2_3",
       tasks: [
-        {
-          text: "Speak with Zarka",
-        },
-        {
-          text: "Speak with Sekhema Asala",
-        },
-        {
-          text: "Use the Desert Map and travel to Mastodon Badlands",
-        },
+        { text: "Speak with Zarka" },
+        { text: "Speak with Sekhema Asala" },
+        { text: "Use the Desert Map and travel to Mastodon Badlands" },
       ],
     },
     {
       prev: "G2_10_2",
       tasks: [
-        {
-          text: "Speak with Risu and Sekhema Asala",
-        },
-        {
-          text: "Use the Desert Map and travel to Traitor's Passage",
-        },
+        { text: "Speak with Risu and Sekhema Asala" },
+        { text: "Use the Desert Map and travel to Traitor's Passage" },
       ],
     },
     {
       prev: "G2_3a",
-      tasks: [
-        {
-          text: "Use the Desert Map and travel to Mawdun Quarry",
-        },
-      ],
+      tasks: [{ text: "Use the Desert Map and travel to Mawdun Quarry" }],
     },
     {
       prev: "G2_1",
       tasks: [
-        {
-          text: "Speak with Sekhema Asala",
-        },
-        {
-          text: "Use the Desert Map and travel to Halani Gates",
-        },
+        { text: "Speak with Sekhema Asala" },
+        { text: "Use the Desert Map and travel to Halani Gates" },
       ],
     },
   ],
   G2_3a: [
     {
-      tasks: [
-        {
-          text: "Speak with Sekhema Asala",
-        },
-        {
-          text: "Portal to Town",
-        },
-      ],
+      tasks: [{ text: "Speak with Sekhema Asala" }, { text: "Portal to Town" }],
     },
   ],
-  G2_10_1: [
-    {
-      tasks: [
-        {
-          text: "Find the entrance to the Mawdun Mine",
-        },
-      ],
-    },
-  ],
+  G2_10_1: [{ tasks: [{ text: "Find the entrance to the Mawdun Mine" }] }],
   G2_10_2: [
     {
       tasks: [
@@ -794,12 +523,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Rudja, the Dread Engineer</span>",
         },
-        {
-          text: "Speak with Risu (cage on top left)",
-        },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Speak with Risu (cage on top left)" },
+        { text: "Portal to Town" },
       ],
     },
   ],
@@ -812,9 +537,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Balbala, the Traitor</span>",
         },
-        {
-          text: "Find the entrance to The Halani Gates",
-        },
+        { text: "Find the entrance to The Halani Gates" },
       ],
     },
   ],
@@ -836,24 +559,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "We will finish this, but not today.",
         },
-        {
-          text: "Go downstairs",
-        },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Go downstairs" },
+        { text: "Portal to Town" },
       ],
     },
   ],
-  G2_5_1: [
-    {
-      tasks: [
-        {
-          text: "Find the entrance to The Bone Pits",
-        },
-      ],
-    },
-  ],
+  G2_5_1: [{ tasks: [{ text: "Find the entrance to The Bone Pits" }] }],
   G2_5_2: [
     {
       tasks: [
@@ -868,21 +579,15 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Iktab and Ekbab</span>",
         },
-        {
-          text: "Portal to Town",
-        },
-        {
-          text: "Use the Desert Map and travel to Keth",
-        },
+        { text: "Portal to Town" },
+        { text: "Use the Desert Map and travel to Keth" },
       ],
     },
   ],
   G2_4_1: [
     {
       tasks: [
-        {
-          text: "Find the Runestones (Farrow quest)",
-        },
+        { text: "Find the Runestones (Farrow quest)" },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Kabala, Constrictor Queen</span>",
           hide: true,
@@ -891,21 +596,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find the <span class='text-poe-quest'>Kabala Clan Relic</span>",
         },
-        {
-          text: "Find the entrance to The Lost City",
-        },
+        { text: "Find the entrance to The Lost City" },
       ],
     },
   ],
-  G2_4_2: [
-    {
-      tasks: [
-        {
-          text: "Find the entrance to the Buried Shrines",
-        },
-      ],
-    },
-  ],
+  G2_4_2: [{ tasks: [{ text: "Find the entrance to the Buried Shrines" }] }],
   G2_4_3: [
     {
       tasks: [
@@ -934,36 +629,26 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "At last... death... Thank you...",
         },
-        {
-          text: "Open a Portal",
-        },
+        { text: "Open a Portal" },
         {
           text: "Take <span class='text-poe-quest'>The Essence of Water</span>",
         },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Portal to Town" },
       ],
     },
   ],
   G2_6: [
     {
       tasks: [
-        {
-          text: "Find and Activate all Ancient Seals",
-        },
+        { text: "Find and Activate all Ancient Seals" },
         {
           text: "Find the Offering to Amrit and Insert the Relics",
           hide: true,
           condition:
             "TheMindlessSeer has received 30% increased [Charm] Charges gained.",
         },
-        {
-          text: "Return to the Clasped Entry",
-        },
-        {
-          text: "Enter The Titan Grotto",
-        },
+        { text: "Return to the Clasped Entry" },
+        { text: "Enter The Titan Grotto" },
       ],
     },
   ],
@@ -976,39 +661,25 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "<span class='text-poe-quest'>Pick up The Flame Ruby</span>",
         },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Portal to Town" },
       ],
     },
   ],
   G2_8: [
     {
       tasks: [
-        {
-          text: "Find the Runestones (Farrow quest)",
-        },
+        { text: "Find the Runestones (Farrow quest)" },
         {
           text: "If you have found all 3 Runestones you can now travel to the Skull of the Titan using the Ardura Caravan",
         },
         {
           text: "Find the <span class='text-poe-quest'>Fallen Dekhara</span>",
         },
-        {
-          text: "Find the entrance to Path of Mourning",
-        },
+        { text: "Find the entrance to Path of Mourning" },
       ],
     },
   ],
-  G2_9_1: [
-    {
-      tasks: [
-        {
-          text: "Find the entrance to The Spires of Deshar",
-        },
-      ],
-    },
-  ],
+  G2_9_1: [{ tasks: [{ text: "Find the entrance to The Spires of Deshar" }] }],
   G2_9_2: [
     {
       tasks: [
@@ -1021,20 +692,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Tor Gul, the Defiler</span>",
         },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Portal to Town" },
       ],
     },
   ],
   G2_12_1: [
-    {
-      tasks: [
-        {
-          text: "Find the entrance to the Dreadnought Vanguard",
-        },
-      ],
-    },
+    { tasks: [{ text: "Find the entrance to the Dreadnought Vanguard" }] },
   ],
   G2_12_2: [
     {
@@ -1042,96 +705,52 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Jamanra, the Risen King</span>",
         },
-        {
-          text: "Speak Sekhema Asala",
-        },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Speak Sekhema Asala" },
+        { text: "Portal to Town" },
       ],
     },
   ],
-  G3_1: [
-    {
-      tasks: [
-        {
-          text: "Find the entrance to Ziggurat Encampment",
-        },
-      ],
-    },
-  ],
+  G3_1: [{ tasks: [{ text: "Find the entrance to Ziggurat Encampment" }] }],
   G3_town: [
     {
       preq: ["G3_17"],
       tasks: [
-        {
-          text: "Speak with Doryani",
-        },
-        {
-          text: "Speak with Alva and Travel to Kingsmarch",
-        },
+        { text: "Speak with Doryani" },
+        { text: "Speak with Alva and Travel to Kingsmarch" },
       ],
     },
     {
       preq: ["G3_12"],
       tasks: [
-        {
-          text: "Speak with Servi",
-        },
-        {
-          text: "Use the Gateway",
-        },
-        {
-          text: "<span class='text-info'>Directions: Go downstairs</span>",
-        },
-        {
-          text: "Enter the Utzaal",
-        },
+        { text: "Speak with Servi" },
+        { text: "Use the Gateway" },
+        { text: "<span class='text-info'>Directions: Go downstairs</span>" },
+        { text: "Enter the Utzaal" },
       ],
     },
     {
       preq: ["G3_11"],
       tasks: [
-        {
-          text: "<span class='text-info'>Directions: Go downstairs</span>",
-        },
+        { text: "<span class='text-info'>Directions: Go downstairs</span>" },
         {
           text: "Use the <span class='text-poe-quest'>Temple Door Idol</span>",
         },
-        {
-          text: "Enter the Temple of Kopec",
-        },
+        { text: "Enter the Temple of Kopec" },
       ],
     },
     {
       prev: "G3_7",
-      tasks: [
-        {
-          text: "Travel back to The Matlan Waterways",
-        },
-      ],
+      tasks: [{ text: "Travel back to The Matlan Waterways" }],
     },
     {
       preq: ["G3_2_2"],
       tasks: [
-        {
-          text: "<span class='text-info'>Directions: Go downstairs</span>",
-        },
-        {
-          text: "Speak with Alva",
-        },
-        {
-          text: "Enter The Drowned City",
-        },
+        { text: "<span class='text-info'>Directions: Go downstairs</span>" },
+        { text: "Speak with Alva" },
+        { text: "Enter The Drowned City" },
       ],
     },
-    {
-      tasks: [
-        {
-          text: "Enter the Jungle Ruins (located at the top)",
-        },
-      ],
-    },
+    { tasks: [{ text: "Enter the Jungle Ruins (located at the top)" }] },
   ],
   G3_3: [
     {
@@ -1140,17 +759,13 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Activate the Stone Altar using the <span class='text-poe-quest'>Large Soul Core</span>",
         },
-        {
-          text: "Enter The Matlan Waterways",
-        },
+        { text: "Enter The Matlan Waterways" },
       ],
     },
     {
       preq: ["G3_4"],
       tasks: [
-        {
-          text: "Find the Runestones (Farrow quest)",
-        },
+        { text: "Find the Runestones (Farrow quest)" },
         {
           text: "Kill the <span class='text-poe-unique font-semibold'>Mighty Silverfist</span>",
           hide: true,
@@ -1159,16 +774,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "<span class='text-info'>Directions: If you find the a camp of explorers helping them will show you the entrance to the Infested Barrens</span>",
         },
-        {
-          text: "Find the entrance to the Infested Barrens",
-        },
+        { text: "Find the entrance to the Infested Barrens" },
       ],
     },
     {
       tasks: [
-        {
-          text: "Find the Runestones (Farrow quest)",
-        },
+        { text: "Find the Runestones (Farrow quest)" },
         {
           text: "Find the entrance to The Venom Crypts (It's close to the waypoint)",
         },
@@ -1183,18 +794,14 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
   G3_4: [
     {
       tasks: [
-        {
-          text: "Find the Runestones (Farrow quest)",
-        },
+        { text: "Find the Runestones (Farrow quest)" },
         {
           text: "Find the <span class='text-poe-quest'>Corpse</span> in the Den of the Serpent Priestess",
         },
         {
           text: "Take the <span class='text-poe-quest'>Corpse-Snake Venom</span>",
         },
-        {
-          text: "Go back to the Jungle Ruins",
-        },
+        { text: "Go back to the Jungle Ruins" },
       ],
     },
   ],
@@ -1204,9 +811,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "<span class='text-info'>Directions: If you find the a camp of explorers helping them will show you the entrance to the Chimeral Wetlands</span>",
         },
-        {
-          text: "Find Chimeral Wetlands",
-        },
+        { text: "Find Chimeral Wetlands" },
       ],
     },
   ],
@@ -1222,9 +827,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "TheMindlessSeer has received +30 to [Spirit|Spirit].",
         },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Portal to Town" },
       ],
     },
   ],
@@ -1234,9 +837,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill the <span class='text-poe-unique font-semibold'>Xyclucian, the Chimera</span>",
         },
-        {
-          text: "Enter Jiquani's Machinarium (left of the boss arena)",
-        },
+        { text: "Enter Jiquani's Machinarium (left of the boss arena)" },
       ],
     },
   ],
@@ -1267,9 +868,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           condition:
             "TheMindlessSeer has received +10% to [Resistances|Fire Resistance].",
         },
-        {
-          text: "Find the entrance to Jiquani's Sanctum",
-        },
+        { text: "Find the entrance to Jiquani's Sanctum" },
       ],
     },
   ],
@@ -1297,9 +896,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Take the <span class='text-poe-quest'>Large Soul Core</span>",
         },
-        {
-          text: "Use the Waypoint and go back to Jungle Ruins",
-        },
+        { text: "Use the Waypoint and go back to Jungle Ruins" },
       ],
     },
   ],
@@ -1307,40 +904,20 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       preq: ["G3_7"],
       tasks: [
-        {
-          text: "Go right and Keep forward",
-        },
-        {
-          text: "Activate the Canal Mechanism",
-        },
-        {
-          text: "Portal to Town",
-        },
-        {
-          text: "",
-        },
+        { text: "Go right and Keep forward" },
+        { text: "Activate the Canal Mechanism" },
+        { text: "Portal to Town" },
+        { text: "" },
       ],
     },
     {
       tasks: [
-        {
-          text: "Keep forward until you reach the Ravaged Corpse Tablet",
-        },
-        {
-          text: "Go left and Enter The Azak Bog",
-        },
+        { text: "Keep forward until you reach the Ravaged Corpse Tablet" },
+        { text: "Go left and Enter The Azak Bog" },
       ],
     },
   ],
-  G3_8: [
-    {
-      tasks: [
-        {
-          text: "Find the Apex of Filth",
-        },
-      ],
-    },
-  ],
+  G3_8: [{ tasks: [{ text: "Find the Apex of Filth" }] }],
   G3_11: [
     {
       tasks: [
@@ -1350,30 +927,20 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Take the <span class='text-poe-quest'>Temple Door Idol</span>",
         },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Portal to Town" },
       ],
     },
   ],
   G3_12: [
     {
       tasks: [
-        {
-          text: "Find the Stairs to level 2",
-        },
-        {
-          text: "Find the Stairs to level 3",
-        },
+        { text: "Find the Stairs to level 2" },
+        { text: "Find the Stairs to level 3" },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Ketzuli, High Priest of the Sun</span>",
         },
-        {
-          text: "Speak with Alva",
-        },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Speak with Alva" },
+        { text: "Portal to Town" },
       ],
     },
   ],
@@ -1383,9 +950,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Viper Napuatzi</span>",
         },
-        {
-          text: "Find the entrance to Aggorat",
-        },
+        { text: "Find the entrance to Aggorat" },
       ],
     },
   ],
@@ -1401,9 +966,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Go back to Sacrificial Dais, Place and Stab the Sacrificial Heart",
         },
-        {
-          text: "Find the entrance to The Black Chambers",
-        },
+        { text: "Find the entrance to The Black Chambers" },
       ],
     },
   ],
@@ -1413,24 +976,16 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Doryani, Royal Thaumaturge</span>",
         },
-        {
-          text: "Portal to Town",
-        },
-        {
-          text: "Speak with Doryani",
-        },
+        { text: "Portal to Town" },
+        { text: "Speak with Doryani" },
       ],
     },
   ],
   P1_Town: [
     {
       tasks: [
-        {
-          text: "Speak with Renly",
-        },
-        {
-          text: "Speak with The Hooded One",
-        },
+        { text: "Speak with Renly" },
+        { text: "Speak with The Hooded One" },
       ],
       preq: ["P1_6"],
     },
@@ -1478,30 +1033,16 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
   P1_2: [
     {
       tasks: [
-        {
-          text: "Activate all Magaliths",
-        },
+        { text: "Activate all Magaliths" },
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Siora, Blade of the Mists</span>",
         },
-        {
-          text: "Speak with Una",
-        },
-        {
-          text: "Go back to Scorched Farmlands",
-        },
+        { text: "Speak with Una" },
+        { text: "Go back to Scorched Farmlands" },
       ],
     },
   ],
-  P1_3: [
-    {
-      tasks: [
-        {
-          text: "Find the entrance to Holten",
-        },
-      ],
-    },
-  ],
+  P1_3: [{ tasks: [{ text: "Find the entrance to Holten" }] }],
   P1_4: [
     {
       tasks: [
@@ -1511,9 +1052,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           show: false,
           hide: true,
         },
-        {
-          text: "Find the entrance to Holten Estate",
-        },
+        { text: "Find the entrance to Holten Estate" },
       ],
     },
   ],
@@ -1529,15 +1068,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
   P1_6: [
     {
       tasks: [
-        {
-          text: "Find the Stairs to enter the courtyard",
-        },
+        { text: "Find the Stairs to enter the courtyard" },
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Thane Wulfric</span> and <span class='text-poe-unique font-semibold'>Lady Elswyth</span>",
         },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Portal to Town" },
       ],
     },
   ],
@@ -1545,12 +1080,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       preq: ["P2_7"],
       tasks: [
-        {
-          text: "Speak with Risu",
-        },
-        {
-          text: "Speak with The Hooded One",
-        },
+        { text: "Speak with Risu" },
+        { text: "Speak with The Hooded One" },
       ],
     },
     {
@@ -1579,9 +1110,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "<span class='text-info'>Directions: Go streight from North exit from The Khari Bazaar</span>",
         },
-        {
-          text: "Find the entrance to The Galai Gates",
-        },
+        { text: "Find the entrance to The Galai Gates" },
       ],
     },
     {
@@ -1622,9 +1151,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           show: false,
           hide: true,
         },
-        {
-          text: "Find the entrance to Pools of Khatal",
-        },
+        { text: "Find the entrance to Pools of Khatal" },
         {
           text: "<span class='text-info'>Directions: Keep West from the West exit from The Khari Bazaar</span>",
           condition: "TheMindlessSeer has received 5% increased maximum Life.",
@@ -1634,27 +1161,15 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       ],
     },
   ],
-  P2_2: [
-    {
-      tasks: [
-        {
-          text: "Find the entrance to Sel Khari Sanctuary",
-        },
-      ],
-    },
-  ],
+  P2_2: [{ tasks: [{ text: "Find the entrance to Sel Khari Sanctuary" }] }],
   P2_3: [
     {
       tasks: [
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Elzarah, the Cobra Lord</span>",
         },
-        {
-          text: "Speak with Sekhema Asala",
-        },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Speak with Sekhema Asala" },
+        { text: "Portal to Town" },
       ],
     },
   ],
@@ -1664,24 +1179,16 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find and Defeat <span class='text-poe-unique font-semibold'>Vornas, the Fell Flame</span>",
         },
-        {
-          text: "Enter Qimah",
-        },
+        { text: "Enter Qimah" },
       ],
     },
   ],
   P2_6: [
     {
       tasks: [
-        {
-          text: "Find the Seven Pillars and choose a Boon",
-        },
-        {
-          text: "Summon and Speak with Jado",
-        },
-        {
-          text: "Enter Qimah Reservoir",
-        },
+        { text: "Find the Seven Pillars and choose a Boon" },
+        { text: "Summon and Speak with Jado" },
+        { text: "Enter Qimah Reservoir" },
       ],
     },
   ],
@@ -1691,38 +1198,21 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Azmadi, the Faridun Prince</span>",
         },
-        {
-          text: "Click on Grand Barya",
-        },
-        {
-          text: "Speak with Jado",
-        },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Click on Grand Barya" },
+        { text: "Speak with Jado" },
+        { text: "Portal to Town" },
       ],
     },
   ],
   P3_Town: [
     {
       prev: "",
-      tasks: [
-        {
-          text: "Travel to Kingsmarch",
-        },
-      ],
+      tasks: [{ text: "Travel to Kingsmarch" }],
       preq: ["P3_7"],
     },
     {
       prev: "P3_4",
-      tasks: [
-        {
-          text: "Speak with Hilda",
-        },
-        {
-          text: "Travel to Glacial Tarn",
-        },
-      ],
+      tasks: [{ text: "Speak with Hilda" }, { text: "Travel to Glacial Tarn" }],
     },
     {
       tasks: [
@@ -1747,15 +1237,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       ],
     },
   ],
-  P3_1: [
-    {
-      tasks: [
-        {
-          text: "Find the entrance to Kriar Village",
-        },
-      ],
-    },
-  ],
+  P3_1: [{ tasks: [{ text: "Find the entrance to Kriar Village" }] }],
   P3_2: [
     {
       tasks: [
@@ -1765,9 +1247,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "TheMindlessSeer has received +40 to [Spirit|Spirit].",
         },
-        {
-          text: "Enter Glacial Tarn",
-        },
+        { text: "Enter Glacial Tarn" },
       ],
     },
   ],
@@ -1783,9 +1263,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find and Defeat <span class='text-poe-unique font-semibold'>Rakkar, the Frozen Talon</span>",
         },
-        {
-          text: "Enter Kriar Peaks",
-        },
+        { text: "Enter Kriar Peaks" },
       ],
     },
   ],
@@ -1795,21 +1273,15 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find and Defeat <span class='text-poe-unique font-semibold'>The Abominable Yeti</span>",
         },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Portal to Town" },
       ],
     },
   ],
   P3_5: [
     {
       tasks: [
-        {
-          text: "Find Elder Madox for a free unique item",
-        },
-        {
-          text: "Find the entrance to Etched Ravine",
-        },
+        { text: "Find Elder Madox for a free unique item" },
+        { text: "Find the entrance to Etched Ravine" },
       ],
     },
   ],
@@ -1819,9 +1291,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find and Defeat <span class='text-poe-unique font-semibold'>Stormgore, the Guardian</span>",
         },
-        {
-          text: "Enter the Cuachic Vault",
-        },
+        { text: "Enter the Cuachic Vault" },
       ],
     },
   ],
@@ -1831,60 +1301,16 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find and Defeat <span class='text-poe-unique font-semibold'>Zelina, Blood Priestess</span> and <span class='text-poe-unique font-semibold'>Zolin, Blood Priest</span>",
         },
-        {
-          text: "Summon and Speak with Doryani",
-        },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Summon and Speak with Doryani" },
+        { text: "Portal to Town" },
       ],
     },
   ],
-  HideoutCanal: [
-    {
-      tasks: [
-        {
-          text: "",
-        },
-      ],
-    },
-  ],
-  HideoutLimestone: [
-    {
-      tasks: [
-        {
-          text: "",
-        },
-      ],
-    },
-  ],
-  HideoutShoreline: [
-    {
-      tasks: [
-        {
-          text: "",
-        },
-      ],
-    },
-  ],
-  HideoutFelled: [
-    {
-      tasks: [
-        {
-          text: "",
-        },
-      ],
-    },
-  ],
-  HideoutDreadnought: [
-    {
-      tasks: [
-        {
-          text: "",
-        },
-      ],
-    },
-  ],
+  HideoutCanal: [{ tasks: [{ text: "" }] }],
+  HideoutLimestone: [{ tasks: [{ text: "" }] }],
+  HideoutShoreline: [{ tasks: [{ text: "" }] }],
+  HideoutFelled: [{ tasks: [{ text: "" }] }],
+  HideoutDreadnought: [{ tasks: [{ text: "" }] }],
   G2_12: [
     {
       tasks: [
@@ -1893,52 +1319,26 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "Die... foolish <i>{Sekhema}!",
         },
-        {
-          text: "Speak Sekhema Asala",
-        },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Speak Sekhema Asala" },
+        { text: "Portal to Town" },
       ],
     },
   ],
-  G3_10_Airlock: [
-    {
-      tasks: [
-        {
-          text: "",
-        },
-      ],
-    },
-  ],
+  G3_10_Airlock: [{ tasks: [{ text: "" }] }],
   ExpeditionSubArea_Kalguur_Act1: [
-    {
-      tasks: [
-        {
-          text: "Enter the Runic Vault",
-        },
-      ],
-    },
+    { tasks: [{ text: "Enter the Runic Vault" }] },
   ],
   ExpeditionSubArea_Kalguur_Act2: [
     {
       tasks: [
-        {
-          text: "Enter the Cave Mouth",
-        },
-        {
-          text: "Enter the Runic Vault",
-        },
+        { text: "Enter the Cave Mouth" },
+        { text: "Enter the Runic Vault" },
       ],
     },
   ],
   G4_town: [
     {
-      tasks: [
-        {
-          text: "Speak with Tujen",
-        },
-      ],
+      tasks: [{ text: "Speak with Tujen" }],
       preq: ["G_Endgame_Town"],
       prev: "",
     },
@@ -1949,6 +1349,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           condition: "G4_11_2",
           show: false,
           hide: true,
+        },
+        {
+          text: "Speak with Kaimana",
+          condition: "G4_11_2",
+          show: true,
+          hide: false,
         },
         {
           text: "Speak with The Hooded One",
@@ -1962,12 +1368,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       preq: [],
       tasks: [
-        {
-          text: "Speak with Dannig",
-        },
-        {
-          text: "Use the Waypoint to Journey's End",
-        },
+        { text: "Speak with Dannig" },
+        { text: "Use the Waypoint to Journey's End" },
       ],
       prev: "G4_2_2",
     },
@@ -1980,12 +1382,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           show: false,
           hide: true,
         },
-        {
-          text: "Speak with The Hooded One",
-        },
-        {
-          text: "Set Sail to Arastas",
-        },
+        { text: "Speak with The Hooded One" },
+        { text: "Set Sail to Arastas" },
       ],
     },
     {
@@ -2088,12 +1486,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find and Kill <span class='text-poe-unique font-semibold'>Krutog, Lord of Kin</span>",
         },
-        {
-          text: "Return to Ship",
-        },
-        {
-          text: "Set Sail to Whakapanu Island",
-        },
+        { text: "Return to Ship" },
+        { text: "Set Sail to Whakapanu Island" },
       ],
     },
   ],
@@ -2102,6 +1496,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: 'Find the <span class="text-poe-quest">Petrified Pirate</span> and take the <span class="text-poe-quest">Frayed Map Piece</span> (Farrow quest)',
+          condition: "G4_3_2",
+          show: false,
+          hide: true,
+        },
+        {
+          text: 'Find the Shark Pit and Kill the <span class="text-poe-unique">Great White One</span>',
           condition: "G4_3_2",
           show: false,
           hide: true,
@@ -2133,12 +1533,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find and Kill <span class='text-poe-unique font-semibold'>Diamora, Song of Death</span>",
         },
-        {
-          text: "Speak with Matiki",
-        },
-        {
-          text: "Return to Ship",
-        },
+        { text: "Speak with Matiki" },
+        { text: "Return to Ship" },
       ],
     },
   ],
@@ -2157,12 +1553,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find and Kill <span class='text-poe-unique font-semibold'>Scourge of the Skies</span>",
         },
-        {
-          text: "Return to Ship",
-        },
-        {
-          text: "Set Sail to Abandoned Prison",
-        },
+        { text: "Return to Ship" },
+        { text: "Set Sail to Abandoned Prison" },
       ],
     },
   ],
@@ -2211,12 +1603,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find and Kill <span class='text-poe-unique font-semibold'>The Prisoner</span>",
         },
-        {
-          text: "Return to Ship",
-        },
-        {
-          text: "Set Sail to Eye of Hinekora",
-        },
+        { text: "Return to Ship" },
+        { text: "Set Sail to Eye of Hinekora" },
       ],
     },
   ],
@@ -2309,9 +1697,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           show: false,
           hide: true,
         },
-        {
-          text: "Enter the Trial of the Ancestors",
-        },
+        { text: "Enter the Trial of the Ancestors" },
       ],
     },
   ],
@@ -2324,26 +1710,14 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           show: false,
           hide: true,
         },
-        {
-          text: "Portal to Town",
-        },
-        {
-          text: "Return to Town and Speak with The Hooded One",
-        },
-        {
-          text: "Set Sail to Arastas",
-        },
+        { text: "Portal to Town" },
+        { text: "Return to Town and Speak with The Hooded One" },
+        { text: "Set Sail to Arastas" },
       ],
     },
   ],
   G4_8a: [
-    {
-      tasks: [
-        {
-          text: "Return to Town and Speak with The Hooded One",
-        },
-      ],
-    },
+    { tasks: [{ text: "Return to Town and Speak with The Hooded One" }] },
   ],
   G4_8b: [
     {
@@ -2426,15 +1800,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           show: false,
           hide: true,
         },
-        {
-          text: "Survive the Madness",
-        },
-        {
-          text: "Return to Ship",
-        },
-        {
-          text: "Set Sail to Whakapanu Island",
-        },
+        { text: "Survive the Madness" },
+        { text: "Return to Ship" },
+        { text: "Set Sail to Whakapanu Island" },
       ],
       prev: "G4_town",
     },
@@ -2458,9 +1826,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           show: false,
           hide: true,
         },
-        {
-          text: "Portal to Town",
-        },
+        { text: "Portal to Town" },
       ],
     },
   ],
@@ -2473,26 +1839,14 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "Hyaaahhh!",
         },
-        {
-          text: "Explore the Forge",
-        },
-        {
-          text: "Portal to Town",
-        },
-        {
-          text: "Set Sail to Ngakanu",
-        },
+        { text: "Explore the Forge" },
+        { text: "Portal to Town" },
+        { text: "Set Sail to Ngakanu" },
       ],
     },
   ],
   G4_11_1b: [
-    {
-      tasks: [
-        {
-          text: "Find the entrance to the Heart of the Tribe",
-        },
-      ],
-    },
+    { tasks: [{ text: "Find the entrance to the Heart of the Tribe" }] },
   ],
   G4_11_2: [
     {
@@ -2503,33 +1857,19 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "What... what have I done?",
         },
-        {
-          text: "Return to Kingsmarch",
-        },
+        { text: "Return to Kingsmarch" },
       ],
     },
   ],
-  G4_13: [
-    {
-      tasks: [
-        {
-          text: "Enter Deserted Post",
-        },
-      ],
-    },
-  ],
+  G4_13: [{ tasks: [{ text: "Enter Deserted Post" }] }],
   G_Endgame_Town: [
     {
       tasks: [
         {
           text: "<span class='text-info'>Directions: Speak with The Hooded One (northeast from the waypoint)</span>",
         },
-        {
-          text: "Speak with Farrow",
-        },
-        {
-          text: "Travel to Kingsmarch",
-        },
+        { text: "Speak with Farrow" },
+        { text: "Travel to Kingsmarch" },
       ],
     },
   ],
