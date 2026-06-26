@@ -150,7 +150,7 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
                 {`${towns[tracker.zone]} - Zone Level: ${tracker.zoneLevel}`}
               </div>
               <div class="divider" />
-              <Show when={levelDiff() >= penalty()}>
+              <Show when={levelDiff() >= penalty() && character.level != 0}>
                 <div
                   classList={{
                     "text-warning": levelDiff() == penalty(),
