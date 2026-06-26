@@ -97,7 +97,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Kill <span class='text-poe-unique font-semibold'>Beira of the Rotten Pack</span> (<span class=\"text-poe-quest\">+10% to Cold Resistance</span>)",
           hide: true,
           condition:
-            "TheMindlessSeer has received +10% to [Resistances|Cold Resistance].",
+            "Character has received +10% to [Resistances|Cold Resistance].",
         },
         { text: "Find the entrance to The Grelwood" },
       ],
@@ -409,7 +409,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Candlemass, The Living Rite</span> (<span class=\"text-poe-quest\">+20 to maximum Life</span>)",
           hide: true,
-          condition: "TheMindlessSeer has received +20 to maximum Life.",
+          condition: "Character has received +20 to maximum Life.",
         },
         {
           text: "<span class='text-info'>Directions: Go Down Stairs until you can take the Take the Elevator</span>",
@@ -645,7 +645,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Find the Offering to Amrit and Insert the Relics",
           hide: true,
           condition:
-            "TheMindlessSeer has received 30% increased [Charm] Charges gained.",
+            "Character has received 30% increased [Charm] Charges gained.",
         },
         { text: "Return to the Clasped Entry" },
         { text: "Enter The Titan Grotto" },
@@ -687,7 +687,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Find and Activate the Sisters of Garukhan",
           hide: true,
           condition:
-            "TheMindlessSeer has received +10% to [Resistances|Lightning Resistance].",
+            "Character has received +10% to [Resistances|Lightning Resistance].",
         },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Tor Gul, the Defiler</span>",
@@ -825,7 +825,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill the <span class='text-poe-unique font-semibold'>Ignagduk, the Bog Witch</span>",
           hide: true,
-          condition: "TheMindlessSeer has received +30 to [Spirit|Spirit].",
+          condition: "Character has received +30 to [Spirit|Spirit].",
         },
         { text: "Portal to Town" },
       ],
@@ -848,25 +848,25 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Find <span class='text-poe-quest'>Small Soul Core</span>",
           hide: true,
           condition:
-            "TheMindlessSeer has received +10% to [Resistances|Fire Resistance].",
+            "Character has received +10% to [Resistances|Fire Resistance].",
         },
         {
           text: "Activate the Stone Altar",
           hide: true,
           condition:
-            "TheMindlessSeer has received +10% to [Resistances|Fire Resistance].",
+            "Character has received +10% to [Resistances|Fire Resistance].",
         },
         {
           text: "Find 2 more <span class='text-poe-quest'>Small Soul Core</span>",
           hide: true,
           condition:
-            "TheMindlessSeer has received +10% to [Resistances|Fire Resistance].",
+            "Character has received +10% to [Resistances|Fire Resistance].",
         },
         {
           text: "Kill the <span class='text-poe-unique font-semibold'>Blackjaw, the Remnant</span>",
           hide: true,
           condition:
-            "TheMindlessSeer has received +10% to [Resistances|Fire Resistance].",
+            "Character has received +10% to [Resistances|Fire Resistance].",
         },
         { text: "Find the entrance to Jiquani's Sanctum" },
       ],
@@ -1119,42 +1119,42 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "<span class='text-info'>Directions: Go Right and follow the dried river bed</span>",
           show: false,
           hide: true,
-          condition: "TheMindlessSeer has received 5% increased maximum Life.",
+          condition: "Character has received 5% increased maximum Life.",
         },
         {
           text: "Find and Defeat <span class='text-poe-unique font-semibold'>Akthi, the Final Sting</span> and <span class='text-poe-unique font-semibold'>Anundr, the Sandworm</span>",
           show: false,
           hide: true,
-          condition: "TheMindlessSeer has received 5% increased maximum Life.",
+          condition: "Character has received 5% increased maximum Life.",
         },
         {
           text: "<span class='text-info'>Directions: Go Northwest for the Skullmaw Stairway</span>",
           show: false,
           hide: true,
-          condition: "TheMindlessSeer has received 5% increased maximum Life.",
+          condition: "Character has received 5% increased maximum Life.",
         },
         {
           text: "Find the Skullmaw Stairway",
           show: false,
           hide: true,
-          condition: "TheMindlessSeer has received 5% increased maximum Life.",
+          condition: "Character has received 5% increased maximum Life.",
         },
         {
           text: "Take the <span class='text-poe-quest'>Molten One's Gift</span>",
           show: false,
           hide: true,
-          condition: "TheMindlessSeer has received 5% increased maximum Life.",
+          condition: "Character has received 5% increased maximum Life.",
         },
         {
           text: "Portal to Town",
-          condition: "TheMindlessSeer has received 5% increased maximum Life.",
+          condition: "Character has received 5% increased maximum Life.",
           show: false,
           hide: true,
         },
         { text: "Find the entrance to Pools of Khatal" },
         {
           text: "<span class='text-info'>Directions: Keep West from the West exit from The Khari Bazaar</span>",
-          condition: "TheMindlessSeer has received 5% increased maximum Life.",
+          condition: "Character has received 5% increased maximum Life.",
           show: true,
           hide: false,
         },
@@ -1245,7 +1245,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Find and Defeat <span class='text-poe-unique font-semibold'>Lythara, the Wayward Spear</span>",
           show: false,
           hide: true,
-          condition: "TheMindlessSeer has received +40 to [Spirit|Spirit].",
+          condition: "Character has received +40 to [Spirit|Spirit].",
         },
         { text: "Enter Glacial Tarn" },
       ],
@@ -1564,21 +1564,21 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find the <span class='text-poe-quest'>Chapel Key</span>",
           condition:
-            "TheMindlessSeer has received 30% increased Life Recovery from [Flask|Flasks].",
+            "Character has received 30% increased Life Recovery from [Flask|Flasks].",
           show: false,
           hide: true,
         },
         {
           text: "Find the Chapel",
           condition:
-            "TheMindlessSeer has received 30% increased Life Recovery from [Flask|Flasks].",
+            "Character has received 30% increased Life Recovery from [Flask|Flasks].",
           show: false,
           hide: true,
         },
         {
           text: "Select a Blessing from the Goddess of Justice",
           condition:
-            "TheMindlessSeer has received 30% increased Life Recovery from [Flask|Flasks].",
+            "Character has received 30% increased Life Recovery from [Flask|Flasks].",
           show: false,
           hide: true,
         },
@@ -1638,7 +1638,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "Pay your respects",
-          condition: "TheMindlessSeer has received 5% increased maximum Mana.",
+          condition: "Character has received 5% increased maximum Mana.",
           show: false,
           hide: true,
         },
@@ -1885,7 +1885,7 @@ const [quotes, setQuotes] = createStore<
   G1_2: {
     "Good on you.": true,
     "See? I told you we'd make a fine team!": true,
-    "TheMindlessSeer has received +10% to [Resistances|Cold Resistance].": true,
+    "Character has received +10% to [Resistances|Cold Resistance].": true,
   },
   G1_5: {
     "Una: The old magicks still thrive! The way is open. Please, hurry.": true,
@@ -1903,7 +1903,7 @@ const [quotes, setQuotes] = createStore<
     "Find me, Maji... return to my embrace...": true,
   },
   G1_15: {
-    "TheMindlessSeer has received +20 to maximum Life.": true,
+    "Character has received +20 to maximum Life.": true,
     "Allow me to clear your mind, if only for a moment.": true,
   },
   G2_3: {
@@ -1918,16 +1918,16 @@ const [quotes, setQuotes] = createStore<
     "At last... death... Thank you...": true,
   },
   G2_6: {
-    "TheMindlessSeer has received 30% increased [Charm] Charges gained.": true,
+    "Character has received 30% increased [Charm] Charges gained.": true,
   },
   G2_9_2: {
-    "TheMindlessSeer has received 30% increased [Charm] Charges gained.": true,
+    "Character has received 30% increased [Charm] Charges gained.": true,
   },
   G3_3: {
     "You have received 2 Passive Skill Points.": true,
   },
   G3_6_1: {
-    "TheMindlessSeer has received +10% to [Resistances|Fire Resistance].": true,
+    "Character has received +10% to [Resistances|Fire Resistance].": true,
   },
   G4_1_1: {
     G4_1_2: true,
@@ -1952,14 +1952,14 @@ const [quotes, setQuotes] = createStore<
     "G4_1_1, G4_2_1, G4_3_1, G4_7": true,
   },
   G4_5_1: {
-    "TheMindlessSeer has received 30% increased Life Recovery from [Flask|Flasks].": true,
+    "Character has received 30% increased Life Recovery from [Flask|Flasks].": true,
     G4_5_2: true,
   },
   G4_4_1: {
     "Ahh! There you are!": true,
     "Now we test your mettle... Rise, warriors of Ngamahu!": true,
     "The Ancestors see you. You are welcome... in our Halls of the Dead.": true,
-    "TheMindlessSeer has received 5% increased maximum Mana.": true,
+    "Character has received 5% increased maximum Mana.": true,
     G4_4_3: true,
   },
   G4_4_2: {
@@ -2005,7 +2005,7 @@ const [quotes, setQuotes] = createStore<
     P1_6: true,
   },
   P3_2: {
-    "TheMindlessSeer has received +40 to [Spirit|Spirit].": true,
+    "Character has received +40 to [Spirit|Spirit].": true,
   },
   P3_3: {
     P3_4: true,
@@ -2015,7 +2015,7 @@ const [quotes, setQuotes] = createStore<
     P3_4: true,
   },
   P2_1: {
-    "TheMindlessSeer has received 5% increased maximum Life.": true,
+    "Character has received 5% increased maximum Life.": true,
   },
 });
 
