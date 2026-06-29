@@ -39,14 +39,14 @@ function SettingsWidget(props: {
   });
 
   return (
-    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 absolute right-20 top-1/10 select-none">
+    <fieldset class="fieldset bg-base-300 border-base-300 rounded-box w-xs border p-4 absolute right-20 top-1/10 select-none">
       <legend class="fieldset-legend">Settings</legend>
 
       <label class="text-base px-1">Overlay Toggle</label>
       <div class="flex flex-row items-center">
         <form class="flex flex-row">
           <input
-            class="btn"
+            class="btn btn-soft"
             type="checkbox"
             name="modifier"
             aria-label="Ctrl"
@@ -57,7 +57,7 @@ function SettingsWidget(props: {
             }}
           />
           <input
-            class="btn"
+            class="btn btn-soft"
             type="checkbox"
             name="modifier"
             aria-label="Shift"
@@ -68,7 +68,7 @@ function SettingsWidget(props: {
             }}
           />
           <input
-            class="btn"
+            class="btn btn-soft"
             type="checkbox"
             name="modifier"
             aria-label="Alt"
@@ -143,7 +143,7 @@ function SettingsWidget(props: {
           data-tip="You need to locate the Client.txt file to enable zone tracking"
         >
           <div class="join">
-            <button class="btn join-item" onClick={selectFile}>
+            <button class="btn btn-soft join-item" onClick={selectFile}>
               Select File
             </button>
             <input
@@ -156,11 +156,14 @@ function SettingsWidget(props: {
         </div>
 
         <div class="join">
-          <button class="btn join-item" onClick={() => resetPosition()}>
+          <button
+            class="btn btn-soft join-item"
+            onClick={() => resetPosition()}
+          >
             Reset Position
           </button>
           <button
-            class="btn join-item"
+            class="btn btn-soft join-item"
             onClick={() => {
               resetWidth();
               resetTextSize();
@@ -198,7 +201,7 @@ function SettingsWidget(props: {
         <div class="flex flex-row items-center">
           <form class="flex flex-row">
             <input
-              class="btn"
+              class="btn btn-soft"
               type="checkbox"
               name="modifier"
               aria-label="Ctrl"
@@ -209,7 +212,7 @@ function SettingsWidget(props: {
               }}
             />
             <input
-              class="btn"
+              class="btn btn-soft"
               type="checkbox"
               name="modifier"
               aria-label="Shift"
@@ -220,7 +223,7 @@ function SettingsWidget(props: {
               }}
             />
             <input
-              class="btn"
+              class="btn btn-soft"
               type="checkbox"
               name="modifier"
               aria-label="Alt"
@@ -254,7 +257,7 @@ function SettingsWidget(props: {
         <div class="flex flex-row items-center">
           <form class="flex flex-row">
             <input
-              class="btn"
+              class="btn btn-soft"
               type="checkbox"
               name="modifier"
               aria-label="Ctrl"
@@ -265,7 +268,7 @@ function SettingsWidget(props: {
               }}
             />
             <input
-              class="btn"
+              class="btn btn-soft"
               type="checkbox"
               name="modifier"
               aria-label="Shift"
@@ -276,7 +279,7 @@ function SettingsWidget(props: {
               }}
             />
             <input
-              class="btn"
+              class="btn btn-soft"
               type="checkbox"
               name="modifier"
               aria-label="Alt"
@@ -307,7 +310,10 @@ function SettingsWidget(props: {
         </div>
 
         <div class="join pb-2">
-          <button class="btn join-item" onClick={() => resetPositionSw()}>
+          <button
+            class="btn btn-soft join-item"
+            onClick={() => resetPositionSw()}
+          >
             Reset Position
           </button>
         </div>
@@ -337,7 +343,7 @@ function SettingsWidget(props: {
       </div>
 
       <button
-        class="btn"
+        class="btn btn-soft"
         onClick={() => {
           if (filePath()) {
             if (!watching()) {

@@ -59,8 +59,8 @@ function App() {
     <main
       class="min-h-dvh min-w-dvw flex items-center justify-center gap-2"
       classList={{
-        "bg-gray-600/25": !passthrough(),
-        "bg-[repeating-linear-gradient(-45deg,rgba(0,0,0,0.08)_0px,rgba(0,0,0,0.08)_1px,transparent_2px,transparent_12px)]":
+        "bg-neutral-content/3": !passthrough(),
+        "bg-[repeating-linear-gradient(-45deg,rgba(0,0,0,0.25)_0px,rgba(0,0,0,0.25)_2px,transparent_3px,transparent_8px)]":
           !passthrough(),
       }}
     >

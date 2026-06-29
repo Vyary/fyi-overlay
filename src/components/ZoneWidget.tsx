@@ -16,9 +16,10 @@ import { content } from "../state/Content";
 import { character } from "../state/Character";
 
 const [posZw, setPosZw] = createSignal({ x: 28, y: 160 });
-const [widthZw, setWidthZw] = createSignal({ w: 300 });
+const [widthZw, setWidthZw] = createSignal({ w: 540 });
 const [textSizeZw, setTextSizeZw] = createSignal(2);
 const [openEditor, setOpenEditor] = createSignal(false);
+const [transparency, setTransparency] = createSignal(25);
 
 const savePosition = () => {
   localStorage.setItem("posZw", JSON.stringify(posZw()));
@@ -34,7 +35,7 @@ const saveWidth = () => {
 };
 
 const resetWidth = () => {
-  setWidthZw({ w: 300 });
+  setWidthZw({ w: 540 });
   localStorage.removeItem("widthZw");
 };
 
@@ -47,6 +48,10 @@ const resetTextSize = () => {
   localStorage.removeItem("textSizeZw");
 };
 
+const saveTransparency = () => {
+  localStorage.setItem("transparencyZw", transparency().toString());
+};
+
 const loadState = () => {
   const p = localStorage.getItem("posZw");
   if (p) setPosZw(JSON.parse(p));
@@ -56,12 +61,16 @@ const loadState = () => {
 
   const ts = localStorage.getItem("textSizeZw");
   if (ts) setTextSizeZw(Number(ts));
+
+  const tr = localStorage.getItem("transparencyZw");
+  if (tr) setTransparency(Number(tr));
 };
 
 const cleanUp = () => {
   savePosition();
   saveWidth();
   saveTextSize();
+  saveTransparency();
 };
 
 function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
@@ -135,21 +144,21 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
     <div class="flex">
       <Show when={content().tasks.length > 0}>
         <div
-          class="absolute h-auto overflow-auto bg-base-200/30 backdrop-blur-md rounded-2xl ring-1 ring-base-content/5 px-5 py-3"
+          class="absolute h-auto overflow-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5"
           style={{
             left: `${posZw().x}px`,
             top: `${posZw().y}px`,
             width: `${widthZw().w}px`,
+            "background-color": `color-mix(in oklch, var(--color-base-300) ${transparency()}%, transparent)`,
           }}
         >
-          <div class="space-y-1 cursor-move" onMouseDown={onDown}>
+          <div class="cursor-move" onMouseDown={onDown}>
             <Show when={towns[tracker.zone]}>
               <div
-                class={`text-base-content text-shadow-lg leading-relaxed select-none ${textSize()}`}
+                class={`text-base-content text-shadow-lg leading-relaxed border-b border-base-content/5 px-5 py-3 select-none ${textSize()}`}
               >
                 {`${towns[tracker.zone]} - Zone Level: ${tracker.zoneLevel}`}
               </div>
-              <div class="divider" />
               <Show when={levelDiff() >= penalty() && character.level != 0}>
                 <div
                   classList={{
@@ -164,50 +173,78 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
               </Show>
             </Show>
 
-            <For each={[towns[tracker.zone]]}>
-              {() => (
-                <TransitionGroup name="slide-fade">
-                  <For each={content().tasks}>
-                    {(task) => (
-                      <div
-                        class={`text-base-content text-shadow-lg leading-relaxed select-none ${textSize()}`}
-                        innerHTML={task.text}
-                      />
-                    )}
-                  </For>
-                </TransitionGroup>
-              )}
-            </For>
+            <div class="px-5 py-3 space-y-1">
+              <For each={[towns[tracker.zone]]}>
+                {() => (
+                  <TransitionGroup name="slide-fade">
+                    <For each={content().tasks}>
+                      {(task) => (
+                        <div class="flex items-center justify-between">
+                          <div
+                            class={`text-base-content text-shadow-lg leading-relaxed select-none ${textSize()}`}
+                            innerHTML={task.text}
+                          />
+                          <span
+                            class={`select-none ${sizes[textSizeZw() - 1] || "text-xs"}`}
+                            innerHTML={task.reward}
+                          />
+                        </div>
+                      )}
+                    </For>
+                  </TransitionGroup>
+                )}
+              </For>
+            </div>
           </div>
 
           <Show when={!props.passthrough()}>
             <div
-              class="absolute top-1/2 -translate-y-1/2 right-2 h-5 w-1 cursor-e-resize p-1 text-white/50 hover:text-white transition-colors"
+              class="absolute top-1/2 -translate-y-1/2 right-2 cursor-e-resize p-1 text-base-content/50 hover:text-base-content transition-colors"
               onMouseDown={onResizeDown}
             >
-              <svg viewBox="0 0 8 40" class="h-5 w-1" fill="currentColor">
-                <rect x="0" y="0" width="8" height="40" rx="4" />
+              <svg viewBox="0 0 8 60" class="w-1" fill="currentColor">
+                <rect x="0" y="0" width="8" height="60" rx="4" />
               </svg>
             </div>
           </Show>
 
           <Show when={!props.passthrough()}>
-            <div class="max-w-xs select-none">
-              <input
-                type="range"
-                min="0"
-                max={sizes.length - 1}
-                value={textSizeZw()}
-                class="range range-xs"
-                step="1"
-                onInput={onTextSizeChange}
-              />
+            <div class="flex gap-0.5 justify-between">
+              <div class="flex items-center gap-2 pt-2 border-t border-base-content/5 bg-base-300/30 px-5 py-3 w-full">
+                <span class="text-xs text-base-content/60 font-medium">A</span>
+                <input
+                  type="range"
+                  min="0"
+                  max={sizes.length - 1}
+                  value={textSizeZw()}
+                  class="range range-xs"
+                  step="1"
+                  onInput={onTextSizeChange}
+                />
+                <span class="text-lg text-base-content/60 font-medium">A</span>
+              </div>
+              <div class="flex items-center gap-2 pt-2 border-t border-base-content/5 bg-base-300/30 px-5 py-3 w-full">
+                <span class="text-lg text-base-content/20 font-medium">T</span>
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={transparency()}
+                  class="range range-xs"
+                  step={1}
+                  onInput={(e) => {
+                    setTransparency(Number(e.currentTarget.value));
+                    saveTransparency();
+                  }}
+                />
+                <span class="text-lg text-base-content/80 font-medium">T</span>
+              </div>
             </div>
           </Show>
 
           <Show when={!props.passthrough()}>
             <div
-              class="absolute top-1 right-7 h-5 w-1 cursor-pointer p-1 text-white/50 hover:text-white transition-colors"
+              class="absolute top-1 right-7 h-5 w-1 cursor-pointer p-1 text-base-content/50 hover:text-base-content transition-colors"
               onMouseDown={() => setOpenEditor(!openEditor())}
             >
               <svg
