@@ -6,7 +6,13 @@ import { createStore, produce, reconcile } from "solid-js/store";
 export interface Guide {
   prev?: string;
   preq?: string[];
-  tasks: { text: string; show?: boolean; hide?: boolean; condition?: string }[];
+  tasks: {
+    text: string;
+    reward?: string;
+    show?: boolean;
+    hide?: boolean;
+    condition?: string;
+  }[];
 }
 
 const [guide, setGuide] = createStore<Record<string, Guide[]>>({
@@ -80,6 +86,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Speak with Farrow",
+          hide: true,
           condition: "Good on you.",
         },
         {
@@ -88,13 +95,16 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           condition: "See? I told you we'd make a fine team!",
         },
         {
-          text: "<span class='text-info'>Directions: The Grelwood is straight right from the Ezomyte Remnant</span>",
+          text: "<span class='text-info italic'>Directions: The Grelwood is straight right from the Ezomyte Remnant</span>",
         },
         {
-          text: "Take the Uncut Skill Gem from the Mysterious Campsite (optional)",
+          text: "<span class='text-warning italic'>Optional: Find the Mysterious Campsite</span>",
+          reward: "<span class='italic'>Uncut Skill Gem (Level 1)</span>",
         },
         {
-          text: "Kill <span class='text-poe-unique font-semibold'>Beira of the Rotten Pack</span> (<span class=\"text-poe-quest\">+10% to Cold Resistance</span>)",
+          text: "Kill <span class='text-poe-unique font-semibold'>Beira of the Rotten Pack</span>",
+          reward:
+            '<span class="text-poe-quest italic">+10% to Cold Resistance</span>',
           hide: true,
           condition:
             "Character has received +10% to [Resistances|Cold Resistance].",
@@ -2112,6 +2122,21 @@ const changeTask = (
   saveGuide();
 };
 
+const changeReward = (
+  zone: string,
+  zoneIndex: number,
+  taskIndex: number,
+  text: string,
+) => {
+  setGuide(
+    produce((s) => {
+      s[zone][zoneIndex].tasks[taskIndex].reward = text;
+    }),
+  );
+
+  saveGuide();
+};
+
 const moveTaskUp = (zone: string, zoneIndex: number, taskIndex: number) => {
   setGuide(
     produce((s) => {
@@ -2275,6 +2300,7 @@ export {
   addTask,
   removeTask,
   changeTask,
+  changeReward,
   moveTaskUp,
   moveTaskDown,
   changeAction,

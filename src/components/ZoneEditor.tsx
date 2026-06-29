@@ -1,4 +1,4 @@
-import { createSignal, For } from "solid-js";
+import { createSignal, For, onCleanup, onMount } from "solid-js";
 import {
   addGroup,
   addTask,
@@ -6,6 +6,7 @@ import {
   changeDoneQuote,
   changePreq,
   changePrev,
+  changeReward,
   changeTask,
   deleteZone,
   guide,
@@ -20,19 +21,33 @@ import { towns } from "../state/Towns";
 import ConfirmModal from "./ConfirmModal";
 
 function ZoneEditor(props: { left: string; top: string }) {
+  const [transparency, setTransparency] = createSignal(75);
+
+  const saveTransparency = () => {
+    localStorage.setItem("transparencyZe", transparency().toString());
+  };
+
+  onMount(() => {
+    const tr = localStorage.getItem("transparencyZe");
+    if (tr) setTransparency(Number(tr));
+  });
+
+  onCleanup(() => saveTransparency());
+
   return (
     <div
-      class="absolute max-h-200 overflow-y-auto bg-base-200/30 backdrop-blur-md rounded-2xl ring-1 ring-base-content/5 py-1 w-140"
+      class={`absolute max-h-200 overflow-y-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5 py-1 w-140`}
       style={{
         left: props.left,
         top: props.top,
+        "background-color": `color-mix(in oklch, var(--color-base-300) ${transparency()}%, transparent)`,
       }}
     >
       <For each={guide[tracker.zone]}>
         {(z, i) => {
           const [showConfirm, setShowConfirm] = createSignal(false);
           return (
-            <div class="card ">
+            <div class="card">
               <div class="card-body">
                 <div class="flex flex-col gap-2 py-1">
                   <div class="grid grid-cols-11 gap-2">
@@ -133,7 +148,7 @@ function ZoneEditor(props: { left: string; top: string }) {
                       </ConfirmModal>
                     </span>
                   </div>
-                  <ul class="flex flex-col gap-1 text-xs mt-2">
+                  <ul class="flex flex-col gap-2 text-xs mt-2">
                     <For each={z.tasks}>
                       {(t, j) => {
                         const [showConfirm, setShowConfirm] =
@@ -141,8 +156,8 @@ function ZoneEditor(props: { left: string; top: string }) {
 
                         return (
                           <li>
-                            <div class="flex items-center gap-1">
-                              <div class="flex flex-col items-center justify-center">
+                            <div class="grid grid-cols-12 gap-2">
+                              <div class="flex flex-col items-center justify-center col-span-1">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   width="24"
@@ -160,7 +175,6 @@ function ZoneEditor(props: { left: string; top: string }) {
                                 >
                                   <path d="m18 15-6-6-6 6" />
                                 </svg>
-
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   width="24"
@@ -180,69 +194,90 @@ function ZoneEditor(props: { left: string; top: string }) {
                                 </svg>
                               </div>
 
-                              <input
-                                type="text"
-                                value={t.text}
-                                class="input"
-                                onChange={(e) =>
-                                  changeTask(
-                                    tracker.zone,
-                                    i(),
-                                    j(),
-                                    e.target.value,
-                                  )
-                                }
-                              />
-                              <select
-                                class="select max-w-20 bg-base-300"
-                                value={
-                                  t.show ? "Show" : t.hide ? "Hide" : "Action"
-                                }
-                                onInput={(e) => {
-                                  changeAction(
-                                    tracker.zone,
-                                    i(),
-                                    j(),
-                                    e.currentTarget.value,
-                                  );
-                                }}
-                              >
-                                <option disabled selected>
-                                  Action
-                                </option>
-                                <option>Show</option>
-                                <option>Hide</option>
-                              </select>
-                              <input
-                                type="text"
-                                value={t.condition || ""}
-                                placeholder="When"
-                                class="input max-w-40"
-                                onChange={(e) =>
-                                  changeDoneQuote(
-                                    tracker.zone,
-                                    i(),
-                                    j(),
-                                    e.target.value,
-                                  )
-                                }
-                              />
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="cursor-pointer h-10 w-10 hover:text-error transition-colors"
-                                onClick={() => setShowConfirm(!showConfirm())}
-                              >
-                                <path d="M18 6 6 18" />
-                                <path d="m6 6 12 12" />
-                              </svg>
+                              <div class="flex flex-col col-span-6">
+                                <input
+                                  type="text"
+                                  value={t.text}
+                                  class="input"
+                                  onChange={(e) =>
+                                    changeTask(
+                                      tracker.zone,
+                                      i(),
+                                      j(),
+                                      e.target.value,
+                                    )
+                                  }
+                                />
+                                <input
+                                  type="text"
+                                  value={t.reward || ""}
+                                  class="input input-xs"
+                                  onChange={(e) =>
+                                    changeReward(
+                                      tracker.zone,
+                                      i(),
+                                      j(),
+                                      e.target.value,
+                                    )
+                                  }
+                                />
+                              </div>
+
+                              <div class="flex flex-col col-span-4">
+                                <select
+                                  class="select select-xs max-w-20 bg-base-300"
+                                  value={
+                                    t.show ? "Show" : t.hide ? "Hide" : "Action"
+                                  }
+                                  onInput={(e) => {
+                                    changeAction(
+                                      tracker.zone,
+                                      i(),
+                                      j(),
+                                      e.currentTarget.value,
+                                    );
+                                  }}
+                                >
+                                  <option disabled selected>
+                                    Action
+                                  </option>
+                                  <option>Show</option>
+                                  <option>Hide</option>
+                                </select>
+                                <input
+                                  type="text"
+                                  value={t.condition || ""}
+                                  placeholder="When"
+                                  class="input max-w-40"
+                                  onChange={(e) =>
+                                    changeDoneQuote(
+                                      tracker.zone,
+                                      i(),
+                                      j(),
+                                      e.target.value,
+                                    )
+                                  }
+                                />
+                              </div>
+
+                              <div class="flex items-center">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  class="cursor-pointer h-6 w-6 hover:text-error transition-colors col-span-1"
+                                  onClick={() => setShowConfirm(!showConfirm())}
+                                >
+                                  <path d="M18 6 6 18" />
+                                  <path d="m6 6 12 12" />
+                                </svg>
+                              </div>
 
                               <ConfirmModal
                                 classList={{
@@ -291,6 +326,23 @@ function ZoneEditor(props: { left: string; top: string }) {
       >
         add group
       </button>
+
+      <div class="flex items-center gap-2 pt-2 border-t border-base-content/5 bg-base-300/30 px-5 py-3 w-full">
+        <span class="text-lg text-base-content/20 font-medium">T</span>
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={transparency()}
+          class="range range-xs"
+          step={1}
+          onInput={(e) => {
+            setTransparency(Number(e.currentTarget.value));
+            saveTransparency();
+          }}
+        />
+        <span class="text-lg text-base-content/80 font-medium">T</span>
+      </div>
     </div>
   );
 }
