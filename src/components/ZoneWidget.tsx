@@ -16,7 +16,7 @@ import { content } from "../state/Content";
 import { character } from "../state/Character";
 
 const [posZw, setPosZw] = createSignal({ x: 28, y: 160 });
-const [widthZw, setWidthZw] = createSignal({ w: 540 });
+const [widthZw, setWidthZw] = createSignal({ w: 550 });
 const [textSizeZw, setTextSizeZw] = createSignal(2);
 const [openEditor, setOpenEditor] = createSignal(false);
 const [transparency, setTransparency] = createSignal(25);
@@ -35,7 +35,7 @@ const saveWidth = () => {
 };
 
 const resetWidth = () => {
-  setWidthZw({ w: 540 });
+  setWidthZw({ w: 550 });
   localStorage.removeItem("widthZw");
 };
 
@@ -223,8 +223,20 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
                 />
                 <span class="text-lg text-base-content/60 font-medium">A</span>
               </div>
-              <div class="flex items-center gap-2 pt-2 border-t border-base-content/5 bg-base-300/30 px-5 py-3 w-full">
-                <span class="text-lg text-base-content/20 font-medium">T</span>
+              <div class="flex items-center gap-2 pt-2 px-5 py-3 w-full justify-end">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4 text-base-content/40"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 2v20" />
+                </svg>
                 <input
                   type="range"
                   min={0}
@@ -237,7 +249,18 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
                     saveTransparency();
                   }}
                 />
-                <span class="text-lg text-base-content/80 font-medium">T</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4 text-base-content/80"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                </svg>
               </div>
             </div>
           </Show>
