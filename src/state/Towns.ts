@@ -33,10 +33,10 @@ const [towns, setTowns] = createStore<Record<string, string>>({
   G2_9_2: "The Spires of Deshar",
   G2_12: "Dreadnought",
   G3_1: "Sandswept Marsh",
+  G3_2_1: "Infested Barrens",
   G3_town: "Ziggurat Encampment",
   G3_3: "Jungle Ruins",
   G3_4: "The Venom Crypts",
-  G3_2_1: "Infested Barrens",
   G3_6_1: "Jiquani's Machinarium",
   G3_6_2: "Jiquani's Sanctum",
   G1_6: "The Grim Tangle",
@@ -46,6 +46,7 @@ const [towns, setTowns] = createStore<Record<string, string>>({
   G3_2_2: "The Matlan Waterways",
   ExpeditionSubArea_Kalguur_Act3: "Mystic Refuge",
   G3_8: "The Drowned City",
+  G3_9: "The Molten Vault",
   G3_11: "Apex of Filth",
   G3_12: "Temple of Kopec",
   G3_14: "Utzaal",
@@ -99,11 +100,13 @@ const [towns, setTowns] = createStore<Record<string, string>>({
   P2_6: "Qimah",
   P2_7: "Qimah Reservoir",
   G_Endgame_Town: "The Ziggurat Refuge",
+  G1_5: "The Red Vale",
+  G3_5: "Chimeral Wetlands",
 });
 
-const addTownName = (townCode: string, townName: string) => {
-  if (!towns[townCode]) {
-    setTowns(townCode, townName);
+const addTownName = (id: string, name: string) => {
+  if (name != "(unknown)") {
+    setTowns(id, name);
   }
 };
 

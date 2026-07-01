@@ -1,4 +1,4 @@
-import { createSignal, For, onCleanup, onMount } from "solid-js";
+import { createSignal, For, onCleanup, onMount, Show } from "solid-js";
 import {
   addGroup,
   addTask,
@@ -401,14 +401,16 @@ function ZoneEditor(props: { left: string; top: string }) {
         }}
       </For>
 
-      <div class="pt-2">
-        <button
-          class="btn btn-dash border-base-content/30 text-base-content/70 hover:text-base-content hover:bg-base-100/50 hover:bg-base-content/5 w-full"
-          onClick={() => addGroup(tracker.zone)}
-        >
-          + Add Zone Group
-        </button>
-      </div>
+      <Show when={tracker.zone}>
+        <div class="pt-2">
+          <button
+            class="btn btn-dash border-base-content/30 text-base-content/70 hover:text-base-content hover:bg-base-100/50 hover:bg-base-content/5 w-full"
+            onClick={() => addGroup(tracker.zone)}
+          >
+            + Add Zone Group
+          </button>
+        </div>
+      </Show>
     </div>
   );
 }
