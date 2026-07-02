@@ -163,13 +163,14 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Speak with Farrow",
           hide: true,
-          condition: "Good on you.",
+          condition: "Thanks for the help.",
           show: false,
         },
         {
           text: "Complete the Ezomyte Remnant",
           hide: true,
           condition: "See? I told you we'd make a fine team!",
+          reward: "<span class='italic'>Orb of Augmentation</span>",
         },
         {
           text: "<span class='text-info italic'>Directions: The Grelwood is straight right from the Ezomyte Remnant</span>",
@@ -177,10 +178,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "<span class='text-warning italic'>Optional: Find the Mysterious Campsite</span>",
           reward: "<span class='italic'>Uncut Skill Gem (Level 1)</span>",
-        },
-        {
-          text: "<span class='text-warning italic'>Optional: Find the Mud Burrow (Kill <span class='text-poe-unique'>The Devourer</span>)</span>",
-          reward: "<span class='italic'>Uncut Skill Gem (Level 2)</span>",
         },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Beira of the Rotten Pack</span>",
@@ -200,7 +197,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       tasks: [
         {
-          text: "<span class='text-warning italic'>Optional: Kill <span class='text-poe-unique'>The Devourer</span></span>",
+          text: "<span class='text-warning italic'>Optional: Kill <span class='text-poe-unique font-semibold'>The Devourer</span></span>",
           reward: "<span class='italic'>Uncut Skill Gem (Level 2)</span>",
         },
       ],
@@ -226,10 +223,10 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "<span class='text-warning italic'>Optional: Kill Areagne, Forgotten Witch</span>",
-          reward: "<span class='italic'>Uncut Support Gem (Level 2)</span>",
+          reward: "<span class='italic'>Uncut Support Gem (Level 1)</span>",
         },
         {
-          text: "<span class='text-warning italic'>Optional: Kill <span class='text-poe-unique'>The Brambleghast</span></span>",
+          text: "<span class='text-warning italic'>Optional: Kill <span class='text-poe-unique font-semibold'>The Brambleghast</span></span>",
           reward: "<span class='italic'>Uncut Skill Gem (Level 2)</span>",
         },
         {
@@ -275,12 +272,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Portal to Town",
         },
-        {
-          text: "Speak to Renly",
-        },
-        {
-          text: "Travel to The Grelwood",
-        },
       ],
     },
   ],
@@ -290,27 +281,32 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Portal to Town",
+          condition:
+            "The old magicks still thrive! The way is open. Please, hurry.",
+          show: false,
+          hide: true,
         },
         {
-          text: "Speak to Una",
+          text: "Summon and Speak to Una",
           hide: true,
           condition:
-            "Una: The old magicks still thrive! The way is open. Please, hurry.",
+            "The old magicks still thrive! The way is open. Please, hurry.",
         },
         {
           text: "<span class='text-warning italic'>Optional: Use Respawn at Checkpoint to Skip the Animation</span>",
           hide: true,
           condition:
-            "Una: The old magicks still thrive! The way is open. Please, hurry.",
+            "The old magicks still thrive! The way is open. Please, hurry.",
         },
         {
           text: "Find the Runestones",
           hide: true,
           condition: "Keep up the search.",
           reward: "<span class='italic'>Farrow Quest</span>",
+          show: false,
         },
         {
-          text: "<span class='text-warning italic'>Optional: Kill <span class='text-poe-unique'>The Rotten Druid</span></span>",
+          text: "<span class='text-warning italic'>Optional: Kill <span class='text-poe-unique font-semibold'>The Rotten Druid</span></span>",
           reward: "<span class='italic'>Uncut Support Gem (Level 1)</span>",
         },
         {
