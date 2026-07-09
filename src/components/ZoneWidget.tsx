@@ -1,5 +1,6 @@
 import {
   Accessor,
+  createMemo,
   createSignal,
   For,
   onCleanup,
@@ -76,13 +77,23 @@ const cleanUp = () => {
 function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
   const sizes = ["text-xs", "text-sm", "text-base", "text-lg", "text-xl"];
   const textSize = () => sizes[textSizeZw()];
-  const [isNegative, setIsNegative] = createSignal(false);
-  const levelDiff = () => {
-    const ld = tracker.zoneLevel - character.level;
-    setIsNegative(ld < 0);
-    return Math.abs(ld);
-  };
-  const penalty = () => 4 + Math.floor(character.level / 16);
+
+  const overleveled = () => tracker.zoneLevel - character.level < 0;
+  const levelDiff = () => Math.abs(tracker.zoneLevel - character.level);
+  const threshold = () => 3 + Math.floor(character.level / 16);
+
+  const penaltyValue = createMemo(() => {
+    const effDiff = Math.max(levelDiff() - threshold(), 0);
+    const numerator = character.level + 5;
+    const denominator = character.level + 5 + Math.pow(effDiff, 2.5);
+
+    return Math.pow(numerator / denominator, 1.3);
+  });
+
+  const penaltyPercent = () => (1 - penaltyValue()) * 100;
+
+  const expections = () =>
+    character.level != 0 && !tracker.zone.toLowerCase().includes("town");
 
   let offset = { x: 0, y: 0 };
   let start = { w: 0, h: 0, x: 0, y: 0 };
@@ -159,20 +170,13 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
               >
                 {`${towns[tracker.zone]} - Zone Level: ${tracker.zoneLevel}`}
               </div>
+
               <Show
                 when={
-                  levelDiff() >= penalty() &&
-                  character.level != 0 &&
-                  !tracker.zone.includes("town")
+                  levelDiff() == threshold() && !overleveled() && expections()
                 }
               >
-                <div
-                  class="px-5 py-3 border-b border-base-content/5 flex items-center gap-3 text-sm"
-                  classList={{
-                    "text-warning bg-warning/10": levelDiff() == penalty(),
-                    "text-error bg-error/10": levelDiff() > penalty(),
-                  }}
-                >
+                <div class="px-5 py-3 border-b border-base-content/5 flex items-center gap-1 text-sm text-warning bg-warning/10">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="h-5 w-5 shrink-0"
@@ -187,10 +191,34 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
                       d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                     />
                   </svg>
-
                   <span>
-                    <strong class="font-semibold">Reduced Experience:</strong>{" "}
-                    Move to a {isNegative() ? "higher" : "lower"} level zone.
+                    <strong class="font-semibold">Under Level Warning</strong>:
+                    Gain More Experience before Continuing
+                  </span>
+                </div>
+              </Show>
+
+              <Show when={penaltyPercent() > 0 && expections()}>
+                <div class="px-5 py-3 border-b border-base-content/5 flex items-center gap-1 text-sm text-error bg-error/10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    />
+                  </svg>
+                  <span>
+                    <strong class="font-semibold">
+                      Reduced Experience {penaltyPercent().toFixed(0)}% penalty
+                    </strong>
+                    : Move to a {overleveled() ? "higher" : "lower"} level zone
                   </span>
                 </div>
               </Show>
