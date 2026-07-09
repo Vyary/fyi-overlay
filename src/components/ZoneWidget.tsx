@@ -274,7 +274,7 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
                 />
                 <span class="text-lg text-base-content/60 font-medium">A</span>
               </div>
-              <div class="flex items-center gap-2 pt-2 px-5 py-3 w-full justify-end">
+              <div class="flex items-center gap-2 pt-2 border-t border-base-content/5 bg-base-300/30 px-5 py-3 w-full justify-end">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="w-4 h-4 text-base-content/40"

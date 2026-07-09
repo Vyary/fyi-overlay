@@ -24,7 +24,6 @@ import { loadTowns, saveTowns } from "./state/Towns";
 import { loadCharacter, saveCharacter } from "./state/Character";
 
 function App() {
-  const [showZw, setShowZw] = createSignal(true);
   const [showSw, setShowSw] = createSignal(false);
   const [autoUpdate, setAutoUpdate] = createSignal(true);
 
@@ -69,9 +68,7 @@ function App() {
           hidden: !showOverlay() && passthrough(),
         }}
       >
-        <Show when={showZw()}>
-          <ZoneWidget passthrough={passthrough} />
-        </Show>
+        <ZoneWidget passthrough={passthrough} />
 
         <Show when={showSw()}>
           <Stopwatch passthrough={passthrough} />
@@ -83,8 +80,6 @@ function App() {
         }}
       >
         <SettingsWidget
-          showZw={showZw}
-          setShowZw={setShowZw}
           showSw={showSw}
           setShowSw={setShowSw}
           autoUpdate={autoUpdate}

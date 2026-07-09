@@ -16,8 +16,6 @@ import {
 import { character, setCharacterName } from "../state/Character";
 
 function SettingsWidget(props: {
-  showZw: Accessor<boolean>;
-  setShowZw: Setter<boolean>;
   showSw: Accessor<boolean>;
   setShowSw: Setter<boolean>;
   autoUpdate: Accessor<boolean>;
@@ -28,9 +26,6 @@ function SettingsWidget(props: {
   const [SwScResetErr, setSwScResetErr] = createSignal(false);
 
   onMount(() => {
-    const szw = localStorage.getItem("showZw");
-    if (szw) props.setShowZw(JSON.parse(szw));
-
     const ssw = localStorage.getItem("showSw");
     if (ssw) props.setShowSw(JSON.parse(ssw));
 
@@ -111,68 +106,44 @@ function SettingsWidget(props: {
         </form>
       </div>
 
-      <div class="flex items-center justify-between px-1 pt-2">
-        <label
-          class="cursor-pointer text-base"
-          onClick={() => {
-            const isEnabled = !props.showZw();
-            props.setShowZw(isEnabled);
-            localStorage.setItem("showZw", JSON.stringify(isEnabled));
-          }}
-        >
-          Zone Widget
-        </label>
-        <input
-          type="checkbox"
-          checked={props.showZw()}
-          onClick={() => {
-            const isEnabled = !props.showZw();
-            props.setShowZw(isEnabled);
-            localStorage.setItem("showZw", JSON.stringify(isEnabled));
-          }}
-          class="toggle toggle-md"
-        />
+      <div class="px-1 pt-2">
+        <label class="text-base">Zone Widget</label>
       </div>
-      <Show when={props.showZw()}>
-        <div
-          classList={{
-            "tooltip tooltip-open tooltip-left tooltip-accent":
-              !filePath().endsWith("\\Client.txt") &&
-              !filePath().endsWith("/Client.txt"),
-          }}
-          data-tip="You need to locate the Client.txt file to enable zone tracking"
-        >
-          <div class="join">
-            <button class="btn btn-soft join-item" onClick={selectFile}>
-              Select File
-            </button>
-            <input
-              type="text"
-              class="input join-item"
-              placeholder="Client.txt Location"
-              value={filePath()}
-            />
-          </div>
-        </div>
-
+      <div
+        classList={{
+          "tooltip tooltip-open tooltip-left tooltip-accent":
+            !filePath().endsWith("\\Client.txt") &&
+            !filePath().endsWith("/Client.txt"),
+        }}
+        data-tip="You need to locate the Client.txt file to enable zone tracking"
+      >
         <div class="join">
-          <button
-            class="btn btn-soft join-item"
-            onClick={() => resetPosition()}
-          >
-            Reset Position
+          <button class="btn btn-soft join-item" onClick={selectFile}>
+            Select File
           </button>
-          <button
-            class="btn btn-soft join-item"
-            onClick={() => {
-              resetWidth();
-              resetTextSize();
-            }}
-          >
-            Reset Size
-          </button>
+          <input
+            type="text"
+            class="input join-item"
+            placeholder="Client.txt Location"
+            value={filePath()}
+          />
         </div>
-      </Show>
+      </div>
+
+      <div class="join">
+        <button class="btn btn-soft join-item" onClick={() => resetPosition()}>
+          Reset Position
+        </button>
+        <button
+          class="btn btn-soft join-item"
+          onClick={() => {
+            resetWidth();
+            resetTextSize();
+          }}
+        >
+          Reset Size
+        </button>
+      </div>
 
       <div class="flex items-center justify-between px-1 pt-2">
         <label
@@ -349,9 +320,6 @@ function SettingsWidget(props: {
             if (!watching()) {
               startTailing();
             }
-            enablePassthrough();
-          }
-          if (!props.showZw()) {
             enablePassthrough();
           }
         }}
