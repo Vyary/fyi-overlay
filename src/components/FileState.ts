@@ -51,10 +51,11 @@ const startTailing = async () => {
       }
 
       const quoteArray = line.split(": ");
-      const quote = quoteArray[quoteArray.length - 1].replace(
-        character.name,
-        "Character",
-      );
+      const quote = quoteArray[quoteArray.length - 1];
+
+      if (character.name != "") {
+        quote.replace(character.name, "Character");
+      }
       // console.log(
       //   quotes["G4_8b"]["Your timing is quite remarkable, you know!"],
       // );
