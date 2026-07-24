@@ -22,6 +22,7 @@ import { loadTracker, saveTracker } from "./state/Tracker";
 import { loadGuide, saveGuide } from "./state/Guide";
 import { loadTowns, saveTowns } from "./state/Towns";
 import { loadCharacter, saveCharacter } from "./state/Character";
+import { Inventory } from "./components/inventory/Inventory";
 
 function App() {
   const [showSw, setShowSw] = createSignal(false);
@@ -90,6 +91,8 @@ function App() {
       <Show when={autoUpdate()}>
         <Updater />
       </Show>
+
+      <Inventory />
     </main>
   );
 }
