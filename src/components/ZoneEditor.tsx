@@ -1,4 +1,4 @@
-import { createSignal, For, onCleanup, onMount, Show } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import {
   addGroup,
   addTask,
@@ -20,30 +20,10 @@ import { setZone, tracker } from "../state/Tracker";
 import { towns } from "../state/Towns";
 import ConfirmModal from "./ConfirmModal";
 
-function ZoneEditor(props: { left: string; top: string }) {
-  const [transparency, setTransparency] = createSignal(75);
-
-  const saveTransparency = () => {
-    localStorage.setItem("transparencyZe", transparency().toString());
-  };
-
-  onMount(() => {
-    const tr = localStorage.getItem("transparencyZe");
-    if (tr) setTransparency(Number(tr));
-  });
-
-  onCleanup(() => saveTransparency());
-
+function ZoneEditor() {
   return (
-    <div
-      class={`absolute max-h-200 overflow-y-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5 w-180`}
-      style={{
-        left: props.left,
-        top: props.top,
-        "background-color": `color-mix(in oklch, var(--color-base-300) ${transparency()}%, transparent)`,
-      }}
-    >
-      <div class="sticky top-0 z-10 backdrop-blur-md flex items-center justify-between border-b border-base-content/5">
+    <div class="py-3 px-5">
+      <div class="sticky top-0 z-10 backdrop-blur-md flex items-center justify-between">
         <div class="form-control w-full py-3 px-5">
           <input
             type="text"
@@ -58,46 +38,6 @@ function ZoneEditor(props: { left: string; top: string }) {
               {([tc, tn]) => <option value={tc}>{tn}</option>}
             </For>
           </datalist>
-        </div>
-
-        <div class="flex items-center gap-2 pt-2 px-5 py-3 w-full justify-end">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-4 h-4 text-base-content/40"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <path d="M12 2v20" />
-          </svg>
-          <input
-            type="range"
-            min={0}
-            max={100}
-            value={transparency()}
-            class="range range-xs"
-            step={1}
-            onInput={(e) => {
-              setTransparency(Number(e.currentTarget.value));
-              saveTransparency();
-            }}
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-4 h-4 text-base-content/80"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="12" cy="12" r="10" />
-          </svg>
         </div>
       </div>
 

@@ -1,70 +1,6 @@
-import {
-  Accessor,
-  createSignal,
-  JSX,
-  onCleanup,
-  onMount,
-  Show,
-} from "solid-js";
+import { createSignal, JSX, onCleanup, onMount, Show } from "solid-js";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { passthrough } from "../PassthroughState";
-
-const [posZw, setPos] = createSignal({ x: 28, y: 160 });
-const [widthZw, setWidth] = createSignal({ w: 550 });
-const [textSize, setTextSize] = createSignal(2);
-const [transparency, setTransparency] = createSignal(25);
-
-const savePosition = (name: string) => {
-  localStorage.setItem(`${name}Pos`, JSON.stringify(posZw()));
-};
-
-const resetPosition = (name: string) => {
-  setPos({ x: 28, y: 160 });
-  localStorage.removeItem(`${name}Pos`);
-};
-
-const saveWidth = (name: string) => {
-  localStorage.setItem(`${name}Width`, JSON.stringify(widthZw()));
-};
-
-const resetWidth = (name: string) => {
-  setWidth({ w: 550 });
-  localStorage.removeItem(`${name}Width`);
-};
-
-const saveTextSize = (name: string) => {
-  localStorage.setItem(`${name}TextSize`, textSize().toString());
-};
-
-const resetTextSize = (name: string) => {
-  setTextSize(2);
-  localStorage.removeItem(`${name}TextSize`);
-};
-
-const saveTransparency = (name: string) => {
-  localStorage.setItem(`${name}Transparency`, transparency().toString());
-};
-
-const loadState = (name: string) => {
-  const p = localStorage.getItem(`${name}Pos`);
-  if (p) setPos(JSON.parse(p));
-
-  const s = localStorage.getItem(`${name}Width`);
-  if (s) setWidth(JSON.parse(s));
-
-  const ts = localStorage.getItem(`${name}TextSize`);
-  if (ts) setTextSize(Number(ts));
-
-  const tr = localStorage.getItem(`${name}Transparency`);
-  if (tr) setTransparency(Number(tr));
-};
-
-const cleanUp = (name: string) => {
-  savePosition(name);
-  saveWidth(name);
-  saveTextSize(name);
-  saveTransparency(name);
-};
 
 function BaseWidget(props: {
   name: string;
@@ -78,6 +14,48 @@ function BaseWidget(props: {
 
   let offset = { x: 0, y: 0 };
   let start = { w: 0, h: 0, x: 0, y: 0 };
+
+  const [posZw, setPos] = createSignal({ x: 28, y: 160 });
+  const [widthZw, setWidth] = createSignal({ w: 550 });
+  const [textSize, setTextSize] = createSignal(2);
+  const [transparency, setTransparency] = createSignal(25);
+
+  const savePosition = (name: string) => {
+    localStorage.setItem(`${name}Pos`, JSON.stringify(posZw()));
+  };
+
+  const saveWidth = (name: string) => {
+    localStorage.setItem(`${name}Width`, JSON.stringify(widthZw()));
+  };
+
+  const saveTextSize = (name: string) => {
+    localStorage.setItem(`${name}TextSize`, textSize().toString());
+  };
+
+  const saveTransparency = (name: string) => {
+    localStorage.setItem(`${name}Transparency`, transparency().toString());
+  };
+
+  const loadState = (name: string) => {
+    const p = localStorage.getItem(`${name}Pos`);
+    if (p) setPos(JSON.parse(p));
+
+    const s = localStorage.getItem(`${name}Width`);
+    if (s) setWidth(JSON.parse(s));
+
+    const ts = localStorage.getItem(`${name}TextSize`);
+    if (ts) setTextSize(Number(ts));
+
+    const tr = localStorage.getItem(`${name}Transparency`);
+    if (tr) setTransparency(Number(tr));
+  };
+
+  const cleanUp = (name: string) => {
+    savePosition(name);
+    saveWidth(name);
+    saveTextSize(name);
+    saveTransparency(name);
+  };
 
   const onMove = (e: MouseEvent) => {
     setPos({ x: e.clientX - offset.x, y: e.clientY - offset.y });
@@ -136,7 +114,7 @@ function BaseWidget(props: {
     <div class="flex">
       <Show when={props.show}>
         <div
-          class={`absolute h-auto overflow-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5`}
+          class={`absolute h-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5`}
           style={{
             left: `${posZw().x}px`,
             top: `${posZw().y}px`,
@@ -145,7 +123,7 @@ function BaseWidget(props: {
           }}
         >
           <div
-            class={`cursor-move px-5 py-3 select-none ${textSizeTW()} ${tableSize()}`}
+            class={`cursor-move overflow-y-auto min-h-0 flex-1 max-h-200 select-none ${textSizeTW()} ${tableSize()}`}
             onMouseDown={onDown}
           >
             {props.children}
@@ -228,4 +206,4 @@ function BaseWidget(props: {
   );
 }
 
-export { BaseWidget, resetPosition, resetWidth, resetTextSize };
+export { BaseWidget };

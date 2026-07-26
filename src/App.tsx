@@ -76,18 +76,13 @@ function App() {
           <Stopwatch passthrough={passthrough} />
         </Show>
       </div>
-      <div
-        classList={{
-          hidden: passthrough(),
-        }}
-      >
-        <SettingsWidget
-          showSw={showSw}
-          setShowSw={setShowSw}
-          autoUpdate={autoUpdate}
-          setAutoUpdate={setAutoUpdate}
-        />
-      </div>
+
+      <SettingsWidget
+        showSw={showSw}
+        setShowSw={setShowSw}
+        autoUpdate={autoUpdate}
+        setAutoUpdate={setAutoUpdate}
+      />
 
       <Show when={autoUpdate()}>
         <Updater />
