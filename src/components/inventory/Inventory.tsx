@@ -4,6 +4,9 @@ import { register } from "@tauri-apps/plugin-global-shortcut";
 import { createSignal, For, onMount } from "solid-js";
 import { fetch } from "@tauri-apps/plugin-http";
 import { ItemInfo, ItemRecord, ItemsRecord } from "./itemsRecord";
+import { load } from "@tauri-apps/plugin-store";
+import { BaseWidget } from "../widget/BaseWidget";
+import { passthrough } from "../PassthroughState";
 
 export interface CurrencyResponse {
   core: {
@@ -118,6 +121,10 @@ const parseItem = async () => {
 
 function Inventory() {
   const [inventory, setInventory] = createSignal<ItemInfo[]>([]);
+  let store: any;
+
+  const sorted = () =>
+    inventory().sort((a, b) => b.prices?.divine - a.prices?.divine);
 
   const addToInventory = async () => {
     const sItem = await parseItem();
@@ -140,6 +147,9 @@ function Inventory() {
     console.log(`${dItem.quantity} x ${dPrice} = ${dItem.prices.divine}`);
 
     setInventory((prev) => [...prev, dItem]);
+
+    await store.set("inventory", inventory());
+    await store.save();
   };
 
   onMount(async () => {
@@ -154,10 +164,16 @@ function Inventory() {
     } catch (e) {
       console.log("failed to register copy shortcut: " + e);
     }
+
+    store = await load("inventory.json", { autoSave: true });
+    const inv = (await store.get("inventory")) as ItemInfo[];
+    if (inv) {
+      setInventory(inv);
+    }
   });
 
   return (
-    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+    <BaseWidget name="inventory" show={!passthrough()}>
       <table class="table">
         <thead>
           <tr>
@@ -169,7 +185,7 @@ function Inventory() {
           </tr>
         </thead>
         <tbody>
-          <For each={inventory()}>
+          <For each={sorted().slice(0, 10)}>
             {(item, i) => (
               <tr>
                 <th>{i() + 1}</th>
@@ -184,13 +200,13 @@ function Inventory() {
                 </td>
                 <td>{item.quantity}</td>
                 <td>{item.category}</td>
-                <td>{item.prices?.divine}</td>
+                <td class="font-bold">{item.prices?.divine.toFixed(2)}d</td>
               </tr>
             )}
           </For>
         </tbody>
       </table>
-    </div>
+    </BaseWidget>
   );
 }
 

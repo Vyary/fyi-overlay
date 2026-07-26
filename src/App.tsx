@@ -23,6 +23,7 @@ import { loadGuide, saveGuide } from "./state/Guide";
 import { loadTowns, saveTowns } from "./state/Towns";
 import { loadCharacter, saveCharacter } from "./state/Character";
 import { Inventory } from "./components/inventory/Inventory";
+import { TestWidget } from "./components/widget/TestWidget";
 
 function App() {
   const [showSw, setShowSw] = createSignal(false);
