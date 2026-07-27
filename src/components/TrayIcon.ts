@@ -5,6 +5,7 @@ import { defaultWindowIcon } from "@tauri-apps/api/app";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { togglePassthrough } from "../state/Passthrough";
 import { exportGuide, importGuide } from "../state/Guide";
+import { load } from "@tauri-apps/plugin-store";
 
 async function initTrayIcon() {
   const menu = await Menu.new({
@@ -35,6 +36,16 @@ async function initTrayIcon() {
         text: "Clear Cache",
         action: async () => {
           localStorage.removeItem("tracker");
+          await relaunch();
+        },
+      },
+      {
+        id: "clear all data",
+        text: "Clear All Data",
+        action: async () => {
+          localStorage.clear();
+          const store = await load("inventory.json");
+          store.clear();
           await relaunch();
         },
       },

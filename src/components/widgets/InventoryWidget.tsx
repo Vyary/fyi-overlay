@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { readText } from "@tauri-apps/plugin-clipboard-manager";
 import { register } from "@tauri-apps/plugin-global-shortcut";
-import { For, onMount } from "solid-js";
+import { For, onMount, Show } from "solid-js";
 import { fetch } from "@tauri-apps/plugin-http";
 import { ItemInfo, ItemRecord, ItemsRecord } from "./itemsRecord.ts";
 import { load } from "@tauri-apps/plugin-store";
@@ -120,7 +120,7 @@ const parseItem = async () => {
   return item;
 };
 
-function InventoryWidget() {
+function InventoryWidget(props: { shortcut: string }) {
   const [inventory, setInventory] = createStore<ItemRecord>({});
   let store: any;
 
@@ -163,7 +163,7 @@ function InventoryWidget() {
 
   onMount(async () => {
     try {
-      await register("F2", async (e) => {
+      await register(props.shortcut, async (e) => {
         if (e.state === "Pressed") {
           await invoke("os_copy");
           await new Promise((resolve) => setTimeout(resolve, 100));
@@ -188,6 +188,7 @@ function InventoryWidget() {
       defaultPos={{ x: 1130, y: 15 }}
       defaultWidth={{ w: 430 }}
       defaultTransparency={90}
+      defaultTextSize={1}
     >
       <table class="table py-3 px-5">
         <thead>
@@ -221,6 +222,14 @@ function InventoryWidget() {
               </tr>
             )}
           </For>
+          <Show when={!sliced().length}>
+            <tr>
+              <td colspan="5" class="text-center py-4">
+                No data found. Scan an in-game item by pressing{" "}
+                <strong>{props.shortcut}</strong>
+              </td>
+            </tr>
+          </Show>
         </tbody>
       </table>
     </BaseWidget>

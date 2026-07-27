@@ -9,6 +9,7 @@ function BaseWidget(props: {
   defaultPos: { x: number; y: number };
   defaultWidth: { w: number };
   defaultTransparency: number;
+  defaultTextSize?: number;
   textSizeSlider?: boolean;
 }) {
   const sizes = ["text-xs", "text-sm", "text-base", "text-lg", "text-xl"];
@@ -21,7 +22,7 @@ function BaseWidget(props: {
 
   const [posZw, setPos] = createSignal(props.defaultPos);
   const [widthZw, setWidth] = createSignal(props.defaultWidth);
-  const [textSize, setTextSize] = createSignal(2);
+  const [textSize, setTextSize] = createSignal(props.defaultTextSize || 2);
   const [transparency, setTransparency] = createSignal(
     props.defaultTransparency,
   );
@@ -133,14 +134,14 @@ function BaseWidget(props: {
           </Show>
 
           <div
-            class={`overflow-y-auto min-h-0 flex-1 max-h-200 ${textSizeTW()} ${tableSize()}`}
+            class={`min-h-0 overflow-x-auto flex-1 max-h-200 ${textSizeTW()} ${tableSize()}`}
           >
             {props.children}
           </div>
 
           <Show when={!passthrough()}>
             <div
-              class="absolute top-1/2 -translate-y-1/2 right-2 cursor-e-resize p-1 text-base-content/50 hover:text-base-content transition-colors"
+              class="absolute top-1/2 -translate-y-1/2 right-1.5 cursor-e-resize text-base-content/50 hover:text-base-content transition-colors"
               onMouseDown={onResizeDown}
             >
               <svg viewBox="0 0 8 60" class="w-1" fill="currentColor">

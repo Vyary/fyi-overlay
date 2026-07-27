@@ -22,7 +22,7 @@ import ConfirmModal from "../ConfirmModal";
 
 function ZoneEditor() {
   return (
-    <div class="py-3 px-5">
+    <div class="py-3 px-5 max-h-200 overflow-y-auto">
       <div class="sticky top-0 z-10 backdrop-blur-md flex items-center justify-between">
         <div class="form-control w-full px-1 py-2">
           <input

@@ -21,6 +21,7 @@ import { Stopwatch } from "./components/widgets/StopwatchWidget";
 
 function App() {
   const [showSw, setShowSw] = createSignal(false);
+  const [showInventory, setShowInventory] = createSignal(false);
   const [autoUpdate, setAutoUpdate] = createSignal(true);
 
   onMount(async () => {
@@ -76,13 +77,17 @@ function App() {
         setShowSw={setShowSw}
         autoUpdate={autoUpdate}
         setAutoUpdate={setAutoUpdate}
+        showInventory={showInventory}
+        setShowInventory={setShowInventory}
       />
 
       <Show when={autoUpdate()}>
         <Updater />
       </Show>
 
-      <Inventory />
+      <Show when={showInventory()}>
+        <Inventory shortcut="F2" />
+      </Show>
     </main>
   );
 }

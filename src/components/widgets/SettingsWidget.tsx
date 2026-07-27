@@ -20,6 +20,8 @@ function SettingsWidget(props: {
   setShowSw: Setter<boolean>;
   autoUpdate: Accessor<boolean>;
   setAutoUpdate: Setter<boolean>;
+  showInventory: Accessor<boolean>;
+  setShowInventory: Setter<boolean>;
 }) {
   const [PtScErr, setPtScErr] = createSignal(false);
   const [SwScErr, setSwScErr] = createSignal(false);
@@ -42,52 +44,48 @@ function SettingsWidget(props: {
       defaultWidth={{ w: 340 }}
       defaultTransparency={95}
     >
-      <fieldset class="select-none px-5 py-3">
-        <legend class="fieldset-legend">Settings</legend>
+      <fieldset class="fieldset select-none w-full gap-3 px-4 py-3">
+        <legend class="fieldset-legend text-sm font-semibold uppercase tracking-wider opacity-70">
+          Settings
+        </legend>
 
-        <label class="text-base px-1">Overlay Toggle</label>
-        <div class="flex flex-row items-center">
-          <form class="flex flex-row">
+        <div class="flex flex-col gap-1">
+          <span class="text-xs font-medium uppercase tracking-wide opacity-60">
+            Overlay Toggle
+          </span>
+          <div class="join w-full">
             <input
-              class="btn btn-soft"
+              class="btn btn-soft btn-sm join-item flex-1"
               type="checkbox"
               name="modifier"
               aria-label="Ctrl"
               value="Ctrl"
               checked={PtSc.Ctrl}
-              onChange={(e) => {
-                updatePasstroughShortcut(e);
-              }}
+              onChange={(e) => updatePasstroughShortcut(e)}
             />
             <input
-              class="btn btn-soft"
+              class="btn btn-soft btn-sm join-item flex-1"
               type="checkbox"
               name="modifier"
               aria-label="Shift"
               value="Shift"
               checked={PtSc.Shift}
-              onChange={(e) => {
-                updatePasstroughShortcut(e);
-              }}
+              onChange={(e) => updatePasstroughShortcut(e)}
             />
             <input
-              class="btn btn-soft"
+              class="btn btn-soft btn-sm join-item flex-1"
               type="checkbox"
               name="modifier"
               aria-label="Alt"
               value="Alt"
               checked={PtSc.Alt}
-              onChange={(e) => {
-                updatePasstroughShortcut(e);
-              }}
+              onChange={(e) => updatePasstroughShortcut(e)}
             />
             <input
               type="text"
               placeholder="Key"
-              class="input"
-              classList={{
-                "border border-error": PtScErr(),
-              }}
+              class="input input-sm join-item w-16 text-center font-mono uppercase"
+              classList={{ "input-error": PtScErr() }}
               value={PtSc.Key.toUpperCase()}
               onInput={(e) => {
                 if (e.target.value.trim() === "") {
@@ -98,185 +96,246 @@ function SettingsWidget(props: {
                 updatePasstroughShortcut(e, true);
               }}
             />
-          </form>
+          </div>
         </div>
 
-        <label class="text-base px-1 pt-2">Character Name</label>
-        <div class="flex flex-row items-center">
-          <form class="flex flex-row">
-            <input
-              type="text"
-              placeholder="Character Name"
-              class="input"
-              value={character.name}
-              onInput={(e) => setCharacterName(e.target.value.trim())}
-            />
-          </form>
-        </div>
+        <div class="divider my-0 opacity-50"></div>
 
-        <div class="px-1 pt-2">
-          <label class="text-base">Zone Widget</label>
-        </div>
-        <div
-          classList={{
-            "tooltip tooltip-open tooltip-left tooltip-accent":
-              !filePath().endsWith("\\Client.txt") &&
-              !filePath().endsWith("/Client.txt"),
-          }}
-          data-tip="You need to locate the Client.txt file to enable zone tracking"
-        >
-          <div class="join">
-            <button class="btn btn-soft join-item" onClick={selectFile}>
-              Select File
+        <div class="flex flex-col gap-1">
+          <span class="text-xs font-medium uppercase tracking-wide opacity-60">
+            Client.txt File
+          </span>
+          <div class="join w-full">
+            <button class="btn btn-soft btn-sm join-item" onClick={selectFile}>
+              Browse
             </button>
             <input
               type="text"
-              class="input join-item"
+              readOnly
+              class="input input-sm join-item flex-1 truncate font-mono"
               placeholder="Client.txt Location"
               value={filePath()}
             />
           </div>
+          <Show
+            when={
+              !filePath().endsWith("\\Client.txt") &&
+              !filePath().endsWith("/Client.txt")
+            }
+          >
+            <p class="flex items-center gap-1 pt-0.5 text-xs text-warning">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3.5 w-3.5 shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 9v4m0 4h.01M10.29 3.86 2.1 18.04A1.5 1.5 0 0 0 3.42 20.3h17.16a1.5 1.5 0 0 0 1.31-2.26L13.7 3.86a1.5 1.5 0 0 0-2.6 0Z"
+                />
+              </svg>
+              Locate Client.txt to enable zone tracking
+            </p>
+          </Show>
         </div>
 
-        <div class="flex items-center justify-between px-1 pt-2">
-          <label
-            class="cursor-pointer text-base"
-            onClick={() => {
-              const isEnabled = !props.showSw();
-              props.setShowSw(isEnabled);
-              localStorage.setItem("showSw", JSON.stringify(isEnabled));
-            }}
-          >
-            Stopwatch Widget
-          </label>
+        <div class="divider my-0 opacity-50"></div>
+
+        <div class="flex flex-col gap-1">
+          <span class="text-xs font-medium uppercase tracking-wide opacity-60">
+            Character Name
+          </span>
           <input
-            type="checkbox"
-            checked={props.showSw()}
-            onClick={() => {
-              const isEnabled = !props.showSw();
-              props.setShowSw(isEnabled);
-              localStorage.setItem("showSw", JSON.stringify(isEnabled));
-            }}
-            class="toggle toggle-md"
+            type="text"
+            placeholder="Character Name"
+            class="input input-sm w-full"
+            value={character.name}
+            onInput={(e) => setCharacterName(e.target.value.trim())}
           />
         </div>
-        <Show when={props.showSw()}>
-          <label class="text-base px-1">Stopwatch Toggle</label>
-          <div class="flex flex-row items-center">
-            <form class="flex flex-row">
-              <input
-                class="btn btn-soft"
-                type="checkbox"
-                name="modifier"
-                aria-label="Ctrl"
-                value="Ctrl"
-                checked={SwSc.Ctrl}
-                onChange={(e) => {
-                  updateStopwatchShortcut(e);
-                }}
-              />
-              <input
-                class="btn btn-soft"
-                type="checkbox"
-                name="modifier"
-                aria-label="Shift"
-                value="Shift"
-                checked={SwSc.Shift}
-                onChange={(e) => {
-                  updateStopwatchShortcut(e);
-                }}
-              />
-              <input
-                class="btn btn-soft"
-                type="checkbox"
-                name="modifier"
-                aria-label="Alt"
-                value="Alt"
-                checked={SwSc.Alt}
-                onChange={(e) => {
-                  updateStopwatchShortcut(e);
-                }}
-              />
-              <input
-                type="text"
-                placeholder="Key"
-                class="input"
-                classList={{
-                  "border border-error": SwScErr(),
-                }}
-                value={SwSc.Key.toUpperCase()}
-                onInput={(e) => {
-                  if (e.target.value.trim() === "") {
-                    setSwScErr(true);
-                    return;
-                  }
-                  setSwScErr(false);
-                  updateStopwatchShortcut(e, true);
-                }}
-              />
-            </form>
+
+        <div class="divider my-0 opacity-50"></div>
+
+        <div class="flex flex-col gap-2">
+          <span class="text-xs font-medium uppercase tracking-wide opacity-60">
+            Beta features
+          </span>
+          <div class="flex items-center justify-between">
+            <span
+              class="cursor-pointer text-sm"
+              onClick={() => {
+                const isEnabled = !props.showSw();
+                props.setShowSw(isEnabled);
+                localStorage.setItem("showSw", JSON.stringify(isEnabled));
+              }}
+            >
+              <div class="flex flex-col">
+                <span class="text-sm font-medium">Stopwatch</span>
+                <span class="text-xs text-base-content/50">
+                  In-game timer overlay
+                </span>
+              </div>
+            </span>
+            <input
+              type="checkbox"
+              checked={props.showSw()}
+              onClick={() => {
+                const isEnabled = !props.showSw();
+                props.setShowSw(isEnabled);
+                localStorage.setItem("showSw", JSON.stringify(isEnabled));
+              }}
+              class="toggle toggle-sm"
+            />
           </div>
 
-          <label class="text-base px-1">Stopwatch Reset</label>
-          <div class="flex flex-row items-center">
-            <form class="flex flex-row">
-              <input
-                class="btn btn-soft"
-                type="checkbox"
-                name="modifier"
-                aria-label="Ctrl"
-                value="Ctrl"
-                checked={SwScReset.Ctrl}
-                onChange={(e) => {
-                  updateStopwatchShortcutReset(e);
-                }}
-              />
-              <input
-                class="btn btn-soft"
-                type="checkbox"
-                name="modifier"
-                aria-label="Shift"
-                value="Shift"
-                checked={SwScReset.Shift}
-                onChange={(e) => {
-                  updateStopwatchShortcutReset(e);
-                }}
-              />
-              <input
-                class="btn btn-soft"
-                type="checkbox"
-                name="modifier"
-                aria-label="Alt"
-                value="Alt"
-                checked={SwScReset.Alt}
-                onChange={(e) => {
-                  updateStopwatchShortcutReset(e);
-                }}
-              />
-              <input
-                type="text"
-                placeholder="Key"
-                class="input"
-                classList={{
-                  "border border-error": SwScResetErr(),
-                }}
-                value={SwScReset.Key.toUpperCase()}
-                onInput={(e) => {
-                  if (e.target.value.trim() === "") {
-                    setSwScResetErr(true);
-                    return;
-                  }
-                  setSwScResetErr(false);
-                  updateStopwatchShortcutReset(e, true);
-                }}
-              />
-            </form>
-          </div>
-        </Show>
+          <Show when={props.showSw()}>
+            <div class="flex flex-col gap-3 rounded-lg bg-base-200/30 p-2">
+              <div class="flex flex-col gap-1">
+                <span class="text-xs font-medium uppercase tracking-wide opacity-60">
+                  Stopwatch Toggle
+                </span>
+                <div class="join w-full">
+                  <input
+                    class="btn btn-soft btn-sm join-item flex-1"
+                    type="checkbox"
+                    name="modifier"
+                    aria-label="Ctrl"
+                    value="Ctrl"
+                    checked={SwSc.Ctrl}
+                    onChange={(e) => updateStopwatchShortcut(e)}
+                  />
+                  <input
+                    class="btn btn-soft btn-sm join-item flex-1"
+                    type="checkbox"
+                    name="modifier"
+                    aria-label="Shift"
+                    value="Shift"
+                    checked={SwSc.Shift}
+                    onChange={(e) => updateStopwatchShortcut(e)}
+                  />
+                  <input
+                    class="btn btn-soft btn-sm join-item flex-1"
+                    type="checkbox"
+                    name="modifier"
+                    aria-label="Alt"
+                    value="Alt"
+                    checked={SwSc.Alt}
+                    onChange={(e) => updateStopwatchShortcut(e)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Key"
+                    class="input input-sm join-item w-16 text-center font-mono uppercase"
+                    classList={{ "input-error": SwScErr() }}
+                    value={SwSc.Key.toUpperCase()}
+                    onInput={(e) => {
+                      if (e.target.value.trim() === "") {
+                        setSwScErr(true);
+                        return;
+                      }
+                      setSwScErr(false);
+                      updateStopwatchShortcut(e, true);
+                    }}
+                  />
+                </div>
+              </div>
 
-        <div class="flex items-center justify-between px-1 pt-2">
-          <label
-            class="cursor-pointer text-base"
+              <div class="flex flex-col gap-1">
+                <span class="text-xs font-medium uppercase tracking-wide opacity-60">
+                  Stopwatch Reset
+                </span>
+                <div class="join w-full">
+                  <input
+                    class="btn btn-soft btn-sm join-item flex-1"
+                    type="checkbox"
+                    name="modifier"
+                    aria-label="Ctrl"
+                    value="Ctrl"
+                    checked={SwScReset.Ctrl}
+                    onChange={(e) => updateStopwatchShortcutReset(e)}
+                  />
+                  <input
+                    class="btn btn-soft btn-sm join-item flex-1"
+                    type="checkbox"
+                    name="modifier"
+                    aria-label="Shift"
+                    value="Shift"
+                    checked={SwScReset.Shift}
+                    onChange={(e) => updateStopwatchShortcutReset(e)}
+                  />
+                  <input
+                    class="btn btn-soft btn-sm join-item flex-1"
+                    type="checkbox"
+                    name="modifier"
+                    aria-label="Alt"
+                    value="Alt"
+                    checked={SwScReset.Alt}
+                    onChange={(e) => updateStopwatchShortcutReset(e)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Key"
+                    class="input input-sm join-item w-16 text-center font-mono uppercase"
+                    classList={{ "input-error": SwScResetErr() }}
+                    value={SwScReset.Key.toUpperCase()}
+                    onInput={(e) => {
+                      if (e.target.value.trim() === "") {
+                        setSwScResetErr(true);
+                        return;
+                      }
+                      setSwScResetErr(false);
+                      updateStopwatchShortcutReset(e, true);
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </Show>
+
+          <div class="flex items-center justify-between">
+            <span
+              class="cursor-pointer text-sm"
+              onClick={() => {
+                const isEnabled = !props.showInventory();
+                props.setShowInventory(isEnabled);
+                localStorage.setItem(
+                  "showInventory",
+                  JSON.stringify(isEnabled),
+                );
+              }}
+            >
+              <div class="flex flex-col">
+                <span class="text-sm font-medium">Inventory</span>
+                <span class="text-xs text-base-content/50">
+                  Scan and View inventory prices
+                </span>
+              </div>
+            </span>
+            <input
+              type="checkbox"
+              checked={props.showInventory()}
+              onClick={() => {
+                const isEnabled = !props.showInventory();
+                props.setShowInventory(isEnabled);
+                localStorage.setItem(
+                  "showInventory",
+                  JSON.stringify(isEnabled),
+                );
+              }}
+              class="toggle toggle-sm"
+            />
+          </div>
+        </div>
+
+        <div class="divider my-0 opacity-50"></div>
+
+        <div class="flex items-center justify-between">
+          <span
+            class="cursor-pointer text-sm"
             onClick={() => {
               const isEnabled = !props.autoUpdate();
               props.setAutoUpdate(isEnabled);
@@ -284,7 +343,7 @@ function SettingsWidget(props: {
             }}
           >
             Auto Update
-          </label>
+          </span>
           <input
             type="checkbox"
             checked={props.autoUpdate()}
@@ -293,25 +352,22 @@ function SettingsWidget(props: {
               props.setAutoUpdate(isEnabled);
               localStorage.setItem("autoUpdate", JSON.stringify(isEnabled));
             }}
-            class="toggle toggle-md"
+            class="toggle toggle-sm"
           />
         </div>
-
-        <div class="pt-2">
-          <button
-            class="btn btn-soft w-full"
-            onClick={() => {
-              if (filePath()) {
-                if (!watching()) {
-                  startTailing();
-                }
-                enablePassthrough();
+        <button
+          class="btn btn-soft btn-sm w-full mt-1"
+          onClick={() => {
+            if (filePath()) {
+              if (!watching()) {
+                startTailing();
               }
-            }}
-          >
-            Close
-          </button>
-        </div>
+              enablePassthrough();
+            }
+          }}
+        >
+          Save & Close
+        </button>
       </fieldset>
     </BaseWidget>
   );
