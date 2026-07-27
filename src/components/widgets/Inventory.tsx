@@ -1,14 +1,13 @@
 import { invoke } from "@tauri-apps/api/core";
 import { readText } from "@tauri-apps/plugin-clipboard-manager";
 import { register } from "@tauri-apps/plugin-global-shortcut";
-import { createMemo, createSignal, For, onMount } from "solid-js";
+import { For, onMount } from "solid-js";
 import { fetch } from "@tauri-apps/plugin-http";
-import { ItemInfo, ItemRecord, ItemsRecord } from "./itemsRecord";
+import { ItemInfo, ItemRecord, ItemsRecord } from "./itemsRecord.ts";
 import { load } from "@tauri-apps/plugin-store";
-import { BaseWidget } from "../widget/BaseWidget";
-import { passthrough } from "../PassthroughState";
+import { BaseWidget } from "./BaseWidget";
+import { passthrough } from "../../state/Passthrough";
 import { createStore } from "solid-js/store";
-import { create } from "@tauri-apps/plugin-fs";
 
 export interface CurrencyResponse {
   core: {
@@ -183,7 +182,13 @@ function Inventory() {
   });
 
   return (
-    <BaseWidget name="inventory" show={!passthrough()}>
+    <BaseWidget
+      name="inventory"
+      show={!passthrough()}
+      defaultPos={{ x: 1130, y: 15 }}
+      defaultWidth={{ w: 430 }}
+      defaultTransparency={90}
+    >
       <table class="table py-3 px-5">
         <thead>
           <tr>

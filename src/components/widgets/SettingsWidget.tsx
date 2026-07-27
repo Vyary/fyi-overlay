@@ -1,20 +1,19 @@
 import { Accessor, createSignal, onMount, Setter, Show } from "solid-js";
-import { filePath, selectFile, startTailing, watching } from "./FileState";
-import { resetPositionSw } from "./StopwatchWidget";
+import { filePath, selectFile, startTailing, watching } from "../../state/File";
 import {
   enablePassthrough,
   passthrough,
   PtSc,
   updatePasstroughShortcut,
-} from "./PassthroughState";
+} from "../../state/Passthrough";
 import {
   SwSc,
   SwScReset,
   updateStopwatchShortcut,
   updateStopwatchShortcutReset,
 } from "./StopwatchShortcutState";
-import { character, setCharacterName } from "../state/Character";
-import { BaseWidget } from "./widget/BaseWidget";
+import { character, setCharacterName } from "../../state/Character";
+import { BaseWidget } from "./BaseWidget";
 
 function SettingsWidget(props: {
   showSw: Accessor<boolean>;
@@ -35,7 +34,14 @@ function SettingsWidget(props: {
   });
 
   return (
-    <BaseWidget name="settings" show={!passthrough()}>
+    <BaseWidget
+      name="settings"
+      show={!passthrough()}
+      textSizeSlider={false}
+      defaultPos={{ x: 1565, y: 15 }}
+      defaultWidth={{ w: 340 }}
+      defaultTransparency={95}
+    >
       <fieldset class="select-none px-5 py-3">
         <legend class="fieldset-legend">Settings</legend>
 
@@ -265,15 +271,6 @@ function SettingsWidget(props: {
                 }}
               />
             </form>
-          </div>
-
-          <div class="join pb-2">
-            <button
-              class="btn btn-soft join-item"
-              onClick={() => resetPositionSw()}
-            >
-              Reset Position
-            </button>
           </div>
         </Show>
 

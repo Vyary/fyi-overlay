@@ -3,7 +3,7 @@ import { Menu } from "@tauri-apps/api/menu";
 import { relaunch } from "@tauri-apps/plugin-process";
 import { defaultWindowIcon } from "@tauri-apps/api/app";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { togglePassthrough } from "./PassthroughState";
+import { togglePassthrough } from "../state/Passthrough";
 import { exportGuide, importGuide } from "../state/Guide";
 
 async function initTrayIcon() {

@@ -1,14 +1,14 @@
-import { Accessor, createMemo, createSignal, For, Show } from "solid-js";
+import { createMemo, createSignal, For, Show } from "solid-js";
 import { TransitionGroup } from "solid-transition-group";
-import { tracker } from "../state/Tracker";
-import { towns } from "../state/Towns";
+import { tracker } from "../../state/Tracker";
+import { towns } from "../../state/Towns";
 import { ZoneEditor } from "./ZoneEditor";
-import { passthrough } from "./PassthroughState";
-import { content } from "../state/Content";
-import { character } from "../state/Character";
-import { BaseWidget } from "./widget/BaseWidget";
+import { passthrough } from "../../state/Passthrough";
+import { content } from "../../state/Content";
+import { character } from "../../state/Character";
+import { BaseWidget } from "./BaseWidget";
 
-function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
+function ZoneWidget() {
   const [openEditor, setOpenEditor] = createSignal(false);
   const overleveled = () => tracker.zoneLevel - character.level < 0;
   const levelDiff = () => Math.abs(tracker.zoneLevel - character.level);
@@ -29,10 +29,16 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
 
   return (
     <>
-      <BaseWidget name="zone" show={true}>
+      <BaseWidget
+        name="zone"
+        show={true}
+        defaultPos={{ x: 20, y: 170 }}
+        defaultWidth={{ w: 550 }}
+        defaultTransparency={25}
+      >
         <Show when={towns[tracker.zone]}>
           <div
-            class={`text-base-content text-shadow-lg leading-relaxed border-b border-base-content/5 px-5 py-3 select-none `}
+            class={`text-base-content text-shadow-lg leading-relaxed border-b border-base-content/5 px-5 py-3 select-none`}
           >
             {`${towns[tracker.zone]} - Zone Level: ${tracker.zoneLevel}`}
           </div>
@@ -108,7 +114,7 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
           </For>
         </div>
 
-        <Show when={!props.passthrough()}>
+        <Show when={!passthrough()}>
           <div
             class="absolute top-1 right-7 h-5 w-1 cursor-pointer p-1 text-base-content/50 hover:text-base-content transition-colors"
             onMouseDown={() => setOpenEditor(!openEditor())}
@@ -131,7 +137,14 @@ function ZoneWidget(props: { passthrough: Accessor<boolean> }) {
           </div>
         </Show>
       </BaseWidget>
-      <BaseWidget name="editor" show={openEditor()}>
+      <BaseWidget
+        name="editor"
+        show={openEditor() && !passthrough()}
+        textSizeSlider={false}
+        defaultPos={{ x: 575, y: 15 }}
+        defaultWidth={{ w: 550 }}
+        defaultTransparency={100}
+      >
         <div
           classList={{
             hidden: passthrough(),

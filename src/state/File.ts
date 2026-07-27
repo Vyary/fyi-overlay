@@ -2,10 +2,10 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { createSignal } from "solid-js";
-import { setFlag, setZone, setZoneLevel, tracker } from "../state/Tracker";
-import { addTown, quotes } from "../state/Guide";
-import { addTownName } from "../state/Towns";
-import { character, updateCharacterLevel } from "../state/Character";
+import { setFlag, setZone, setZoneLevel, tracker } from "./Tracker";
+import { addTown, quotes } from "./Guide";
+import { addTownName } from "./Towns";
+import { character, updateCharacterLevel } from "./Character";
 
 const [filePath, setFilePath] = createSignal("");
 const [watching, setWatching] = createSignal(false);

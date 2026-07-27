@@ -15,16 +15,16 @@ import {
   moveTaskDown,
   moveTaskUp,
   removeTask,
-} from "../state/Guide";
-import { setZone, tracker } from "../state/Tracker";
-import { towns } from "../state/Towns";
-import ConfirmModal from "./ConfirmModal";
+} from "../../state/Guide";
+import { setZone, tracker } from "../../state/Tracker";
+import { towns } from "../../state/Towns";
+import ConfirmModal from "../ConfirmModal";
 
 function ZoneEditor() {
   return (
     <div class="py-3 px-5">
       <div class="sticky top-0 z-10 backdrop-blur-md flex items-center justify-between">
-        <div class="form-control w-full py-3 px-5">
+        <div class="form-control w-full px-1 py-2">
           <input
             type="text"
             list="towns"

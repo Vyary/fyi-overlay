@@ -1,29 +1,23 @@
 import { createSignal, onMount, Show } from "solid-js";
 import "./App.css";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { ZoneWidget } from "./components/ZoneWidget";
+import { ZoneWidget } from "./components/widgets/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
-import { Stopwatch } from "./components/StopwatchWidget";
-import SettingsWidget from "./components/SettingsWidget";
+import { Stopwatch } from "./components/widgets/StopwatchWidget";
+import SettingsWidget from "./components/widgets/SettingsWidget";
 import {
   enablePassthrough,
   passthrough,
   registerPasstroughShortcut,
-} from "./components/PassthroughState";
+} from "./state/Passthrough";
 import { unregisterAll } from "@tauri-apps/plugin-global-shortcut";
-import {
-  filePath,
-  setFilePath,
-  showOverlay,
-  startTailing,
-} from "./components/FileState";
+import { filePath, setFilePath, showOverlay, startTailing } from "./state/File";
 import Updater from "./components/Updater";
 import { loadTracker, saveTracker } from "./state/Tracker";
 import { loadGuide, saveGuide } from "./state/Guide";
 import { loadTowns, saveTowns } from "./state/Towns";
 import { loadCharacter, saveCharacter } from "./state/Character";
-import { Inventory } from "./components/inventory/Inventory";
-import { TestWidget } from "./components/widget/TestWidget";
+import { Inventory } from "./components/widgets/Inventory";
 
 function App() {
   const [showSw, setShowSw] = createSignal(false);
@@ -70,10 +64,10 @@ function App() {
           hidden: !showOverlay() && passthrough(),
         }}
       >
-        <ZoneWidget passthrough={passthrough} />
+        <ZoneWidget />
 
         <Show when={showSw()}>
-          <Stopwatch passthrough={passthrough} />
+          <Stopwatch />
         </Show>
       </div>
 

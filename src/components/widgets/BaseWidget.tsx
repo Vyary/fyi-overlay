@@ -1,11 +1,15 @@
 import { createSignal, JSX, onCleanup, onMount, Show } from "solid-js";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { passthrough } from "../PassthroughState";
+import { passthrough } from "../../state/Passthrough";
 
 function BaseWidget(props: {
   name: string;
   show: boolean;
   children?: JSX.Element;
+  defaultPos: { x: number; y: number };
+  defaultWidth: { w: number };
+  defaultTransparency: number;
+  textSizeSlider?: boolean;
 }) {
   const sizes = ["text-xs", "text-sm", "text-base", "text-lg", "text-xl"];
   const tSizes = ["table-xs", "table-sm", "table-md", "table-lg", "table-xl"];
@@ -15,10 +19,12 @@ function BaseWidget(props: {
   let offset = { x: 0, y: 0 };
   let start = { w: 0, h: 0, x: 0, y: 0 };
 
-  const [posZw, setPos] = createSignal({ x: 28, y: 160 });
-  const [widthZw, setWidth] = createSignal({ w: 550 });
+  const [posZw, setPos] = createSignal(props.defaultPos);
+  const [widthZw, setWidth] = createSignal(props.defaultWidth);
   const [textSize, setTextSize] = createSignal(2);
-  const [transparency, setTransparency] = createSignal(25);
+  const [transparency, setTransparency] = createSignal(
+    props.defaultTransparency,
+  );
 
   const savePosition = (name: string) => {
     localStorage.setItem(`${name}Pos`, JSON.stringify(posZw()));
@@ -111,8 +117,8 @@ function BaseWidget(props: {
   onCleanup(() => cleanUp(props.name));
 
   return (
-    <div class="flex">
-      <Show when={props.show}>
+    <Show when={props.show}>
+      <div class="flex">
         <div
           class={`absolute h-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5`}
           style={{
@@ -122,9 +128,12 @@ function BaseWidget(props: {
             "background-color": `color-mix(in oklch, var(--color-base-300) ${transparency()}%, transparent)`,
           }}
         >
+          <Show when={!passthrough()}>
+            <div class="cursor-move h-1 select-none" onMouseDown={onDown}></div>
+          </Show>
+
           <div
-            class={`cursor-move overflow-y-auto min-h-0 flex-1 max-h-200 select-none ${textSizeTW()} ${tableSize()}`}
-            onMouseDown={onDown}
+            class={`overflow-y-auto min-h-0 flex-1 max-h-200 ${textSizeTW()} ${tableSize()}`}
           >
             {props.children}
           </div>
@@ -141,8 +150,13 @@ function BaseWidget(props: {
           </Show>
 
           <Show when={!passthrough()}>
-            <div class="flex gap-0.5 justify-between">
-              <div class="flex items-center gap-2 pt-2 border-t border-base-content/5 bg-base-300/30 px-5 py-3 w-full">
+            <div class="flex gap-0.5 justify-between bg-base-300/30 rounded-b-2xl border-t border-base-content/5">
+              <div
+                class="flex items-center gap-2 px-5 py-3 w-full"
+                classList={{
+                  hidden: props.textSizeSlider == false,
+                }}
+              >
                 <span class="text-xs text-base-content/60 font-medium select-none">
                   A
                 </span>
@@ -159,7 +173,7 @@ function BaseWidget(props: {
                   A
                 </span>
               </div>
-              <div class="flex items-center gap-2 pt-2 border-t border-base-content/5 bg-base-300/30 px-5 py-3 w-full justify-end">
+              <div class="flex items-center gap-2 px-5 py-3 w-full justify-end">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="w-4 h-4 text-base-content/40"
@@ -201,8 +215,8 @@ function BaseWidget(props: {
             </div>
           </Show>
         </div>
-      </Show>
-    </div>
+      </div>
+    </Show>
   );
 }
 
