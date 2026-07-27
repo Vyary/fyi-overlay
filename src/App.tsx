@@ -3,7 +3,6 @@ import "./App.css";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { ZoneWidget } from "./components/widgets/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
-import { Stopwatch } from "./components/widgets/StopwatchWidget";
 import SettingsWidget from "./components/widgets/SettingsWidget";
 import {
   enablePassthrough,
@@ -17,7 +16,8 @@ import { loadTracker, saveTracker } from "./state/Tracker";
 import { loadGuide, saveGuide } from "./state/Guide";
 import { loadTowns, saveTowns } from "./state/Towns";
 import { loadCharacter, saveCharacter } from "./state/Character";
-import { Inventory } from "./components/widgets/Inventory";
+import { Inventory } from "./components/widgets/InventoryWidget";
+import { Stopwatch } from "./components/widgets/StopwatchWidget";
 
 function App() {
   const [showSw, setShowSw] = createSignal(false);

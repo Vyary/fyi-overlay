@@ -120,7 +120,7 @@ const parseItem = async () => {
   return item;
 };
 
-function Inventory() {
+function InventoryWidget() {
   const [inventory, setInventory] = createStore<ItemRecord>({});
   let store: any;
 
@@ -227,4 +227,4 @@ function Inventory() {
   );
 }
 
-export { Inventory };
+export { InventoryWidget as Inventory };
