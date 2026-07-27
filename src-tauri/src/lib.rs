@@ -1,3 +1,7 @@
+use enigo::{
+    Direction::{Click, Press, Release},
+    Enigo, Key, Keyboard, Settings,
+};
 use std::time::Duration;
 use tauri::{Emitter, Window};
 use tokio::fs::File;
@@ -30,9 +34,20 @@ async fn tail_file(window: Window, file_path: String) -> Result<(), String> {
     }
 }
 
+#[tauri::command]
+fn os_copy() {
+    let mut enigo = Enigo::new(&Settings::default()).unwrap();
+    let _ = enigo.key(Key::Control, Press);
+    let _ = enigo.key(Key::Unicode('c'), Click);
+    let _ = enigo.key(Key::Control, Release);
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_http::init())
+        .plugin(tauri_plugin_store::Builder::new().build())
+        .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_single_instance::init(|_app, _args, _cwd| {}))
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
@@ -40,7 +55,7 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![tail_file])
+        .invoke_handler(tauri::generate_handler![tail_file, os_copy])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

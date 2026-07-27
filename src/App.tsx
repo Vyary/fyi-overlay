@@ -1,30 +1,27 @@
 import { createSignal, onMount, Show } from "solid-js";
 import "./App.css";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { ZoneWidget } from "./components/ZoneWidget";
+import { ZoneWidget } from "./components/widgets/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
-import { Stopwatch } from "./components/StopwatchWidget";
-import SettingsWidget from "./components/SettingsWidget";
+import SettingsWidget from "./components/widgets/SettingsWidget";
 import {
   enablePassthrough,
   passthrough,
   registerPasstroughShortcut,
-} from "./components/PassthroughState";
+} from "./state/Passthrough";
 import { unregisterAll } from "@tauri-apps/plugin-global-shortcut";
-import {
-  filePath,
-  setFilePath,
-  showOverlay,
-  startTailing,
-} from "./components/FileState";
+import { filePath, setFilePath, showOverlay, startTailing } from "./state/File";
 import Updater from "./components/Updater";
 import { loadTracker, saveTracker } from "./state/Tracker";
 import { loadGuide, saveGuide } from "./state/Guide";
 import { loadTowns, saveTowns } from "./state/Towns";
 import { loadCharacter, saveCharacter } from "./state/Character";
+import { Inventory } from "./components/widgets/InventoryWidget";
+import { Stopwatch } from "./components/widgets/StopwatchWidget";
 
 function App() {
   const [showSw, setShowSw] = createSignal(false);
+  const [showInventory, setShowInventory] = createSignal(false);
   const [autoUpdate, setAutoUpdate] = createSignal(true);
 
   onMount(async () => {
@@ -68,27 +65,28 @@ function App() {
           hidden: !showOverlay() && passthrough(),
         }}
       >
-        <ZoneWidget passthrough={passthrough} />
+        <ZoneWidget />
 
         <Show when={showSw()}>
-          <Stopwatch passthrough={passthrough} />
+          <Stopwatch />
         </Show>
       </div>
-      <div
-        classList={{
-          hidden: passthrough(),
-        }}
-      >
-        <SettingsWidget
-          showSw={showSw}
-          setShowSw={setShowSw}
-          autoUpdate={autoUpdate}
-          setAutoUpdate={setAutoUpdate}
-        />
-      </div>
+
+      <SettingsWidget
+        showSw={showSw}
+        setShowSw={setShowSw}
+        autoUpdate={autoUpdate}
+        setAutoUpdate={setAutoUpdate}
+        showInventory={showInventory}
+        setShowInventory={setShowInventory}
+      />
 
       <Show when={autoUpdate()}>
         <Updater />
+      </Show>
+
+      <Show when={showInventory()}>
+        <Inventory shortcut="F2" />
       </Show>
     </main>
   );

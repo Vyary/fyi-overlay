@@ -19,6 +19,12 @@
     "process:allow-restart",
     "updater:default",
     "fs:allow-write-text-file",
-    "fs:allow-read-text-file"
+    "fs:allow-read-text-file",
+    "clipboard-manager:allow-read-text",
+    "store:default",
+    {
+          "identifier": "http:default",
+          "allow": [{ "url": "https://poe.ninja/*" }]
+        }
   ]
 }
