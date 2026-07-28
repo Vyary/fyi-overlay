@@ -51,17 +51,11 @@ const startTailing = async () => {
       }
 
       const quoteArray = line.split(": ");
-      const quote = quoteArray[quoteArray.length - 1];
+      let quote = quoteArray[quoteArray.length - 1];
 
-      if (character.name != "") {
-        quote.replace(character.name, "Character");
+      if (character.name != "" && quote.includes(character.name)) {
+        quote = quote.replace(character.name, "Character");
       }
-      // console.log(
-      //   quotes["G4_8b"]["Your timing is quite remarkable, you know!"],
-      // );
-      // console.log(tracker.zone);
-      // console.log(quote);
-      // console.log(quotes?.[tracker.zone]?.[quote]);
       if (quotes?.[tracker.zone]?.[quote]) {
         setFlag(quote);
       }
