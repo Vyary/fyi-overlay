@@ -52,12 +52,15 @@ const startTailing = async () => {
 
       const quoteArray = line.split(": ");
       let quote = quoteArray[quoteArray.length - 1];
+      console.log(quote)
 
       if (character.name != "" && quote.includes(character.name)) {
         quote = quote.replace(character.name, "Character");
+        console.log(quote)
       }
       if (quotes?.[tracker.zone]?.[quote]) {
         setFlag(quote);
+        console.log("quote found")
       }
     } catch (e) {
       console.log(e);

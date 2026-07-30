@@ -1,4 +1,4 @@
-import { createStore } from "solid-js/store";
+import { createStore, reconcile } from "solid-js/store";
 
 interface Character {
   name: string;
@@ -24,7 +24,7 @@ const saveCharacter = () => {
 
 const loadCharacter = () => {
   const c = localStorage.getItem("char");
-  if (c) setCharacter(JSON.parse(c));
+  if (c) setCharacter(reconcile(JSON.parse(c)))
 };
 
 export {

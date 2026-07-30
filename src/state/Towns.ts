@@ -1,4 +1,4 @@
-import { createStore } from "solid-js/store";
+import { createStore, reconcile } from "solid-js/store";
 
 const [towns, setTowns] = createStore<Record<string, string>>({
   G1_town: "Clearfell Encampment",
@@ -116,7 +116,7 @@ const saveTowns = () => {
 
 const loadTowns = () => {
   const t = localStorage.getItem("towns");
-  if (t) setTowns(JSON.parse(t));
+  if (t) setTowns(reconcile(JSON.parse(t)))
 };
 
 export { towns, addTownName, saveTowns, loadTowns };
