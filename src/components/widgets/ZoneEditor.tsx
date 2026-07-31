@@ -45,7 +45,7 @@ function ZoneEditor() {
         {(z, i) => {
           const [showConfirm, setShowConfirm] = createSignal(false);
           return (
-            <div class="bg-base-200/40 rounded-xl border border-base-content/5 p-4 flex flex-col gap-4">
+            <div class="bg-base-200/40 rounded-xl border border-base-content/5 p-4 flex flex-col gap-4 card ">
               <div class="flex items-center gap-2">
                 <div class="flex flex-col gap-1 text-base-content/40">
                   <button
