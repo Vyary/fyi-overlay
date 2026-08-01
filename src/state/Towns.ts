@@ -116,7 +116,7 @@ const saveTowns = () => {
 
 const loadTowns = () => {
   const t = localStorage.getItem("towns");
-  if (t) setTowns(reconcile(JSON.parse(t)))
+  if (t) setTowns(reconcile(JSON.parse(t)));
 };
 
 export { towns, addTownName, saveTowns, loadTowns };
