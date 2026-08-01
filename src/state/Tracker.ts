@@ -4,6 +4,7 @@ interface Tracker {
   zone: string;
   zoneLevel: number;
   prevZone: string;
+  progressZone: string;
   history: string[];
   flags: Record<string, Record<string, boolean>>;
 }
@@ -12,6 +13,7 @@ const [tracker, setTracker] = createStore<Tracker>({
   zone: "",
   zoneLevel: 0,
   prevZone: "",
+  progressZone: "",
   history: [],
   flags: {},
 });
@@ -22,6 +24,7 @@ const setZone = (zone: string) => {
       s.prevZone = s.zone;
       s.zone = zone;
       s.history = [zone, ...s.history];
+      s.progressZone = zone;
     }),
   );
 };

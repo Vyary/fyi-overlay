@@ -500,10 +500,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       prev: "G2_7",
       tasks: [
         { text: "Speak with Zarka" },
-        { text: "Speak with Sekhema Asala" },
         { text: "Use the Desert Map and travel to Traitor's Passage" },
         { text: "Use the Horn of the Vastiri" },
-        { text: "Speak with Sekhema Asala" },
         { text: "Use the Desert Map and travel to Deshar" },
       ],
     },
@@ -529,7 +527,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       prev: "G2_3",
       tasks: [
         { text: "Speak with Zarka" },
-        { text: "Speak with Sekhema Asala" },
         { text: "Use the Desert Map and travel to Mastodon Badlands" },
       ],
     },
@@ -796,6 +793,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find the Runestones",
           reward: "<span class='italic'>Farrow Quest</span>",
+          show: false,
+          hide: true,
+          condition: "There we go!",
         },
         {
           text: '<span class="text-info italic">If you have found all 3 Runestones you can now travel to the Skull of the Titan using the Ardura Caravan</span>',
@@ -2226,6 +2226,8 @@ const [quotes, setQuotes] = createStore<
   },
   G2_9_2: {
     "Character has received 30% increased [Charm] Charges gained.": true,
+    "Character has received +10% to [Resistances|Lightning Resistance]": true,
+    "Character has received +10% to [Resistances|Lightning Resistance].": true,
   },
   G3_3: { "You have received 2 Passive Skill Points.": true },
   G3_6_1: {
@@ -2292,6 +2294,7 @@ const [quotes, setQuotes] = createStore<
   G2_5_2: {
     "Well done! Now... there's still more to find... keep searching!": true,
   },
+  G2_8: { "There we go!": true },
 });
 
 const addTown = (town: string) => {
