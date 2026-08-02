@@ -18,6 +18,7 @@ import { loadTowns, saveTowns } from "./state/Towns";
 import { loadCharacter, saveCharacter } from "./state/Character";
 import { Inventory } from "./components/widgets/InventoryWidget";
 import { Stopwatch } from "./components/widgets/StopwatchWidget";
+import TimelineWidget from "./components/widgets/TimelineWidget";
 
 function App() {
   const [showSw, setShowSw] = createSignal(false);
@@ -88,6 +89,8 @@ function App() {
       <Show when={showInventory()}>
         <Inventory shortcut="F2" />
       </Show>
+
+      <TimelineWidget />
     </main>
   );
 }

@@ -5,15 +5,12 @@ import { tracker } from "./Tracker";
 const content = createMemo<Guide>(
   (prev) => {
     const found = guide[tracker.zone]?.find((z) => {
-      const prevCheck = z.prev == tracker.prevZone;
-      const preqCheck = z.preq?.every((zone) => tracker.history.includes(zone));
-
-      if (prevCheck && preqCheck) return true;
-      if (prevCheck && !z.preq) return true;
-      if (!z.prev && preqCheck) return true;
-      if (!z.prev && !z.preq) return true;
-
-      return false;
+      const prevOk = z.prev ? z.prev == tracker.prevZone : true;
+      const preqOk = z.preq
+        ? z.preq.every((zone) => tracker.history.includes(zone))
+        : true;
+      const progressOk = z.progress ? z.progress == tracker.progressZone : true;
+      return prevOk && preqOk && progressOk;
     });
 
     if (!found) return prev;

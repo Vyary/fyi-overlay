@@ -4,6 +4,7 @@ import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { createStore, produce, reconcile } from "solid-js/store";
 
 export interface Guide {
+  progress?: number;
   prev?: string;
   preq?: string[];
   tasks: {
@@ -2479,6 +2480,14 @@ const changeDoneQuote = (
   saveGuide();
 };
 
+const changeProgress = (zone: string, zoneIndex: number, index: number) => {
+  setGuide(
+    produce((s) => {
+      s[zone][zoneIndex].progress = index;
+    }),
+  );
+};
+
 const changePrev = (zone: string, zoneIndex: number, text: string) => {
   setGuide(
     produce((s) => {
@@ -2578,6 +2587,7 @@ export {
   moveTaskDown,
   changeAction,
   changeDoneQuote,
+  changeProgress,
   changePrev,
   changePreq,
   saveGuide,
