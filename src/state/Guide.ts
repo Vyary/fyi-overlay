@@ -40,13 +40,53 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     },
   ],
   G1_town: [
+    { tasks: [{ text: "Travel to Kingsmarch (Act 4)" }], progress: 49 },
+    {
+      tasks: [
+        {
+          text: "Travel to the Sandswept Marsh (Act 3)",
+          show: false,
+          hide: true,
+          condition: "G3_town",
+        },
+        {
+          text: "Travel to the Ziggurat Encampment (Act 3)",
+          show: true,
+          hide: false,
+          condition: "G3_town",
+        },
+      ],
+      progress: 34,
+    },
+    {
+      tasks: [
+        {
+          text: "Travel to the Vastiri Outskirts (Act 2)",
+          show: false,
+          hide: true,
+          condition: "G2_town",
+        },
+        {
+          text: "Travel to The Ardura Caravan (Act 2)",
+          show: true,
+          hide: false,
+          condition: "G2_town",
+        },
+      ],
+      progress: 16,
+    },
     {
       prev: "G1_15",
       tasks: [{ text: "Speak to Una, Leitis, Farrow and The Hooded One" }],
     },
-    { prev: "G1_14", tasks: [{ text: "Return to The Manor Ramparts" }] },
-    { prev: "G1_13_2", tasks: [{ text: "Return to Ogham Village" }] },
-    { prev: "G1_13_1", tasks: [{ text: "Return to Ogham Farmlands" }] },
+    { tasks: [{ text: "Return to the Ogham Manor" }], progress: 15 },
+    {
+      prev: "",
+      tasks: [{ text: "Return to The Manor Ramparts" }],
+      progress: 14,
+    },
+    { prev: "", tasks: [{ text: "Return to Ogham Village" }], progress: 13 },
+    { prev: "", tasks: [{ text: "Return to Ogham Farmlands" }], progress: 12 },
     {
       prev: "G1_12",
       tasks: [
@@ -54,35 +94,48 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Return to the Hunting Grounds" },
       ],
     },
-    { prev: "G1_11", tasks: [{ text: "Return to the Hunting Grounds" }] },
     {
-      prev: "G1_6",
+      prev: "",
+      tasks: [{ text: "Return to the Hunting Grounds" }],
+      progress: 11,
+    },
+    {
+      tasks: [{ text: "Return to the Cemetery of the Eternals" }],
+      progress: 8,
+    },
+    {
+      prev: "",
       tasks: [
         { text: "Speak with Una" },
-        { text: "Return to The Grim Tangle" },
+        { text: "Travel to The Grim Tangle" },
       ],
+      progress: 7,
+    },
+    {
+      prev: "",
+      tasks: [
+        { text: "Speak to Una" },
+        { text: "Travel to The Grelwood" },
+        { text: "Find The Grim Tangle" },
+      ],
+      preq: ["G1_5"],
+      progress: 6,
     },
     {
       prev: "G1_5",
       tasks: [{ text: "Speak to Renly" }, { text: "Travel to The Grelwood" }],
     },
+    { tasks: [{ text: "Return to The Red Vale" }], progress: 4 },
+    { prev: "", tasks: [{ text: "Return to The Grelwood" }], progress: 3 },
+    { prev: "", tasks: [{ text: "Return to Clearfell" }], progress: 2 },
     {
-      prev: "G1_4",
-      preq: ["G1_5"],
-      tasks: [
-        { text: "Speak to Una" },
-        { text: "Travel to or Find The Grim Tangle" },
-      ],
-    },
-    { prev: "G1_4", tasks: [{ text: "Return to The Grelwood" }] },
-    { prev: "G1_2", tasks: [{ text: "Return to Clearfell" }] },
-    {
-      prev: "G1_1",
+      prev: "",
       tasks: [
         { text: "Speak to Renly" },
         { text: "Cut the Uncut Skill Gem" },
         { text: "Enter Clearfell" },
       ],
+      progress: 1,
     },
   ],
   G1_2: [
@@ -477,6 +530,24 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     },
   ],
   G2_town: [
+    { tasks: [{ text: "Travel to Kingsmarch (Act 4)" }], progress: 49 },
+    {
+      tasks: [
+        {
+          text: "Travel to the Sandswept Marsh (Act 3)",
+          show: false,
+          hide: true,
+          condition: "G3_town",
+        },
+        {
+          text: "Travel to the Ziggurat Encampment (Act 3)",
+          show: true,
+          hide: false,
+          condition: "G3_town",
+        },
+      ],
+      progress: 34,
+    },
     {
       prev: "G2_12",
       tasks: [
@@ -487,7 +558,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Speak with Sekhema Asala" },
       ],
     },
-    { prev: "G2_10_1", tasks: [{ text: "Return to Mawdun Quarry" }] },
+    { tasks: [{ text: "Return to Dreadnought" }], progress: 33 },
     {
       prev: "G2_9_2",
       tasks: [
@@ -495,8 +566,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to The Dreadnought" },
       ],
     },
-    { prev: "G2_9_1", tasks: [{ text: "Return to Path of Mourning" }] },
-    { prev: "G2_8", tasks: [{ text: "Return to Deshar" }] },
+    { tasks: [{ text: "Return to The Spires of Deshar" }], progress: 32 },
+    { prev: "", tasks: [{ text: "Return to Path of Mourning" }], progress: 31 },
+    { prev: "", tasks: [{ text: "Return to Deshar" }], progress: 30 },
     {
       prev: "G2_7",
       tasks: [
@@ -506,7 +578,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to Deshar" },
       ],
     },
-    { prev: "G2_6", tasks: [{ text: "Return to Valley of the Titans" }] },
+    { tasks: [{ text: "Return to The Titan Grotto" }], progress: 29 },
+    {
+      prev: "",
+      tasks: [{ text: "Return to Valley of the Titans" }],
+      progress: 28,
+    },
     {
       prev: "G2_4_3",
       tasks: [
@@ -514,8 +591,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to Valley of the Titans" },
       ],
     },
-    { prev: "G2_4_2", tasks: [{ text: "Return to The Lost City" }] },
-    { prev: "G2_4_1", tasks: [{ text: "Return to Keth" }] },
+    { tasks: [{ text: "Return to the Buried Shrines" }], progress: 27 },
+    { prev: "", tasks: [{ text: "Return to The Lost City" }], progress: 26 },
+    { prev: "", tasks: [{ text: "Return to Keth" }], progress: 25 },
     {
       prev: "G2_5_2",
       tasks: [
@@ -523,7 +601,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to Keth" },
       ],
     },
-    { prev: "G2_5_1", tasks: [{ text: "Return to Mastodon Badlands" }] },
+    { tasks: [{ text: "Return to The Bone Pits" }], progress: 24 },
+    {
+      prev: "",
+      tasks: [{ text: "Return to Mastodon Badlands" }],
+      progress: 23,
+    },
     {
       prev: "G2_3",
       tasks: [
@@ -531,6 +614,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to Mastodon Badlands" },
       ],
     },
+    { tasks: [{ text: "Return to The Halani Gates" }], progress: 22 },
+    { tasks: [{ text: "Return to Traitor's Passage" }], progress: 21 },
     {
       prev: "G2_10_2",
       tasks: [
@@ -538,16 +623,24 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to Traitor's Passage" },
       ],
     },
+    { tasks: [{ text: "Return to the Mawdun Mine" }], progress: 20 },
+    {
+      prev: "",
+      tasks: [{ text: "Return to the Mawdun Quarry" }],
+      progress: 19,
+    },
     {
       prev: "G2_3a",
       tasks: [{ text: "Use the Desert Map and travel to Mawdun Quarry" }],
+      progress: 0,
     },
     {
-      prev: "G2_1",
+      prev: "",
       tasks: [
         { text: "Speak with Sekhema Asala" },
         { text: "Use the Desert Map and travel to Halani Gates" },
       ],
+      progress: 17,
     },
   ],
   G2_3a: [
@@ -873,15 +966,20 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     },
   ],
   G3_town: [
+    { tasks: [{ text: "Travel to Kingsmarch (Act 4)" }], progress: 49 },
     {
-      preq: ["G3_17"],
+      preq: [],
       tasks: [
         { text: "Speak with Doryani" },
         { text: "Speak with Alva and Travel to Kingsmarch" },
       ],
+      prev: "G3_17",
     },
+    { tasks: [{ text: "Return to The Black Chambers" }], progress: 48 },
+    { tasks: [{ text: "Return to the Aggorat" }], progress: 47 },
+    { tasks: [{ text: "Return to the Utzaal " }], progress: 46 },
     {
-      preq: ["G3_12"],
+      preq: [],
       tasks: [
         { text: "Speak with Servi" },
         { text: "Use the Gateway" },
@@ -890,9 +988,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         { text: "Enter the Utzaal" },
       ],
+      prev: "G3_12",
     },
+    { tasks: [{ text: "Return to the Temple of Kopec" }], progress: 45 },
     {
-      preq: ["G3_11"],
+      preq: [],
       tasks: [
         {
           text: "<span class='text-info italic'>Directions: Go downstairs</span>",
@@ -902,7 +1002,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         { text: "Enter the Temple of Kopec" },
       ],
+      prev: "G3_11",
     },
+    { tasks: [{ text: "Return to the Apex of Filth" }], progress: 44 },
     {
       tasks: [
         { text: "Speak with Oswald" },
@@ -911,8 +1013,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       prev: "G3_9",
     },
     { prev: "G3_7", tasks: [{ text: "Travel back to The Matlan Waterways" }] },
+    { tasks: [{ text: "Return to The Drowned City" }], progress: 43 },
     {
-      preq: ["G3_2_2"],
       tasks: [
         {
           text: "<span class='text-info italic'>Directions: Go downstairs</span>",
@@ -920,7 +1022,17 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Speak with Alva" },
         { text: "Enter The Drowned City" },
       ],
+      preq: [],
+      prev: "G3_2_2",
     },
+    { tasks: [{ text: "Return to The Matlan Waterways" }], progress: 42 },
+    { tasks: [{ text: "Return to the Jungle Ruins" }], progress: 41 },
+    { tasks: [{ text: "Travel to the Jungle Ruins" }], prev: "G3_6_2" },
+    { tasks: [{ text: "Return to the Jiquani's Sanctum" }], progress: 40 },
+    { tasks: [{ text: "Return to the Jiquani's Machinarium" }], progress: 39 },
+    { tasks: [{ text: "Return to the Chimeral Wetlands" }], progress: 38 },
+    { tasks: [{ text: "Return to the Infested Barrens" }], progress: 37 },
+    { tasks: [{ text: "Return to the Jungle Ruins" }] },
     {
       tasks: [
         {
@@ -1620,8 +1732,18 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           show: false,
           hide: true,
         },
-        { text: "Speak with The Hooded One" },
-        { text: "Set Sail to Arastas" },
+        {
+          text: "Speak with The Hooded One",
+          show: true,
+          hide: false,
+          condition: "G4_4_3",
+        },
+        {
+          text: "Set Sail to Arastas",
+          show: true,
+          hide: false,
+          condition: "G4_4_3",
+        },
       ],
     },
     {
@@ -1653,6 +1775,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       ],
       preq: ["G4_1_2"],
     },
+    { tasks: [{ text: "Return to the Isle of Kin" }], progress: 50 },
     {
       tasks: [
         {
@@ -1724,7 +1847,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
         },
         {
-          text: "Set Sail to Whakapanu Island",
+          text: "Set Sail to Kedge Bay",
           condition: "G4_1_2",
           show: true,
           hide: false,
@@ -1743,7 +1866,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Kill <span class='text-poe-unique font-semibold'>Krutog, Lord of Kin</span>",
         },
         { text: "Return to Ship" },
-        { text: "Set Sail to Whakapanu Island" },
       ],
     },
   ],
@@ -2296,6 +2418,8 @@ const [quotes, setQuotes] = createStore<
     "Well done! Now... there's still more to find... keep searching!": true,
   },
   G2_8: { "There we go!": true },
+  G1_town: { G2_town: true, G3_town: true },
+  G2_town: { G3_town: true },
 });
 
 const addTown = (town: string) => {
@@ -2486,6 +2610,8 @@ const changeProgress = (zone: string, zoneIndex: number, index: number) => {
       s[zone][zoneIndex].progress = index;
     }),
   );
+
+  saveGuide();
 };
 
 const changePrev = (zone: string, zoneIndex: number, text: string) => {
@@ -2494,6 +2620,8 @@ const changePrev = (zone: string, zoneIndex: number, text: string) => {
       s[zone][zoneIndex].prev = text;
     }),
   );
+
+  saveGuide();
 };
 
 const changePreq = (zone: string, zoneIndex: number, text: string) => {
@@ -2502,6 +2630,8 @@ const changePreq = (zone: string, zoneIndex: number, text: string) => {
       s[zone][zoneIndex].preq = text === "" ? [] : text.split(", ");
     }),
   );
+
+  saveGuide();
 };
 
 const saveGuide = () => {

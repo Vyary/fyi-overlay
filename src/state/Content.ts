@@ -9,7 +9,7 @@ const content = createMemo<Guide>(
       const preqOk = z.preq
         ? z.preq.every((zone) => tracker.history.includes(zone))
         : true;
-      const progressOk = z.progress ? z.progress == tracker.progressZone : true;
+      const progressOk = z.progress ? tracker.progressZone >= z.progress : true;
       return prevOk && preqOk && progressOk;
     });
 

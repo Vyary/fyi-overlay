@@ -14,7 +14,7 @@ const [tracker, setTracker] = createStore<Tracker>({
   zone: "",
   zoneLevel: 0,
   prevZone: "",
-  progressZone: 0,
+  progressZone: 69,
   history: [],
   flags: {},
 });
