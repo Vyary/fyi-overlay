@@ -73,24 +73,28 @@ function App() {
         </Show>
       </div>
 
-      <SettingsWidget
-        showSw={showSw}
-        setShowSw={setShowSw}
-        autoUpdate={autoUpdate}
-        setAutoUpdate={setAutoUpdate}
-        showInventory={showInventory}
-        setShowInventory={setShowInventory}
-      />
+      <div
+        classList={{
+          hidden: passthrough(),
+        }}
+      >
+        <SettingsWidget
+          showSw={showSw}
+          setShowSw={setShowSw}
+          autoUpdate={autoUpdate}
+          setAutoUpdate={setAutoUpdate}
+          showInventory={showInventory}
+          setShowInventory={setShowInventory}
+        />
+
+        <Show when={showInventory()}>
+          <Inventory shortcut="F2" />
+        </Show>
+      </div>
 
       <Show when={autoUpdate()}>
         <Updater />
       </Show>
-
-      <Show when={showInventory()}>
-        <Inventory shortcut="F2" />
-      </Show>
-
-      <TimelineWidget />
     </main>
   );
 }

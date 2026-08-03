@@ -2,7 +2,6 @@ import { Accessor, createSignal, onMount, Setter, Show } from "solid-js";
 import { filePath, selectFile, startTailing, watching } from "../../state/File";
 import {
   enablePassthrough,
-  passthrough,
   PtSc,
   updatePasstroughShortcut,
 } from "../../state/Passthrough";
@@ -38,11 +37,10 @@ function SettingsWidget(props: {
   return (
     <BaseWidget
       name="settings"
-      show={!passthrough()}
       textSizeSlider={false}
       defaultPos={{ x: 1565, y: 15 }}
       defaultWidth={{ w: 340 }}
-      defaultTransparency={95}
+      defaultTransparency={100}
     >
       <fieldset class="fieldset select-none w-full gap-3 px-4 py-3">
         <legend class="fieldset-legend text-sm font-semibold uppercase tracking-wider opacity-70">

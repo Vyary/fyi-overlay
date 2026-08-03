@@ -7,6 +7,7 @@ import { passthrough } from "../../state/Passthrough";
 import { content } from "../../state/Content";
 import { character } from "../../state/Character";
 import { BaseWidget } from "./BaseWidget";
+import TimelineWidget from "./TimelineWidget";
 
 function ZoneWidget() {
   const [openEditor, setOpenEditor] = createSignal(false);
@@ -31,7 +32,6 @@ function ZoneWidget() {
     <>
       <BaseWidget
         name="zone"
-        show={true}
         defaultPos={{ x: 20, y: 170 }}
         defaultWidth={{ w: 550 }}
         defaultTransparency={25}
@@ -137,22 +137,17 @@ function ZoneWidget() {
           </div>
         </Show>
       </BaseWidget>
-      <BaseWidget
-        name="editor"
-        show={openEditor() && !passthrough()}
-        textSizeSlider={false}
-        defaultPos={{ x: 575, y: 15 }}
-        defaultWidth={{ w: 550 }}
-        defaultTransparency={100}
-      >
+
+      <Show when={openEditor()}>
         <div
           classList={{
             hidden: passthrough(),
           }}
         >
           <ZoneEditor />
+          <TimelineWidget />
         </div>
-      </BaseWidget>
+      </Show>
     </>
   );
 }

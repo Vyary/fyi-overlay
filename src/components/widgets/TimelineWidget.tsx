@@ -1,20 +1,18 @@
 import { For } from "solid-js";
 import { BaseWidget } from "./BaseWidget";
 import { moveTownDown, moveTownUp, townOrder, towns } from "../../state/Towns";
-import { passthrough } from "../../state/Passthrough";
-import { tracker } from "../../state/Tracker";
+import { setProgress, tracker } from "../../state/Tracker";
 
 function TimelineWidget() {
   return (
     <BaseWidget
       name="townTimeline"
-      show={!passthrough()}
-      defaultPos={{ x: 0, y: 0 }}
-      defaultWidth={{ w: 400 }}
+      defaultPos={{ x: 1150, y: 15 }}
+      defaultWidth={{ w: 340 }}
       defaultTransparency={100}
     >
-      <div class="py-3 px-5">
-        <div class="bg-base-200/50 rounded-xl">
+      <div class="py-3 px-5 max-h-200 overflow-y-auto">
+        <div class="bg-base-200/40 rounded-xl">
           <ul class="timeline timeline-vertical ml-[-200px]">
             <li>
               <div class="timeline-middle">
@@ -40,7 +38,7 @@ function TimelineWidget() {
                 <li>
                   <hr
                     classList={{
-                      "bg-poe-quest": tracker.progressZone >= i(),
+                      "bg-poe-quest": tracker.progress >= i(),
                     }}
                   />
                   <div class="timeline-start">
@@ -83,14 +81,14 @@ function TimelineWidget() {
                       </button>
                     </div>
                   </div>
-                  <div class="timeline-middle">
+                  <div class="timeline-middle" onClick={() => setProgress(i())}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                       class="h-5 w-5"
                       classList={{
-                        "text-poe-quest": tracker.progressZone >= i(),
+                        "text-poe-quest": tracker.progress >= i(),
                       }}
                     >
                       <path
@@ -105,7 +103,7 @@ function TimelineWidget() {
                   </div>
                   <hr
                     classList={{
-                      "bg-poe-quest": tracker.progressZone >= i(),
+                      "bg-poe-quest": tracker.progress >= i(),
                     }}
                   />
                 </li>
