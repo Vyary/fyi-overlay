@@ -546,10 +546,10 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           condition: "G3_town",
         },
       ],
-      progress: 34,
+      progress: 35,
     },
     {
-      prev: "G2_12",
+      prev: "",
       tasks: [
         { text: "Exit the Caravan and Speak with The Hooded One" },
         {
@@ -557,6 +557,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         { text: "Speak with Sekhema Asala" },
       ],
+      progress: 34,
     },
     { tasks: [{ text: "Return to Dreadnought" }], progress: 33 },
     {
@@ -966,7 +967,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     },
   ],
   G3_town: [
-    { tasks: [{ text: "Travel to Kingsmarch (Act 4)" }], progress: 49 },
+    { tasks: [{ text: "Travel to Kingsmarch (Act 4)" }], progress: 50 },
     {
       preq: [],
       tasks: [
@@ -975,9 +976,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       ],
       prev: "G3_17",
     },
-    { tasks: [{ text: "Return to The Black Chambers" }], progress: 48 },
-    { tasks: [{ text: "Return to the Aggorat" }], progress: 47 },
-    { tasks: [{ text: "Return to the Utzaal " }], progress: 46 },
+    { tasks: [{ text: "Return to The Black Chambers" }], progress: 49 },
+    { tasks: [{ text: "Return to the Aggorat" }], progress: 48 },
+    { tasks: [{ text: "Return to the Utzaal " }], progress: 47 },
     {
       preq: [],
       tasks: [
@@ -990,7 +991,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       ],
       prev: "G3_12",
     },
-    { tasks: [{ text: "Return to the Temple of Kopec" }], progress: 45 },
+    { tasks: [{ text: "Return to the Temple of Kopec" }], progress: 46 },
     {
       preq: [],
       tasks: [
@@ -1004,7 +1005,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       ],
       prev: "G3_11",
     },
-    { tasks: [{ text: "Return to the Apex of Filth" }], progress: 44 },
+    { tasks: [{ text: "Return to the Apex of Filth" }], progress: 45 },
     {
       tasks: [
         { text: "Speak with Oswald" },
@@ -1013,7 +1014,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       prev: "G3_9",
     },
     { prev: "G3_7", tasks: [{ text: "Travel back to The Matlan Waterways" }] },
-    { tasks: [{ text: "Return to The Drowned City" }], progress: 43 },
+    { tasks: [{ text: "Return to The Drowned City" }], progress: 44 },
     {
       tasks: [
         {
@@ -1025,13 +1026,13 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       preq: [],
       prev: "G3_2_2",
     },
-    { tasks: [{ text: "Return to The Matlan Waterways" }], progress: 42 },
-    { tasks: [{ text: "Return to the Jungle Ruins" }], progress: 41 },
+    { tasks: [{ text: "Return to The Matlan Waterways" }], progress: 43 },
+    { tasks: [{ text: "Return to the Jungle Ruins" }], progress: 42 },
     { tasks: [{ text: "Travel to the Jungle Ruins" }], prev: "G3_6_2" },
-    { tasks: [{ text: "Return to the Jiquani's Sanctum" }], progress: 40 },
-    { tasks: [{ text: "Return to the Jiquani's Machinarium" }], progress: 39 },
-    { tasks: [{ text: "Return to the Chimeral Wetlands" }], progress: 38 },
-    { tasks: [{ text: "Return to the Infested Barrens" }], progress: 37 },
+    { tasks: [{ text: "Return to the Jiquani's Sanctum" }], progress: 41 },
+    { tasks: [{ text: "Return to the Jiquani's Machinarium" }], progress: 40 },
+    { tasks: [{ text: "Return to the Chimeral Wetlands" }], progress: 39 },
+    { tasks: [{ text: "Return to the Infested Barrens" }], progress: 38 },
     { tasks: [{ text: "Return to the Jungle Ruins" }] },
     {
       tasks: [
@@ -1057,6 +1058,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find the Runestones",
           reward: "<span class='italic'>Farrow Quest</span>",
+          show: false,
+          hide: true,
+          condition: "Nice spotting!",
         },
         {
           text: "Find the entrance to The Venom Crypts",
@@ -1083,8 +1087,15 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       tasks: [
         {
+          text: "<span class='text-warning italic'>Optional: Complete the Abyss</span>",
+          reward: "<span class='italic'>XP</span>",
+        },
+        {
           text: "Find the Runestones",
           reward: "<span class='italic'>Farrow Quest</span>",
+          show: false,
+          hide: true,
+          condition: "Well Done!",
         },
         {
           text: "Find the <span class='text-poe-quest'>Corpse</span> in the Den of the Serpent Priestess",
@@ -1132,6 +1143,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
   G3_5: [
     {
       tasks: [
+        {
+          text: "<span class='text-warning italic'>Optional: Find the Ravaged Camp</span>",
+          reward:
+            "<span class='italic'>2 <span class='text-poe-magic'>magic</span> and 1 <span class='text-poe-rare'>rare</span> chest</span>",
+        },
         {
           text: "Kill the <span class='text-poe-unique font-semibold'>Xyclucian, the Chimera</span>",
         },
@@ -1209,7 +1225,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Shaman's Hut</span>",
-          reward: "<span class='italic'>Gargantuan Life and Mana Flasks</span>",
+          reward:
+            "<span class='italic'><span class='text-poe-rare'>Rare Item</span>/Gargantuan flask</span>",
         },
         {
           text: "Keep forward until you reach the Ravaged Corpse Tablet",
@@ -1231,14 +1248,14 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           show: false,
           hide: true,
         },
-        { text: "Go right", condition: "G3_7", show: true, hide: false },
+        { text: "Go right", condition: "", show: false, hide: true },
         {
           text: "Activate the Canal Mechanism",
-          condition: "G3_7",
-          show: true,
-          hide: false,
+          condition: "",
+          show: false,
+          hide: true,
         },
-        { text: "Portal to Town", show: true, hide: false, condition: "G3_7" },
+        { text: "Portal to Town", show: false, hide: true, condition: "" },
       ],
     },
   ],
@@ -2294,6 +2311,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       ],
     },
   ],
+  ExpeditionSubArea_Kalguur_Act3: [{ tasks: [{ text: "" }] }],
 });
 
 const [quotes, setQuotes] = createStore<
@@ -2352,7 +2370,10 @@ const [quotes, setQuotes] = createStore<
     "Character has received +10% to [Resistances|Lightning Resistance]": true,
     "Character has received +10% to [Resistances|Lightning Resistance].": true,
   },
-  G3_3: { "You have received 2 Passive Skill Points.": true },
+  G3_3: {
+    "You have received 2 Passive Skill Points.": true,
+    "Nice spotting!": true,
+  },
   G3_6_1: {
     "Character has received +10% to [Resistances|Fire Resistance].": true,
   },
@@ -2420,6 +2441,8 @@ const [quotes, setQuotes] = createStore<
   G2_8: { "There we go!": true },
   G1_town: { G2_town: true, G3_town: true },
   G2_town: { G3_town: true },
+  G3_4: { "Well Done!": true },
+  G3_2_2: { "": true },
 });
 
 const addTown = (town: string) => {

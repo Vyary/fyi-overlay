@@ -21,15 +21,15 @@ const [tracker, setTracker] = createStore<Tracker>({
 
 const updateProgress = (index: number, zone: string) => {
   const i = index + 1;
-  const j = index + 2;
+  // const j = index + 2;
 
   if (townOrder[i] == zone) {
     return i;
   }
 
-  if (townOrder[j] == zone) {
-    return j;
-  }
+  // if (townOrder[j] == zone) {
+  //   return j;
+  // }
 
   return index;
 };

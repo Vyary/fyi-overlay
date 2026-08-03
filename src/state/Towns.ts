@@ -140,6 +140,7 @@ const [townOrder, setTownOrder] = createStore([
   "G2_9_1",
   "G2_9_2",
   "G2_12",
+  "G2_town",
 
   "G3_1",
   "G3_town",
