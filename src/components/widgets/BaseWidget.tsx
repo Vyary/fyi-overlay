@@ -4,7 +4,6 @@ import { passthrough } from "../../state/Passthrough";
 
 function BaseWidget(props: {
   name: string;
-  show: boolean;
   children?: JSX.Element;
   defaultPos: { x: number; y: number };
   defaultWidth: { w: number };
@@ -118,106 +117,104 @@ function BaseWidget(props: {
   onCleanup(() => cleanUp(props.name));
 
   return (
-    <Show when={props.show}>
-      <div class="flex">
+    <div class="flex">
+      <div
+        class={`absolute h-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5`}
+        style={{
+          left: `${posZw().x}px`,
+          top: `${posZw().y}px`,
+          width: `${widthZw().w}px`,
+          "background-color": `color-mix(in oklch, var(--color-base-300) ${transparency()}%, transparent)`,
+        }}
+      >
+        <Show when={!passthrough()}>
+          <div class="cursor-move h-1 select-none" onMouseDown={onDown}></div>
+        </Show>
+
         <div
-          class={`absolute h-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5`}
-          style={{
-            left: `${posZw().x}px`,
-            top: `${posZw().y}px`,
-            width: `${widthZw().w}px`,
-            "background-color": `color-mix(in oklch, var(--color-base-300) ${transparency()}%, transparent)`,
-          }}
+          class={`min-h-0 overflow-x-auto flex-1 max-h-200 ${textSizeTW()} ${tableSize()}`}
         >
-          <Show when={!passthrough()}>
-            <div class="cursor-move h-1 select-none" onMouseDown={onDown}></div>
-          </Show>
+          {props.children}
+        </div>
 
+        <Show when={!passthrough()}>
           <div
-            class={`min-h-0 overflow-x-auto flex-1 max-h-200 ${textSizeTW()} ${tableSize()}`}
+            class="absolute top-1/2 -translate-y-1/2 right-1.5 cursor-e-resize text-base-content/50 hover:text-base-content transition-colors"
+            onMouseDown={onResizeDown}
           >
-            {props.children}
+            <svg viewBox="0 0 8 60" class="w-1" fill="currentColor">
+              <rect x="0" y="0" width="8" height="60" rx="4" />
+            </svg>
           </div>
+        </Show>
 
-          <Show when={!passthrough()}>
+        <Show when={!passthrough()}>
+          <div class="flex gap-0.5 justify-between bg-base-300/30 rounded-b-2xl border-t border-base-content/5">
             <div
-              class="absolute top-1/2 -translate-y-1/2 right-1.5 cursor-e-resize text-base-content/50 hover:text-base-content transition-colors"
-              onMouseDown={onResizeDown}
+              class="flex items-center gap-2 px-5 py-3 w-full"
+              classList={{
+                hidden: props.textSizeSlider == false,
+              }}
             >
-              <svg viewBox="0 0 8 60" class="w-1" fill="currentColor">
-                <rect x="0" y="0" width="8" height="60" rx="4" />
+              <span class="text-xs text-base-content/60 font-medium select-none">
+                A
+              </span>
+              <input
+                type="range"
+                min="0"
+                max={sizes.length - 1}
+                value={textSize()}
+                class="range range-xs"
+                step="1"
+                onInput={onTextSizeChange}
+              />
+              <span class="text-lg text-base-content/60 font-medium select-none">
+                A
+              </span>
+            </div>
+            <div class="flex items-center gap-2 px-5 py-3 w-full justify-end">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-base-content/40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2v20" />
+              </svg>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={transparency()}
+                class="range range-xs"
+                step={1}
+                onInput={(e) => {
+                  setTransparency(Number(e.currentTarget.value));
+                  saveTransparency(props.name);
+                }}
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-base-content/80"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
               </svg>
             </div>
-          </Show>
-
-          <Show when={!passthrough()}>
-            <div class="flex gap-0.5 justify-between bg-base-300/30 rounded-b-2xl border-t border-base-content/5">
-              <div
-                class="flex items-center gap-2 px-5 py-3 w-full"
-                classList={{
-                  hidden: props.textSizeSlider == false,
-                }}
-              >
-                <span class="text-xs text-base-content/60 font-medium select-none">
-                  A
-                </span>
-                <input
-                  type="range"
-                  min="0"
-                  max={sizes.length - 1}
-                  value={textSize()}
-                  class="range range-xs"
-                  step="1"
-                  onInput={onTextSizeChange}
-                />
-                <span class="text-lg text-base-content/60 font-medium select-none">
-                  A
-                </span>
-              </div>
-              <div class="flex items-center gap-2 px-5 py-3 w-full justify-end">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-4 h-4 text-base-content/40"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 2v20" />
-                </svg>
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={transparency()}
-                  class="range range-xs"
-                  step={1}
-                  onInput={(e) => {
-                    setTransparency(Number(e.currentTarget.value));
-                    saveTransparency(props.name);
-                  }}
-                />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-4 h-4 text-base-content/80"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                </svg>
-              </div>
-            </div>
-          </Show>
-        </div>
+          </div>
+        </Show>
       </div>
-    </Show>
+    </div>
   );
 }
 

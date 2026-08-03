@@ -5,7 +5,7 @@ interface Tracker {
   zone: string;
   zoneLevel: number;
   prevZone: string;
-  progressZone: number;
+  progress: number;
   history: string[];
   flags: Record<string, Record<string, boolean>>;
 }
@@ -14,24 +14,28 @@ const [tracker, setTracker] = createStore<Tracker>({
   zone: "",
   zoneLevel: 0,
   prevZone: "",
-  progressZone: 69,
+  progress: 0,
   history: [],
   flags: {},
 });
 
 const updateProgress = (index: number, zone: string) => {
-  const aI = index + 1;
-  const bI = index + 2;
+  const i = index + 1;
+  const j = index + 2;
 
-  if (townOrder[aI] == zone) {
-    return aI;
+  if (townOrder[i] == zone) {
+    return i;
   }
 
-  if (townOrder[bI] == zone) {
-    return bI;
+  if (townOrder[j] == zone) {
+    return j;
   }
 
   return index;
+};
+
+const setProgress = (index: number) => {
+  setTracker(produce((s) => (s.progress = index)));
 };
 
 const setZone = (zone: string) => {
@@ -40,9 +44,7 @@ const setZone = (zone: string) => {
       s.prevZone = s.zone;
       s.zone = zone;
       s.history = [zone, ...s.history];
-      s.progressZone = updateProgress(s.progressZone, zone);
-
-      console.log(s.progressZone);
+      s.progress = updateProgress(s.progress, zone);
     }),
   );
 };
@@ -65,4 +67,12 @@ const loadTracker = () => {
   if (t) setTracker(reconcile(JSON.parse(t)));
 };
 
-export { tracker, setZone, setZoneLevel, setFlag, saveTracker, loadTracker };
+export {
+  tracker,
+  setZone,
+  setZoneLevel,
+  setFlag,
+  setProgress,
+  saveTracker,
+  loadTracker,
+};

@@ -184,7 +184,6 @@ function InventoryWidget(props: { shortcut: string }) {
   return (
     <BaseWidget
       name="inventory"
-      show={!passthrough()}
       defaultPos={{ x: 1130, y: 15 }}
       defaultWidth={{ w: 430 }}
       defaultTransparency={90}
