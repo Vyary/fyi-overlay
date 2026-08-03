@@ -1,10 +1,11 @@
 import { createStore, produce, reconcile } from "solid-js/store";
+import { townOrder } from "./Towns";
 
 interface Tracker {
   zone: string;
   zoneLevel: number;
   prevZone: string;
-  progressZone: string;
+  progressZone: number;
   history: string[];
   flags: Record<string, Record<string, boolean>>;
 }
@@ -13,10 +14,25 @@ const [tracker, setTracker] = createStore<Tracker>({
   zone: "",
   zoneLevel: 0,
   prevZone: "",
-  progressZone: "",
+  progressZone: 69,
   history: [],
   flags: {},
 });
+
+const updateProgress = (index: number, zone: string) => {
+  const aI = index + 1;
+  const bI = index + 2;
+
+  if (townOrder[aI] == zone) {
+    return aI;
+  }
+
+  if (townOrder[bI] == zone) {
+    return bI;
+  }
+
+  return index;
+};
 
 const setZone = (zone: string) => {
   setTracker(
@@ -24,7 +40,9 @@ const setZone = (zone: string) => {
       s.prevZone = s.zone;
       s.zone = zone;
       s.history = [zone, ...s.history];
-      s.progressZone = zone;
+      s.progressZone = updateProgress(s.progressZone, zone);
+
+      console.log(s.progressZone);
     }),
   );
 };

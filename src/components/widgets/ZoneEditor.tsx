@@ -6,6 +6,7 @@ import {
   changeDoneQuote,
   changePreq,
   changePrev,
+  changeProgress,
   changeReward,
   changeTask,
   deleteZone,
@@ -23,7 +24,23 @@ import ConfirmModal from "../ConfirmModal";
 function ZoneEditor() {
   return (
     <div class="py-3 px-5 max-h-200 overflow-y-auto">
-      <div class="sticky top-0 z-10 backdrop-blur-md flex items-center justify-between">
+      <div class="sticky top-0 z-10 backdrop-blur-md flex gap-4 items-center justify-between">
+        <div class="flex flex-col">
+          <span class="text-sm font-semibold truncate">
+            {towns[tracker.zone]}
+          </span>
+          <span class="text-xs text-base-content/50 font-mono">
+            {tracker.zone}
+          </span>
+        </div>
+
+        <div class="flex flex-col">
+          <span class="text-sm font-semibold truncate">index</span>
+          <span class="text-xs text-base-content/50 font-mono">
+            {tracker.progressZone}
+          </span>
+        </div>
+
         <div class="form-control w-full px-1 py-2">
           <input
             type="text"
@@ -86,16 +103,25 @@ function ZoneEditor() {
                   </button>
                 </div>
 
-                <div class="flex flex-col w-32">
-                  <span class="text-sm font-semibold truncate">
-                    {towns[tracker.zone]}
-                  </span>
-                  <span class="text-xs text-base-content/50 font-mono">
-                    {tracker.zone}
-                  </span>
-                </div>
-
                 <div class="flex flex-1 items-center gap-2">
+                  <label class="flex flex-col flex-1 gap-1">
+                    <span class="text-[10px] uppercase tracking-wider text-base-content/50 font-semibold pl-1">
+                      Progress
+                    </span>
+                    <input
+                      type="text"
+                      value={z.progress || ""}
+                      placeholder="None"
+                      class="input input-sm input-bordered bg-transparent focus:bg-base-100 transition-colors w-full"
+                      onChange={(e) =>
+                        changeProgress(
+                          tracker.zone,
+                          i(),
+                          Number(e.target.value),
+                        )
+                      }
+                    />
+                  </label>
                   <label class="flex flex-col flex-1 gap-1">
                     <span class="text-[10px] uppercase tracking-wider text-base-content/50 font-semibold pl-1">
                       Previous
