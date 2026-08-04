@@ -44,10 +44,10 @@ const startTailing = async () => {
         updateCharacterLevel(Number(charLevel));
       }
 
-      if (line.includes("Set Source")) {
-        const match = line.match(/Set Source \[(?<zoneName>[\w\W]*)]/)!;
+      if (line.includes("LOADING SCREEN")) {
+        const match = line.match(/LOADING SCREEN\] \((?<zoneName>[^)]+)/)!;
         const { zoneName } = match.groups!;
-        if (zoneName !== "(null)") addTownName(tracker.zone, zoneName);
+        addTownName(tracker.zone, zoneName);
       }
 
       const quoteArray = line.split(": ");
