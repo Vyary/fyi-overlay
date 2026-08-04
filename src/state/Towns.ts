@@ -157,6 +157,7 @@ const [townOrder, setTownOrder] = createStore([
   "G3_14",
   "G3_16",
   "G3_17",
+  "G3_town",
 
   "G4_town",
   "G4_1_1",
@@ -164,22 +165,21 @@ const [townOrder, setTownOrder] = createStore([
 
   "G4_2_1",
   "G4_2_2",
+  "G4_town",
+  "G4_2_2",
 
   "G4_3_1",
   "G4_3_2",
-  "G4_3_1",
 
   "G4_7",
 
   "G4_5_1",
   "G4_5_2",
-  "G4_5_1",
 
   "G4_4_1",
   "G4_4_2",
   "G4_4_3",
 
-  "G4_8a",
   "G4_8b",
   "G4_10",
 
@@ -214,9 +214,7 @@ const [townOrder, setTownOrder] = createStore([
 ]);
 
 const addTownName = (id: string, name: string) => {
-  if (name != "(unknown)") {
-    setTowns(id, name);
-  }
+  setTowns(id, name);
 };
 
 const saveTowns = () => {

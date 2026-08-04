@@ -974,7 +974,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Speak with Doryani" },
         { text: "Speak with Alva and Travel to Kingsmarch" },
       ],
-      prev: "G3_17",
+      prev: "",
+      progress: 50,
     },
     { tasks: [{ text: "Return to The Black Chambers" }], progress: 49 },
     { tasks: [{ text: "Return to the Aggorat" }], progress: 48 },
@@ -1332,11 +1333,17 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Find the <span class='text-poe-quest'>Sacrificial Heart</span>",
+          show: false,
+          hide: true,
+          condition: "You have received 2 Passive Skill Points.",
         },
         {
           text: "Find the Sacrificial Dais, Place and Stab the Sacrificial Heart",
           reward:
             "<span class='text-poe-quest italic'>+2 Weapon Set Skill Points</span>",
+          show: false,
+          hide: true,
+          condition: "You have received 2 Passive Skill Points.",
         },
         { text: "Find the entrance to The Black Chambers" },
       ],
@@ -1733,12 +1740,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       preq: ["G4_10"],
     },
     {
-      preq: [],
       tasks: [
-        { text: "Speak with Dannig" },
-        { text: "Use the Waypoint to Journey's End" },
+        { text: "Speak with The Hooded One" },
+        { text: "Set Sail to Arastas" },
       ],
-      prev: "G4_2_2",
+      prev: "G4_8a",
     },
     {
       preq: ["G4_2_1", "G4_3_2", "G4_7", "G4_5_2"],
@@ -1763,6 +1769,18 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
       ],
     },
+    { tasks: [{ text: "Set Sail to Shrike Island" }], progress: 59 },
+    { tasks: [{ text: "Set Sail to Whakapanu Island" }], progress: 57 },
+    {
+      tasks: [
+        { text: "Speak with Dannig" },
+        { text: "Use the Waypoint to Journey's End" },
+      ],
+      progress: 56,
+      preq: [],
+      prev: "",
+    },
+    { tasks: [{ text: "Return to Journey's End" }], progress: 55 },
     {
       tasks: [
         {
@@ -1771,38 +1789,21 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           show: false,
           hide: true,
         },
-        {
-          text: "Set Sail to Whakapanu Island",
-          condition: "G4_3_2",
-          show: false,
-          hide: true,
-        },
-        {
-          text: "Set Sail to Shrike Island",
-          condition: "G4_7",
-          show: false,
-          hide: true,
-        },
-        {
-          text: "Set Sail to Abandoned Prison",
-          condition: "G4_5_2",
-          show: false,
-          hide: true,
-        },
       ],
-      preq: ["G4_1_2"],
+      progress: 53,
+      preq: [],
     },
-    { tasks: [{ text: "Return to the Isle of Kin" }], progress: 50 },
+    { tasks: [{ text: "Return to the Isle of Kin" }], progress: 52 },
     {
       tasks: [
         {
-          text: "Speak with Doryani and Alva",
+          text: "Speak with Doryani",
           condition: "G4_1_2",
           show: false,
           hide: true,
         },
         {
-          text: "Speak with Rog and Take the <span class='text-poe-quest'>Boat Charter</span>",
+          text: "Speak with  Alva and Take the <span class='text-poe-quest'>Boat Charter</span> from Rog",
         },
         {
           text: "Speak with Makoru",
@@ -2216,6 +2217,18 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       tasks: [
         {
+          text: "Summon and Speak with Tujen",
+          condition: "Heh heh... thank you kindly... I am finally free!",
+          show: false,
+          hide: true,
+        },
+        {
+          text: "Speak with Freya",
+          condition: "Heh heh... thank you kindly... I am finally free!",
+          show: false,
+          hide: true,
+        },
+        {
           text: "Click on Karui Totem",
           condition: "Heh heh... thank you kindly... I am finally free!",
           show: false,
@@ -2249,7 +2262,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         { text: "Explore the Forge" },
         { text: "Portal to Town" },
-        { text: "Set Sail to Ngakanu" },
       ],
     },
   ],
@@ -2312,6 +2324,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     },
   ],
   ExpeditionSubArea_Kalguur_Act3: [{ tasks: [{ text: "" }] }],
+  G2_13: [{ tasks: [{ text: "" }] }],
+  Sanctum_1_Foyer_1: [{ tasks: [{ text: "" }] }],
+  G3_10: [{ tasks: [{ text: "" }] }],
 });
 
 const [quotes, setQuotes] = createStore<
@@ -2443,6 +2458,7 @@ const [quotes, setQuotes] = createStore<
   G2_town: { G3_town: true },
   G3_4: { "Well Done!": true },
   G3_2_2: { "": true },
+  G3_16: { "You have received 2 Passive Skill Points.": true },
 });
 
 const addTown = (town: string) => {
