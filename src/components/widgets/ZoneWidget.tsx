@@ -9,6 +9,8 @@ import { character } from "../../state/Character";
 import { BaseWidget } from "./BaseWidget";
 import TimelineWidget from "./TimelineWidget";
 
+const [RTL, setRTL] = createSignal(false);
+
 function ZoneWidget() {
   const [openEditor, setOpenEditor] = createSignal(false);
   const overleveled = () => tracker.zoneLevel - character.level < 0;
@@ -39,6 +41,9 @@ function ZoneWidget() {
         <Show when={towns[tracker.zone]}>
           <div
             class={`text-base-content text-shadow-lg leading-relaxed border-b border-base-content/5 px-5 py-3 select-none`}
+            classList={{
+              "text-end": RTL(),
+            }}
           >
             {`${towns[tracker.zone]} - Zone Level: ${tracker.zoneLevel}`}
           </div>
@@ -46,7 +51,10 @@ function ZoneWidget() {
           <Show
             when={levelDiff() == threshold() && !overleveled() && expections()}
           >
-            <div class="px-5 py-3 border-b border-base-content/5 flex items-center gap-1 text-sm text-warning bg-warning/10">
+            <div
+              class="px-5 py-3 border-b border-base-content/5 flex items-center gap-1 text-sm text-warning bg-warning/10"
+              classList={{ "justify-end": RTL() }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 shrink-0"
@@ -69,7 +77,10 @@ function ZoneWidget() {
           </Show>
 
           <Show when={penaltyPercent() > 0 && expections()}>
-            <div class="px-5 py-3 border-b border-base-content/5 flex items-center gap-1 text-sm text-error bg-error/10">
+            <div
+              class="px-5 py-3 border-b border-base-content/5 flex items-center gap-1 text-sm text-error bg-error/10"
+              classList={{ "justify-end": RTL() }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 shrink-0"
@@ -100,12 +111,15 @@ function ZoneWidget() {
               <TransitionGroup name="slide-fade">
                 <For each={content().tasks}>
                   {(task) => (
-                    <div class="flex items-center justify-between">
+                    <div
+                      class="flex items-center justify-between"
+                      classList={{ "flex-row-reverse": RTL() }}
+                    >
                       <div
                         class={`text-base-content text-shadow-lg leading-relaxed select-none `}
                         innerHTML={task.text}
                       />
-                      <span class={`select-none `} innerHTML={task.reward} />
+                      <div class={`select-none `} innerHTML={task.reward} />
                     </div>
                   )}
                 </For>
@@ -116,7 +130,11 @@ function ZoneWidget() {
 
         <Show when={!passthrough()}>
           <div
-            class="absolute top-1 right-7 h-5 w-1 cursor-pointer p-1 text-base-content/50 hover:text-base-content transition-colors"
+            class="absolute top-1 h-5 w-1 cursor-pointer p-1 text-base-content/50 hover:text-base-content transition-colors"
+            classList={{
+              "right-7": !RTL(),
+              "left-1": RTL(),
+            }}
             onMouseDown={() => setOpenEditor(!openEditor())}
           >
             <svg
@@ -152,4 +170,4 @@ function ZoneWidget() {
   );
 }
 
-export { ZoneWidget };
+export { ZoneWidget, RTL, setRTL };
