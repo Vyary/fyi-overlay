@@ -13,6 +13,7 @@ import {
 } from "./StopwatchShortcutState";
 import { character, setCharacterName } from "../../state/Character";
 import { BaseWidget } from "./BaseWidget";
+import { RTL, setRTL } from "./ZoneWidget";
 
 function SettingsWidget(props: {
   showSw: Accessor<boolean>;
@@ -323,6 +324,34 @@ function SettingsWidget(props: {
                   "showInventory",
                   JSON.stringify(isEnabled),
                 );
+              }}
+              class="toggle toggle-sm"
+            />
+          </div>
+
+          <div class="flex items-center justify-between">
+            <span
+              class="cursor-pointer text-sm"
+              onClick={() => {
+                const isEnabled = !RTL();
+                setRTL(isEnabled);
+                localStorage.setItem("RTL", JSON.stringify(isEnabled));
+              }}
+            >
+              <div class="flex flex-col">
+                <span class="text-sm font-medium">RTL</span>
+                <span class="text-xs text-base-content/50">
+                  Zone Widget text direction from Right To Left
+                </span>
+              </div>
+            </span>
+            <input
+              type="checkbox"
+              checked={RTL()}
+              onClick={() => {
+                const isEnabled = !RTL();
+                setRTL(isEnabled);
+                localStorage.setItem("RTL", JSON.stringify(isEnabled));
               }}
               class="toggle toggle-sm"
             />
