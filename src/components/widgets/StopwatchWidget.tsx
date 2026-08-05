@@ -67,7 +67,6 @@ function Stopwatch() {
   return (
     <BaseWidget
       name="stopwatch"
-      textSizeSlider={false}
       defaultPos={{ x: 340, y: 875 }}
       defaultWidth={{ w: 135 }}
       defaultTransparency={25}

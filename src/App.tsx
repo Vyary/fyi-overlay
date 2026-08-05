@@ -1,9 +1,14 @@
-import { createSignal, onMount, Show } from "solid-js";
+import { onMount, Show } from "solid-js";
 import "./App.css";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { ZoneWidget } from "./components/widgets/ZoneWidget";
 import initTrayIcon from "./components/TrayIcon";
-import SettingsWidget from "./components/widgets/SettingsWidget";
+import {
+  autoUpdate,
+  SettingsWidget,
+  showInventory,
+  showSw,
+} from "./components/widgets/SettingsWidget";
 import {
   enablePassthrough,
   passthrough,
@@ -20,10 +25,6 @@ import { Inventory } from "./components/widgets/InventoryWidget";
 import { Stopwatch } from "./components/widgets/StopwatchWidget";
 
 function App() {
-  const [showSw, setShowSw] = createSignal(false);
-  const [showInventory, setShowInventory] = createSignal(false);
-  const [autoUpdate, setAutoUpdate] = createSignal(true);
-
   onMount(async () => {
     initTrayIcon();
     getCurrentWindow().maximize();
@@ -62,29 +63,10 @@ function App() {
     >
       <div
         classList={{
-          hidden: !showOverlay() && passthrough(),
-        }}
-      >
-        <ZoneWidget />
-
-        <Show when={showSw()}>
-          <Stopwatch />
-        </Show>
-      </div>
-
-      <div
-        classList={{
           hidden: passthrough(),
         }}
       >
-        <SettingsWidget
-          showSw={showSw}
-          setShowSw={setShowSw}
-          autoUpdate={autoUpdate}
-          setAutoUpdate={setAutoUpdate}
-          showInventory={showInventory}
-          setShowInventory={setShowInventory}
-        />
+        <SettingsWidget />
 
         <Show when={showInventory()}>
           <Inventory shortcut="F2" />
@@ -94,6 +76,18 @@ function App() {
       <Show when={autoUpdate()}>
         <Updater />
       </Show>
+
+      <div
+        classList={{
+          hidden: !showOverlay() && passthrough(),
+        }}
+      >
+        <ZoneWidget />
+
+        <Show when={showSw()}>
+          <Stopwatch />
+        </Show>
+      </div>
     </main>
   );
 }

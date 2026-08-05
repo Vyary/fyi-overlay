@@ -11,7 +11,7 @@ function TimelineWidget() {
       defaultWidth={{ w: 340 }}
       defaultTransparency={100}
     >
-      <div class="py-3 px-5 max-h-200 overflow-y-auto">
+      <div class="py-3 px-4 max-h-200 overflow-y-auto">
         <div class="bg-base-200/40 rounded-xl">
           <ul class="timeline timeline-vertical ml-[-200px]">
             <li>

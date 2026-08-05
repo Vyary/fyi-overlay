@@ -8,8 +8,7 @@ import { content } from "../../state/Content";
 import { character } from "../../state/Character";
 import { BaseWidget } from "./BaseWidget";
 import TimelineWidget from "./TimelineWidget";
-
-const [RTL, setRTL] = createSignal(false);
+import { RTL, textSize, textSizeSmall } from "./SettingsWidget";
 
 function ZoneWidget() {
   const [openEditor, setOpenEditor] = createSignal(false);
@@ -37,10 +36,11 @@ function ZoneWidget() {
         defaultPos={{ x: 20, y: 170 }}
         defaultWidth={{ w: 550 }}
         defaultTransparency={25}
+        transparencySlider={true}
       >
         <Show when={towns[tracker.zone]}>
           <div
-            class={`text-base-content text-shadow-lg leading-relaxed border-b border-base-content/5 px-5 py-3 select-none`}
+            class={`text-base-content text-shadow-lg leading-relaxed border-b border-base-content/5 px-5 py-3 select-none ${textSize()}`}
             classList={{
               "text-end": RTL(),
             }}
@@ -52,7 +52,7 @@ function ZoneWidget() {
             when={levelDiff() == threshold() && !overleveled() && expections()}
           >
             <div
-              class="px-5 py-3 border-b border-base-content/5 flex items-center gap-1 text-sm text-warning bg-warning/10"
+              class={`px-5 py-3 border-b border-base-content/5 flex items-center gap-1 text-sm text-warning bg-warning/10 ${textSize()}`}
               classList={{ "justify-end": RTL() }}
             >
               <svg
@@ -78,7 +78,7 @@ function ZoneWidget() {
 
           <Show when={penaltyPercent() > 0 && expections()}>
             <div
-              class="px-5 py-3 border-b border-base-content/5 flex items-center gap-1 text-sm text-error bg-error/10"
+              class={`px-5 py-3 border-b border-base-content/5 flex items-center gap-1 text-sm text-error bg-error/10 ${textSize()}`}
               classList={{ "justify-end": RTL() }}
             >
               <svg
@@ -112,14 +112,17 @@ function ZoneWidget() {
                 <For each={content().tasks}>
                   {(task) => (
                     <div
-                      class="flex items-center justify-between"
+                      class="flex items-baseline justify-between"
                       classList={{ "flex-row-reverse": RTL() }}
                     >
                       <div
-                        class={`text-base-content text-shadow-lg leading-relaxed select-none `}
+                        class={`leading-6 text-base-content select-none ${textSize()}`}
                         innerHTML={task.text}
                       />
-                      <div class={`select-none `} innerHTML={task.reward} />
+                      <div
+                        class={`select-none italic ml-5 text-sm ${textSizeSmall()}`}
+                        innerHTML={task.reward}
+                      />
                     </div>
                   )}
                 </For>
@@ -162,12 +165,12 @@ function ZoneWidget() {
             hidden: passthrough(),
           }}
         >
-          <ZoneEditor />
           <TimelineWidget />
+          <ZoneEditor />
         </div>
       </Show>
     </>
   );
 }
 
-export { ZoneWidget, RTL, setRTL };
+export { ZoneWidget };
