@@ -39,6 +39,9 @@ function SettingsWidget({}) {
 
     const rtl = localStorage.getItem("RTL");
     if (rtl) setRTL(JSON.parse(rtl));
+
+    const ts = localStorage.getItem("textSize");
+    if (ts) setTextSlider(Number(ts));
   });
 
   return (
@@ -376,7 +379,10 @@ function SettingsWidget({}) {
             max="4"
             value={textSlider()}
             class="range range-xs"
-            onInput={(e) => setTextSlider(Number(e.currentTarget.value))}
+            onInput={(e) => {
+              setTextSlider(Number(e.currentTarget.value));
+              localStorage.setItem("textSize", textSlider().toString());
+            }}
           />
         </div>
 
