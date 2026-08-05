@@ -664,10 +664,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Rudja, the Dread Engineer</span>",
         },
-        {
-          text: "Speak with Risu",
-          reward: "cage top-left",
-        },
+        { text: "Speak with Risu", reward: "cage top-left" },
         { text: "Portal to Town" },
       ],
     },
@@ -722,10 +719,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "<span class='text-warning italic'>Optional: Find the Fossilised Memorial</span>",
           reward: "Uncut Support Gem (Level 2)",
         },
-        {
-          text: "Find the Lightless Passage",
-          reward: "The Well of Souls",
-        },
+        { text: "Find the Lightless Passage", reward: "The Well of Souls" },
         { text: "Find the entrance to The Bone Pits" },
       ],
     },
@@ -1027,14 +1021,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     { tasks: [{ text: "Return to the Chimeral Wetlands" }], progress: 39 },
     { tasks: [{ text: "Return to the Infested Barrens" }], progress: 38 },
     { tasks: [{ text: "Return to the Jungle Ruins" }] },
-    {
-      tasks: [
-        {
-          text: "Enter the Jungle Ruins",
-          reward: "located top-left",
-        },
-      ],
-    },
+    { tasks: [{ text: "Enter the Jungle Ruins", reward: "located top-left" }] },
   ],
   G3_3: [
     {
@@ -1708,27 +1695,20 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     },
     {
       tasks: [
+        { text: "Speak with Kaimana", condition: "", show: false, hide: true },
         {
-          text: "Set Sail to Ngakanu",
-          condition: "G4_11_2",
+          text: "Speak with The Hooded One",
+          condition: "",
           show: false,
           hide: true,
         },
-        {
-          text: "Speak with Kaimana",
-          condition: "G4_11_2",
-          show: true,
-          hide: false,
-        },
-        {
-          text: "Speak with The Hooded One",
-          condition: "G4_11_2",
-          show: true,
-          hide: false,
-        },
       ],
-      preq: ["G4_10"],
+      preq: [],
+      progress: 69,
+      prev: "",
     },
+    { tasks: [{ text: "Set Sail to Ngakanu" }], progress: 0, prev: "G4_10" },
+    { tasks: [{ text: "Return to The Excavation" }], progress: 67 },
     {
       tasks: [
         { text: "Speak with The Hooded One" },
@@ -1759,7 +1739,10 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
       ],
     },
-    { tasks: [{ text: "Set Sail to Shrike Island" }], progress: 59 },
+    { tasks: [{ text: "Return to Solitary Confinement" }], progress: 62 },
+    { tasks: [{ text: "Return to Shrike Island" }], progress: 60 },
+    { tasks: [{ text: "Return to the Abandoned Prison" }], progress: 61 },
+    { tasks: [{ text: "Return to the Singing Caverns" }], progress: 59 },
     { tasks: [{ text: "Set Sail to Whakapanu Island" }], progress: 57 },
     {
       tasks: [
@@ -1771,10 +1754,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       prev: "",
     },
     { tasks: [{ text: "Return to Journey's End" }], progress: 55 },
+    { tasks: [{ text: "Return to Kedge Bay" }], progress: 54 },
     {
       tasks: [
         {
-          text: "Set Sail to Kedge Bay",
+          text: "Return to the Volcanic Warrens",
           condition: "G4_2_1",
           show: false,
           hide: true,
@@ -2051,6 +2035,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           condition: "Character has received 5% increased maximum Mana.",
           show: false,
           hide: true,
+          reward:
+            "<span class='text-poe-quest'>5% increased maximum Mana</span>",
         },
         {
           text: "Speak with Navali",
@@ -2121,7 +2107,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
         },
         { text: "Return to Ship" },
-        { text: "Set Sail to Arastas" },
       ],
     },
   ],
