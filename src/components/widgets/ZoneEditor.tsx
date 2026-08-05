@@ -26,12 +26,11 @@ function ZoneEditor() {
   return (
     <BaseWidget
       name="editor"
-      textSizeSlider={false}
       defaultPos={{ x: 575, y: 15 }}
       defaultWidth={{ w: 550 }}
       defaultTransparency={100}
     >
-      <div class="py-3 px-5 max-h-200 overflow-y-auto">
+      <div class="py-3 px-4 max-h-200 overflow-y-auto">
         <div class="sticky top-0 z-10 backdrop-blur-md flex gap-4 items-center justify-between">
           <div class="flex flex-col">
             <span class="text-sm font-semibold truncate">

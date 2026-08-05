@@ -187,7 +187,6 @@ function InventoryWidget(props: { shortcut: string }) {
       defaultPos={{ x: 1130, y: 15 }}
       defaultWidth={{ w: 430 }}
       defaultTransparency={90}
-      defaultTextSize={1}
     >
       <table class="table py-3 px-5">
         <thead>

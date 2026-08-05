@@ -1,4 +1,4 @@
-import { Accessor, createSignal, onMount, Setter, Show } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 import { filePath, selectFile, startTailing, watching } from "../../state/File";
 import {
   enablePassthrough,
@@ -13,32 +13,37 @@ import {
 } from "./StopwatchShortcutState";
 import { character, setCharacterName } from "../../state/Character";
 import { BaseWidget } from "./BaseWidget";
-import { RTL, setRTL } from "./ZoneWidget";
 
-function SettingsWidget(props: {
-  showSw: Accessor<boolean>;
-  setShowSw: Setter<boolean>;
-  autoUpdate: Accessor<boolean>;
-  setAutoUpdate: Setter<boolean>;
-  showInventory: Accessor<boolean>;
-  setShowInventory: Setter<boolean>;
-}) {
+const [textSlider, setTextSlider] = createSignal(2);
+const sizes = ["text-xs", "text-sm", "text-base", "text-lg", "text-lg"];
+const textSize = () => sizes[textSlider()];
+const textSizeSmall = () =>
+  sizes[textSlider() - 1 >= 0 ? textSlider() - 1 : textSlider()];
+
+const [RTL, setRTL] = createSignal(false);
+const [showSw, setShowSw] = createSignal(false);
+const [showInventory, setShowInventory] = createSignal(false);
+const [autoUpdate, setAutoUpdate] = createSignal(true);
+
+function SettingsWidget({}) {
   const [PtScErr, setPtScErr] = createSignal(false);
   const [SwScErr, setSwScErr] = createSignal(false);
   const [SwScResetErr, setSwScResetErr] = createSignal(false);
 
   onMount(() => {
     const ssw = localStorage.getItem("showSw");
-    if (ssw) props.setShowSw(JSON.parse(ssw));
+    if (ssw) setShowSw(JSON.parse(ssw));
 
     const au = localStorage.getItem("autoUpdate");
-    if (au) props.setAutoUpdate(JSON.parse(au));
+    if (au) setAutoUpdate(JSON.parse(au));
+
+    const rtl = localStorage.getItem("RTL");
+    if (rtl) setRTL(JSON.parse(rtl));
   });
 
   return (
     <BaseWidget
       name="settings"
-      textSizeSlider={false}
       defaultPos={{ x: 1565, y: 15 }}
       defaultWidth={{ w: 340 }}
       defaultTransparency={100}
@@ -167,8 +172,8 @@ function SettingsWidget(props: {
             <span
               class="cursor-pointer text-sm"
               onClick={() => {
-                const isEnabled = !props.showSw();
-                props.setShowSw(isEnabled);
+                const isEnabled = !showSw();
+                setShowSw(isEnabled);
                 localStorage.setItem("showSw", JSON.stringify(isEnabled));
               }}
             >
@@ -181,17 +186,17 @@ function SettingsWidget(props: {
             </span>
             <input
               type="checkbox"
-              checked={props.showSw()}
+              checked={showSw()}
               onClick={() => {
-                const isEnabled = !props.showSw();
-                props.setShowSw(isEnabled);
+                const isEnabled = !showSw();
+                setShowSw(isEnabled);
                 localStorage.setItem("showSw", JSON.stringify(isEnabled));
               }}
               class="toggle toggle-sm"
             />
           </div>
 
-          <Show when={props.showSw()}>
+          <Show when={showSw()}>
             <div class="flex flex-col gap-3 rounded-lg bg-base-200/30 p-2">
               <div class="flex flex-col gap-1">
                 <span class="text-xs font-medium uppercase tracking-wide opacity-60">
@@ -299,8 +304,8 @@ function SettingsWidget(props: {
             <span
               class="cursor-pointer text-sm"
               onClick={() => {
-                const isEnabled = !props.showInventory();
-                props.setShowInventory(isEnabled);
+                const isEnabled = !showInventory();
+                setShowInventory(isEnabled);
                 localStorage.setItem(
                   "showInventory",
                   JSON.stringify(isEnabled),
@@ -316,10 +321,10 @@ function SettingsWidget(props: {
             </span>
             <input
               type="checkbox"
-              checked={props.showInventory()}
+              checked={showInventory()}
               onClick={() => {
-                const isEnabled = !props.showInventory();
-                props.setShowInventory(isEnabled);
+                const isEnabled = !showInventory();
+                setShowInventory(isEnabled);
                 localStorage.setItem(
                   "showInventory",
                   JSON.stringify(isEnabled),
@@ -360,12 +365,29 @@ function SettingsWidget(props: {
 
         <div class="divider my-0 opacity-50"></div>
 
+        <div class="flex flex-col gap-2">
+          <span class="text-xs font-medium uppercase tracking-wide opacity-60">
+            Text Size
+          </span>
+
+          <input
+            type="range"
+            min="0"
+            max="4"
+            value={textSlider()}
+            class="range range-xs"
+            onInput={(e) => setTextSlider(Number(e.currentTarget.value))}
+          />
+        </div>
+
+        <div class="divider my-0 opacity-50"></div>
+
         <div class="flex items-center justify-between">
           <span
             class="cursor-pointer text-sm"
             onClick={() => {
-              const isEnabled = !props.autoUpdate();
-              props.setAutoUpdate(isEnabled);
+              const isEnabled = !autoUpdate();
+              setAutoUpdate(isEnabled);
               localStorage.setItem("autoUpdate", JSON.stringify(isEnabled));
             }}
           >
@@ -373,10 +395,10 @@ function SettingsWidget(props: {
           </span>
           <input
             type="checkbox"
-            checked={props.autoUpdate()}
+            checked={autoUpdate()}
             onClick={() => {
-              const isEnabled = !props.autoUpdate();
-              props.setAutoUpdate(isEnabled);
+              const isEnabled = !autoUpdate();
+              setAutoUpdate(isEnabled);
               localStorage.setItem("autoUpdate", JSON.stringify(isEnabled));
             }}
             class="toggle toggle-sm"
@@ -400,4 +422,12 @@ function SettingsWidget(props: {
   );
 }
 
-export default SettingsWidget;
+export {
+  SettingsWidget,
+  RTL,
+  showSw,
+  showInventory,
+  autoUpdate,
+  textSize,
+  textSizeSmall,
+};
