@@ -44,11 +44,11 @@ const startTailing = async () => {
         updateCharacterLevel(Number(charLevel));
       }
 
-      if (line.includes("LOADING SCREEN")) {
-        const match = line.match(/LOADING SCREEN\] \((?<zoneName>[^)]+)/)!;
-        const { zoneName } = match.groups!;
-        addTownName(tracker.zone, zoneName);
-      }
+      // if (line.includes("LOADING SCREEN")) {
+      //   const match = line.match(/LOADING SCREEN\] \((?<zoneName>[^)]+)/)!;
+      //   const { zoneName } = match.groups!;
+      //   addTownName(tracker.zone, zoneName);
+      // }
 
       const quoteArray = line.split(": ");
       let quote = quoteArray[quoteArray.length - 1];

@@ -187,6 +187,14 @@ const [townOrder, setTownOrder] = createStore([
   "G4_11_2",
   "G4_town",
 
+  "P2_Town",
+  "P2_1",
+  "P2_2",
+  "P2_3",
+  "P2_5",
+  "P2_6",
+  "P2_7",
+
   "P1_Town",
   "P1_1",
   "P1_2",
@@ -194,7 +202,6 @@ const [townOrder, setTownOrder] = createStore([
   "P1_4",
   "P1_5",
   "P1_6",
-  "P2_Town",
   "P3_Town",
   "P3_1",
   "P3_2",
@@ -204,12 +211,7 @@ const [townOrder, setTownOrder] = createStore([
   "P3_5",
   "P3_6",
   "P3_7",
-  "P2_1",
-  "P2_2",
-  "P2_3",
-  "P2_5",
-  "P2_6",
-  "P2_7",
+
   "G_Endgame_Town",
 ]);
 
