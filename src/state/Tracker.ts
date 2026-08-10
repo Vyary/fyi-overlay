@@ -20,18 +20,17 @@ const [tracker, setTracker] = createStore<Tracker>({
 });
 
 const updateProgress = (index: number, zone: string) => {
-  const i = index + 1;
-  // const j = index + 2;
-
-  if (townOrder[i] == zone) {
-    return i;
+  if (townOrder[index + 1] == zone) {
+    return index + 1;
   }
 
-  // if (townOrder[j] == zone) {
-  //   return j;
-  // }
+  const indexOf = townOrder.indexOf(zone);
 
-  return index;
+  if (indexOf < index) {
+    return index;
+  }
+
+  return indexOf;
 };
 
 const setProgress = (index: number) => {
@@ -54,7 +53,9 @@ const setZoneLevel = (level: number) => {
 };
 
 const setFlag = (quote: string) => {
-  setTracker("flags", tracker.zone, {});
+  if (!tracker.flags[tracker.zone]) {
+    setTracker("flags", tracker.zone, {});
+  }
   setTracker("flags", tracker.zone, quote, true);
 };
 
