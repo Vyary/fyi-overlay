@@ -1,7 +1,7 @@
 function ConfirmModal(props: any) {
   return (
     <div
-      class="absolute left-1/2 -translate-x-1/2 card w-96 bg-base-100 card-sm shadow-sm bg-base-300 z-10"
+      class="absolute left-1/2 -translate-x-1/2 card w-96 card-sm shadow-sm bg-base-300 z-10"
       classList={props.classList}
     >
       <div class="card-body">

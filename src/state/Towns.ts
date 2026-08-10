@@ -1,4 +1,4 @@
-import { createStore, produce, reconcile } from "solid-js/store";
+import { createStore, reconcile } from "solid-js/store";
 
 const [towns, setTowns] = createStore<Record<string, string>>({
   G1_town: "Clearfell Encampment",
@@ -104,117 +104,6 @@ const [towns, setTowns] = createStore<Record<string, string>>({
   G3_5: "Chimeral Wetlands",
 });
 
-const [townOrder, setTownOrder] = createStore([
-  "G1_1",
-  "G1_town",
-  "G1_2",
-  "G1_4",
-  "G1_5",
-  "G1_town",
-  "G1_4",
-  "G1_6",
-  "G1_7",
-  "G1_9",
-  "G1_8",
-  "G1_11",
-  "G1_13_1",
-  "G1_13_2",
-  "G1_14",
-  "G1_15",
-
-  "G2_1",
-  "G2_town",
-  "G2_3a",
-  "G2_10_1",
-  "G2_10_2",
-  "G2_2",
-  "G2_3",
-  "G2_5_1",
-  "G2_5_2",
-  "G2_4_1",
-  "G2_4_2",
-  "G2_4_3",
-  "G2_6",
-  "G2_7",
-  "G2_8",
-  "G2_9_1",
-  "G2_9_2",
-  "G2_12",
-  "G2_town",
-
-  "G3_1",
-  "G3_town",
-  "G3_3",
-  "G3_2_1",
-  "G3_5",
-  "G3_6_1",
-  "G3_6_2",
-  "G3_3",
-  "G3_2_2",
-  "G3_8",
-  "G3_11",
-  "G3_12",
-  "G3_14",
-  "G3_16",
-  "G3_17",
-  "G3_town",
-
-  "G4_town",
-  "G4_1_1",
-  "G4_1_2",
-
-  "G4_2_1",
-  "G4_2_2",
-  "G4_town",
-  "G4_2_2",
-
-  "G4_3_1",
-  "G4_3_2",
-
-  "G4_7",
-
-  "G4_5_1",
-  "G4_5_2",
-
-  "G4_4_1",
-  "G4_4_2",
-  "G4_4_3",
-
-  "G4_8b",
-  "G4_10",
-
-  "G4_11_1b",
-  "G4_11_2",
-  "G4_town",
-
-  "P2_Town",
-  "P2_1",
-  "P2_2",
-  "P2_3",
-  "P2_5",
-  "P2_6",
-  "P2_7",
-
-  "P1_Town",
-  "P1_1",
-  "P1_2",
-  "P1_3",
-  "P1_4",
-  "P1_5",
-  "P1_6",
-  "P3_Town",
-  "P3_1",
-  "P3_2",
-  "P3_3",
-  "P3_4",
-  "G4_13",
-  "P3_5",
-  "P3_6",
-  "P3_7",
-
-  "G_Endgame_Town",
-]);
-
 const addTownName = (id: string, name: string) => {
   setTowns(id, name);
 };
@@ -228,32 +117,4 @@ const loadTowns = () => {
   if (t) setTowns(reconcile(JSON.parse(t)));
 };
 
-const moveTownDown = (index: number) => {
-  if (index < townOrder.length - 1) {
-    setTownOrder(
-      produce((s) => {
-        [s[index + 1], s[index]] = [s[index], s[index + 1]];
-      }),
-    );
-  }
-};
-
-const moveTownUp = (index: number) => {
-  if (index > 0) {
-    setTownOrder(
-      produce((s) => {
-        [s[index - 1], s[index]] = [s[index], s[index - 1]];
-      }),
-    );
-  }
-};
-
-export {
-  towns,
-  addTownName,
-  saveTowns,
-  loadTowns,
-  townOrder,
-  moveTownDown,
-  moveTownUp,
-};
+export { towns, addTownName, saveTowns, loadTowns };
