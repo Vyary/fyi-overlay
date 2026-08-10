@@ -13,18 +13,18 @@ function BaseWidget(props: {
   let offset = { x: 0, y: 0 };
   let start = { w: 0, h: 0, x: 0, y: 0 };
 
-  const [posZw, setPos] = createSignal(props.defaultPos);
-  const [widthZw, setWidth] = createSignal(props.defaultWidth);
+  const [pos, setPos] = createSignal(props.defaultPos);
+  const [width, setWidth] = createSignal(props.defaultWidth);
   const [transparency, setTransparency] = createSignal(
     props.defaultTransparency,
   );
 
   const savePosition = (name: string) => {
-    localStorage.setItem(`${name}Pos`, JSON.stringify(posZw()));
+    localStorage.setItem(`${name}Pos`, JSON.stringify(pos()));
   };
 
   const saveWidth = (name: string) => {
-    localStorage.setItem(`${name}Width`, JSON.stringify(widthZw()));
+    localStorage.setItem(`${name}Width`, JSON.stringify(width()));
   };
 
   const saveTransparency = (name: string) => {
@@ -59,7 +59,7 @@ function BaseWidget(props: {
   };
 
   const onDown = (e: MouseEvent) => {
-    offset = { x: e.clientX - posZw().x, y: e.clientY - posZw().y };
+    offset = { x: e.clientX - pos().x, y: e.clientY - pos().y };
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
   };
@@ -78,7 +78,7 @@ function BaseWidget(props: {
 
   const onResizeDown = (e: MouseEvent) => {
     e.stopPropagation();
-    start.w = widthZw().w;
+    start.w = width().w;
     start.x = e.clientX;
 
     window.addEventListener("mousemove", onResizeMove);
@@ -99,10 +99,10 @@ function BaseWidget(props: {
   return (
     <div class="flex">
       <div
-        class={`absolute h-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5 max-w-140`}
+        class={`absolute h-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5`}
         style={{
-          left: `${posZw().x}px`,
-          top: `${posZw().y}px`,
+          left: `${pos().x}px`,
+          top: `${pos().y}px`,
           "background-color": `color-mix(in oklch, var(--color-base-300) ${transparency()}%, transparent)`,
         }}
       >

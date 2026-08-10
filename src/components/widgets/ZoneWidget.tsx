@@ -7,7 +7,6 @@ import { passthrough } from "../../state/Passthrough";
 import { content } from "../../state/Content";
 import { character } from "../../state/Character";
 import { BaseWidget } from "./BaseWidget";
-import TimelineWidget from "./TimelineWidget";
 import { RTL, textSize, textSizeSmall } from "./SettingsWidget";
 
 function ZoneWidget() {
@@ -165,7 +164,6 @@ function ZoneWidget() {
             hidden: passthrough(),
           }}
         >
-          <TimelineWidget />
           <ZoneEditor />
         </div>
       </Show>
