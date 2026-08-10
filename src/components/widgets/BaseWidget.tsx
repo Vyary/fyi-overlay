@@ -99,7 +99,7 @@ function BaseWidget(props: {
   return (
     <div class="flex">
       <div
-        class={`absolute h-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5`}
+        class={`absolute h-auto backdrop-blur-md rounded-2xl ring-1 ring-base-content/5 max-w-140`}
         style={{
           left: `${posZw().x}px`,
           top: `${posZw().y}px`,

@@ -140,6 +140,7 @@ const [townOrder, setTownOrder] = createStore([
   "G2_9_1",
   "G2_9_2",
   "G2_12",
+  "G2_town",
 
   "G3_1",
   "G3_town",
@@ -156,6 +157,7 @@ const [townOrder, setTownOrder] = createStore([
   "G3_14",
   "G3_16",
   "G3_17",
+  "G3_town",
 
   "G4_town",
   "G4_1_1",
@@ -163,28 +165,35 @@ const [townOrder, setTownOrder] = createStore([
 
   "G4_2_1",
   "G4_2_2",
+  "G4_town",
+  "G4_2_2",
 
   "G4_3_1",
   "G4_3_2",
-  "G4_3_1",
 
   "G4_7",
 
   "G4_5_1",
   "G4_5_2",
-  "G4_5_1",
 
   "G4_4_1",
   "G4_4_2",
   "G4_4_3",
 
-  "G4_8a",
   "G4_8b",
   "G4_10",
 
   "G4_11_1b",
   "G4_11_2",
   "G4_town",
+
+  "P2_Town",
+  "P2_1",
+  "P2_2",
+  "P2_3",
+  "P2_5",
+  "P2_6",
+  "P2_7",
 
   "P1_Town",
   "P1_1",
@@ -193,7 +202,6 @@ const [townOrder, setTownOrder] = createStore([
   "P1_4",
   "P1_5",
   "P1_6",
-  "P2_Town",
   "P3_Town",
   "P3_1",
   "P3_2",
@@ -203,19 +211,12 @@ const [townOrder, setTownOrder] = createStore([
   "P3_5",
   "P3_6",
   "P3_7",
-  "P2_1",
-  "P2_2",
-  "P2_3",
-  "P2_5",
-  "P2_6",
-  "P2_7",
+
   "G_Endgame_Town",
 ]);
 
 const addTownName = (id: string, name: string) => {
-  if (name != "(unknown)") {
-    setTowns(id, name);
-  }
+  setTowns(id, name);
 };
 
 const saveTowns = () => {

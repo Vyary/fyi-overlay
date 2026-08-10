@@ -40,53 +40,45 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     },
   ],
   G1_town: [
-    { tasks: [{ text: "Travel to Kingsmarch (Act 4)" }], progress: 49 },
+    { tasks: [{ text: "Travel to Kingsmarch (Act 4)" }], preq: ["G4_town"] },
     {
       tasks: [
         {
           text: "Travel to the Sandswept Marsh (Act 3)",
-          show: false,
           hide: true,
           condition: "G3_town",
         },
         {
           text: "Travel to the Ziggurat Encampment (Act 3)",
           show: true,
-          hide: false,
           condition: "G3_town",
         },
       ],
-      progress: 34,
+      preq: ["G3_1"],
     },
     {
       tasks: [
         {
           text: "Travel to the Vastiri Outskirts (Act 2)",
-          show: false,
           hide: true,
           condition: "G2_town",
         },
         {
           text: "Travel to The Ardura Caravan (Act 2)",
           show: true,
-          hide: false,
           condition: "G2_town",
         },
       ],
-      progress: 16,
+      preq: ["G2_1"],
     },
     {
       prev: "G1_15",
       tasks: [{ text: "Speak to Una, Leitis, Farrow and The Hooded One" }],
     },
-    { tasks: [{ text: "Return to the Ogham Manor" }], progress: 15 },
-    {
-      prev: "",
-      tasks: [{ text: "Return to The Manor Ramparts" }],
-      progress: 14,
-    },
-    { prev: "", tasks: [{ text: "Return to Ogham Village" }], progress: 13 },
-    { prev: "", tasks: [{ text: "Return to Ogham Farmlands" }], progress: 12 },
+    { tasks: [{ text: "Return to the Ogham Manor" }], preq: ["G1_15"] },
+    { tasks: [{ text: "Return to The Manor Ramparts" }], preq: ["G1_14"] },
+    { tasks: [{ text: "Return to Ogham Village" }], preq: ["G1_13_2"] },
+    { tasks: [{ text: "Return to Ogham Farmlands" }], preq: ["G1_13_1"] },
     {
       prev: "G1_12",
       tasks: [
@@ -94,48 +86,39 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Return to the Hunting Grounds" },
       ],
     },
-    {
-      prev: "",
-      tasks: [{ text: "Return to the Hunting Grounds" }],
-      progress: 11,
-    },
+    { tasks: [{ text: "Return to the Hunting Grounds" }], preq: ["G1_11"] },
     {
       tasks: [{ text: "Return to the Cemetery of the Eternals" }],
-      progress: 8,
-    },
-    {
-      prev: "",
-      tasks: [
-        { text: "Speak with Una" },
-        { text: "Travel to The Grim Tangle" },
-      ],
-      progress: 7,
-    },
-    {
-      prev: "",
-      tasks: [
-        { text: "Speak to Una" },
-        { text: "Travel to The Grelwood" },
-        { text: "Find The Grim Tangle" },
-      ],
-      preq: ["G1_5"],
-      progress: 6,
+      preq: ["G1_7"],
     },
     {
       prev: "G1_5",
       tasks: [{ text: "Speak to Renly" }, { text: "Travel to The Grelwood" }],
     },
-    { tasks: [{ text: "Return to The Red Vale" }], progress: 4 },
-    { prev: "", tasks: [{ text: "Return to The Grelwood" }], progress: 3 },
-    { prev: "", tasks: [{ text: "Return to Clearfell" }], progress: 2 },
+    { prev: "G1_4", tasks: [{ text: "Return to The Grelwood" }] },
     {
-      prev: "",
+      tasks: [{ text: "Return to The Grelwood" }],
+      prev: "G1_3",
+      preq: ["G1_4"],
+    },
+    {
+      tasks: [{ text: "Return to The Grelwood" }],
+      prev: "G1_2",
+      preq: ["G1_4"],
+    },
+    {
+      tasks: [{ text: "Speak to Una" }, { text: "Travel to The Grim Tangle" }],
+      preq: ["G1_5", "G1_6"],
+    },
+    { tasks: [{ text: "Return to The Red Vale" }], preq: ["G1_5"] },
+    { tasks: [{ text: "Return to The Grelwood" }], preq: ["G1_4"] },
+    { tasks: [{ text: "Return to Clearfell" }], preq: ["G1_2"] },
+    {
       tasks: [
         { text: "Speak to Renly" },
         { text: "Cut the Uncut Skill Gem" },
         { text: "Enter Clearfell" },
       ],
-      progress: 1,
     },
   ],
   G1_2: [
@@ -145,22 +128,20 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Speak with Farrow",
           hide: true,
           condition: "Thanks for the help.",
-          show: false,
         },
         {
           text: "Complete the Ezomyte Remnant",
           hide: true,
           condition: "See? I told you we'd make a fine team!",
-          reward: "<span class='italic'>Orb of Augmentation</span>",
+          reward: "Orb of Augmentation",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Mysterious Campsite</span>",
-          reward: "<span class='italic'>Uncut Skill Gem (Level 1)</span>",
+          reward: "Uncut Skill Gem (Level 1)",
         },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Beira of the Rotten Pack</span>",
-          reward:
-            '<span class="text-poe-quest italic">+10% to Cold Resistance</span>',
+          reward: '<span class="text-poe-quest">+10% to Cold Resistance</span>',
           hide: true,
           condition:
             "Character has received +10% to [Resistances|Cold Resistance].",
@@ -174,7 +155,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Kill <span class='text-poe-unique font-semibold'>The Devourer</span></span>",
-          reward: "<span class='italic'>Uncut Skill Gem (Level 2)</span>",
+          reward: "Uncut Skill Gem (Level 2)",
         },
       ],
     },
@@ -191,40 +172,40 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Areagne's Hut</span>",
-          reward: "<span class='italic'>Medium Life and Mana Flasks</span>",
+          reward: "Medium Life and Mana Flasks",
         },
         {
           text: "<span class='text-warning italic'>Optional: Kill Areagne, Forgotten Witch</span>",
-          reward: "<span class='italic'>Uncut Support Gem (Level 1)</span>",
+          reward: "Uncut Support Gem (Level 1)",
         },
         {
           text: "<span class='text-warning italic'>Optional: Kill <span class='text-poe-unique font-semibold'>The Brambleghast</span></span>",
-          reward: "<span class='italic'>Uncut Skill Gem (Level 2)</span>",
+          reward: "Uncut Skill Gem (Level 2)",
         },
-        { text: "Find the Waypoint near the Tree of Souls" },
         {
-          text: "<span class='text-info italic'>Directions: If you find the river follow it upstream to find The Red Vale</span>",
-          show: false,
+          text: "Find the Waypoint near the Tree of Souls",
           hide: true,
           condition: "G1_5",
         },
         {
           text: "Find the entrance to The Red Vale",
+          hide: true,
           condition: "G1_5",
-          show: false,
+        },
+        {
+          text: "<span class='text-info italic'>Directions: If you find the river follow it upstream to find The Red Vale</span>",
+          condition: "G1_5",
           hide: true,
         },
         {
           text: "Break the Runic Seals on the Tree of Souls",
           condition: "G1_5, G1_town",
           show: true,
-          hide: false,
         },
         {
           text: "Find The Grim Tangle",
           condition: "G1_5, G1_town",
           show: true,
-          hide: false,
         },
       ],
     },
@@ -234,7 +215,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Click on Refined Arms</span>",
-          reward: "<span class='italic'>Weapons</span>",
+          reward: "Weapons",
         },
         { text: "Complete all 3 Obelisk of Rust" },
         { text: "Portal to Town" },
@@ -249,7 +230,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Portal to Town",
           condition:
             "The old magicks still thrive! The way is open. Please, hurry.",
-          show: false,
           hide: true,
         },
         {
@@ -268,12 +248,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Find the Runestones",
           hide: true,
           condition: "Keep up the search.",
-          reward: "<span class='italic'>Farrow Quest</span>",
-          show: false,
+          reward: "Farrow Quest",
         },
         {
           text: "<span class='text-warning italic'>Optional: Kill <span class='text-poe-unique font-semibold'>The Rotten Druid</span></span>",
-          reward: "<span class='italic'>Uncut Support Gem (Level 1)</span>",
+          reward: "Uncut Support Gem (Level 1)",
         },
         { text: "Find the entrance to the Cemetery of the Eternals" },
       ],
@@ -313,17 +292,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Sarcophagus</span>",
-          reward: "<span class='italic'>Normal Rarity Ring</span>",
+          reward: "Normal Rarity Ring",
         },
-        {
-          text: "Find Tomb of the Consort",
-          show: false,
-          hide: true,
-          condition: "G1_9",
-        },
+        { text: "Find Tomb of the Consort", hide: true, condition: "G1_9" },
         {
           text: "Find Mausoleum of the Praetor",
-          show: false,
           hide: true,
           condition: "G1_8",
         },
@@ -335,7 +308,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Forgotten Riches</span>",
-          reward: "<span class='italic'>Gold</span>",
+          reward: "Gold",
         },
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Draven, the Eternal Praetor</span>",
@@ -349,7 +322,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Haunted Treasure</span>",
-          reward: "<span class='italic'>Uncut Support Gem (Level 1)</span>",
+          reward: "Uncut Support Gem (Level 1)",
         },
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Asinia, the Praetor's Consort</span>",
@@ -363,16 +336,14 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-info italic'>Directions: The points of interest are in the corners</span>",
-          reward: "",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Dryadic Ritual</span>",
-          reward: "<span class='italic'>Uncut Support Gem (Level 1)</span>",
+          reward: "Uncut Support Gem (Level 1)",
         },
         {
           text: "<span class='text-warning italic'>Optional: Complete Ritual Altar</span>",
-          reward: "<span class='italic'>Uncut Skill Gem (Level 4)</span>",
-          show: false,
+          reward: "Uncut Skill Gem (Level 4)",
           hide: true,
           condition: "Well, this is ominous.",
         },
@@ -381,11 +352,10 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "You have received 2 Passive Skill Points.",
           reward:
-            "<span class='text-poe-quest italic'>+2 Weapon Set Skill Points</span>",
+            "<span class='text-poe-quest'>+2 Weapon Set Skill Points</span>",
         },
         {
           text: "Find the entrance to Freythorn",
-          show: false,
           hide: true,
           condition: "G1_12",
         },
@@ -393,14 +363,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Find the Runestones",
           hide: true,
           condition: "Good work!",
-          reward: "<span class='italic'>Farrow Quest</span>",
+          reward: "Farrow Quest",
         },
-        {
-          text: "Find the Ogham Farmlands",
-          show: false,
-          hide: true,
-          condition: "",
-        },
+        { text: "Find the Ogham Farmlands" },
       ],
     },
   ],
@@ -419,9 +384,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>King of the Mists</span>",
-          reward:
-            "<span class='text-poe-quest italic'>+30 to Maximum Spirit</span>",
-          show: false,
+          reward: "<span class='text-poe-quest'>+30 to Maximum Spirit</span>",
           hide: true,
           condition: "Character has received +30 to [Spirit|Spirit].",
         },
@@ -431,22 +394,20 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
   ],
   G1_13_1: [
     {
-      preq: [],
       tasks: [
         {
           text: 'Find <span class="text-poe-quest">Una\'s Lute</span>',
           reward:
-            "<span class='text-poe-quest italic'>+2 Weapon Set Skill Points</span>",
+            "<span class='text-poe-quest'>+2 Weapon Set Skill Points</span>",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find Crop Circle</span>",
-          reward: "<span class='italic'>Uncut Skill Gem (Level 4)</span>",
+          reward: "Uncut Skill Gem (Level 4)",
         },
         {
           text: "Find the Runestones",
-          reward: "<span class='italic'>Farrow Quest</span>",
+          reward: "Farrow Quest",
           condition: "That's it! The last one!",
-          show: false,
           hide: true,
         },
         {
@@ -461,11 +422,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Find the <span class='text-poe-quest'>Smithing Tools</span>",
-          reward: "<span class='italic'>Unlocks Salvage Bench</span>",
+          reward: "Unlocks Salvage Bench",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find Blacksmith's Chest</span>",
-          reward: "<span class='text-poe-quest italic'>Blank Rune</span>",
+          reward: "<span class='text-poe-quest'>Blank Rune</span>",
         },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>The Executioner</span>",
@@ -483,7 +444,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "<span class='text-warning italic'>Optional: Find The Gallows</span>",
-          reward: "<span class='italic'>Uncut Support Gem (Level 1)</span>",
+          reward: "Uncut Support Gem (Level 1)",
         },
         { text: "Find the entrance to Ogham Manor" },
       ],
@@ -496,8 +457,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Kill <span class='text-poe-unique font-semibold'>Candlemass, The Living Rite</span>",
           hide: true,
           condition: "Character has received +20 to maximum Life.",
-          reward:
-            "<span class='text-poe-quest italic'>+20 to Maximum Life</span>",
+          reward: "<span class='text-poe-quest'>+20 to Maximum Life</span>",
         },
         {
           text: "<span class='text-info italic'>Directions: Go Down Stairs until you can take the Take the Elevator</span>",
@@ -518,7 +478,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Raided Camp</span>",
-          reward: "<span class='italic'>Gold</span>",
+          reward: "Gold",
         },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>The Rathbreaker</span>",
@@ -530,23 +490,21 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     },
   ],
   G2_town: [
-    { tasks: [{ text: "Travel to Kingsmarch (Act 4)" }], progress: 49 },
+    { tasks: [{ text: "Travel to Kingsmarch (Act 4)" }], preq: ["G4_town"] },
     {
       tasks: [
         {
           text: "Travel to the Sandswept Marsh (Act 3)",
-          show: false,
           hide: true,
           condition: "G3_town",
         },
         {
           text: "Travel to the Ziggurat Encampment (Act 3)",
           show: true,
-          hide: false,
           condition: "G3_town",
         },
       ],
-      progress: 34,
+      preq: ["G3_1"],
     },
     {
       prev: "G2_12",
@@ -558,7 +516,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Speak with Sekhema Asala" },
       ],
     },
-    { tasks: [{ text: "Return to Dreadnought" }], progress: 33 },
+    { tasks: [{ text: "Return to Dreadnought" }], preq: ["G2_12"] },
     {
       prev: "G2_9_2",
       tasks: [
@@ -566,9 +524,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to The Dreadnought" },
       ],
     },
-    { tasks: [{ text: "Return to The Spires of Deshar" }], progress: 32 },
-    { prev: "", tasks: [{ text: "Return to Path of Mourning" }], progress: 31 },
-    { prev: "", tasks: [{ text: "Return to Deshar" }], progress: 30 },
+    { tasks: [{ text: "Return to The Spires of Deshar" }], preq: ["G2_9_2"] },
+    { tasks: [{ text: "Return to Path of Mourning" }], preq: ["G2_9_1"] },
+    { tasks: [{ text: "Return to Deshar" }], preq: ["G2_8"] },
     {
       prev: "G2_7",
       tasks: [
@@ -578,12 +536,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to Deshar" },
       ],
     },
-    { tasks: [{ text: "Return to The Titan Grotto" }], progress: 29 },
-    {
-      prev: "",
-      tasks: [{ text: "Return to Valley of the Titans" }],
-      progress: 28,
-    },
+    { tasks: [{ text: "Return to The Titan Grotto" }], preq: ["G2_7"] },
+    { tasks: [{ text: "Return to Valley of the Titans" }], preq: ["G2_6"] },
     {
       prev: "G2_4_3",
       tasks: [
@@ -591,9 +545,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to Valley of the Titans" },
       ],
     },
-    { tasks: [{ text: "Return to the Buried Shrines" }], progress: 27 },
-    { prev: "", tasks: [{ text: "Return to The Lost City" }], progress: 26 },
-    { prev: "", tasks: [{ text: "Return to Keth" }], progress: 25 },
+    { tasks: [{ text: "Return to the Buried Shrines" }], preq: ["G2_4_3"] },
+    { tasks: [{ text: "Return to The Lost City" }], preq: ["G2_4_2"] },
+    { tasks: [{ text: "Return to Keth" }], preq: ["G2_4_1"] },
     {
       prev: "G2_5_2",
       tasks: [
@@ -601,12 +555,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to Keth" },
       ],
     },
-    { tasks: [{ text: "Return to The Bone Pits" }], progress: 24 },
-    {
-      prev: "",
-      tasks: [{ text: "Return to Mastodon Badlands" }],
-      progress: 23,
-    },
+    { tasks: [{ text: "Return to The Bone Pits" }], preq: ["G2_5_2"] },
+    { tasks: [{ text: "Return to Mastodon Badlands" }], preq: ["G2_5_1"] },
     {
       prev: "G2_3",
       tasks: [
@@ -614,8 +564,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to Mastodon Badlands" },
       ],
     },
-    { tasks: [{ text: "Return to The Halani Gates" }], progress: 22 },
-    { tasks: [{ text: "Return to Traitor's Passage" }], progress: 21 },
+    { tasks: [{ text: "Return to The Halani Gates" }], preq: ["G2_3"] },
+    { tasks: [{ text: "Return to Traitor's Passage" }], preq: ["G2_2"] },
     {
       prev: "G2_10_2",
       tasks: [
@@ -623,24 +573,17 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Use the Desert Map and travel to Traitor's Passage" },
       ],
     },
-    { tasks: [{ text: "Return to the Mawdun Mine" }], progress: 20 },
+    { tasks: [{ text: "Return to the Mawdun Mine" }], preq: ["G2_10_2"] },
+    { tasks: [{ text: "Return to the Mawdun Quarry" }], preq: ["G2_10_1"] },
     {
-      prev: "",
-      tasks: [{ text: "Return to the Mawdun Quarry" }],
-      progress: 19,
-    },
-    {
-      prev: "G2_3a",
       tasks: [{ text: "Use the Desert Map and travel to Mawdun Quarry" }],
-      progress: 0,
+      preq: ["G2_3a"],
     },
     {
-      prev: "",
       tasks: [
         { text: "Speak with Sekhema Asala" },
         { text: "Use the Desert Map and travel to Halani Gates" },
       ],
-      progress: 17,
     },
   ],
   G2_3a: [
@@ -653,7 +596,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Faridun War Cache</span>",
-          reward: "<span class='italic'>Artificer's Orb</span>",
+          reward: "Artificer's Orb",
         },
         { text: "Find the entrance to the Mawdun Mine" },
       ],
@@ -671,10 +614,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Rudja, the Dread Engineer</span>",
         },
-        {
-          text: "Speak with Risu",
-          reward: "<span class='italic'>cage top-left</span>",
-        },
+        { text: "Speak with Risu", reward: "cage top-left" },
         { text: "Portal to Town" },
       ],
     },
@@ -684,12 +624,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Bell Chest</span>",
-          reward: "<span class='italic'>Uncut Skill Gem (Level 6)</span>",
+          reward: "Uncut Skill Gem (Level 6)",
         },
         { text: "Find Forgotten Prison of the Traitor" },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Balbala, the Traitor</span>",
-          reward: "<span class='italic text-poe-quest'>Balbala's Barya</span>",
+          reward: "<span class='text-poe-quest'>Balbala's Barya</span>",
         },
         { text: "Find the entrance to The Halani Gates" },
       ],
@@ -723,16 +663,13 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Complete the Abyss</span>",
-          reward: "<span class='italic'>XP</span>",
+          reward: "XP",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Fossilised Memorial</span>",
-          reward: "<span class='italic'>Uncut Support Gem (Level 2)</span>",
+          reward: "Uncut Support Gem (Level 2)",
         },
-        {
-          text: "Find the Lightless Passage",
-          reward: "<span class='italic'>The Well of Souls</span>",
-        },
+        { text: "Find the Lightless Passage", reward: "The Well of Souls" },
         { text: "Find the entrance to The Bone Pits" },
       ],
     },
@@ -745,7 +682,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition:
             "Well done! Now... there's still more to find... keep searching!",
-          reward: "<span class='italic'>Farrow Quest</span>",
+          reward: "Farrow Quest",
         },
         { text: "Find the <span class='text-poe-quest'>Sun Clan Relic</span>" },
         {
@@ -760,12 +697,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find The Shrine of Hotak</span>",
-          reward: "<span class='text-poe-magic italic'>Magic Amulet</span>",
+          reward: "<span class='text-poe-magic'>Magic Amulet</span>",
         },
         {
           text: "Find the Runestones",
-          reward: "<span class='italic'>Farrow Quest</span>",
-          show: false,
+          reward: "Farrow Quest",
           hide: true,
           condition: "Well done!",
         },
@@ -774,7 +710,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition: "You have received 2 Passive Skill Points.",
           reward:
-            "<span class='text-poe-quest italic'>+2 Weapon Set Skill Points</span>",
+            "<span class='text-poe-quest'>+2 Weapon Set Skill Points</span>",
         },
         {
           text: "Find the <span class='text-poe-quest'>Kabala Clan Relic</span>",
@@ -788,7 +724,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Golden Tomb</span>",
-          reward: "<span class='italic'>Uncut Spirit Gem (Level 7)</span>",
+          reward: "Uncut Spirit Gem (Level 7)",
         },
         { text: "Find the entrance to the Buried Shrines" },
       ],
@@ -800,11 +736,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "<span class='text-warning italic'>Optional: Find the Elemental Offering</span>",
           reward:
-            "<span class='text-poe-magic italic'>Magic Elemental Ring + Lesser Rune</span>",
+            "<span class='text-poe-magic'>Magic Elemental Ring + Lesser Rune</span>",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Suspicious Sarcophagus</span>",
-          reward: "<span class='italic'>Uncut Support Gem (Level 2)</span>",
+          reward: "Uncut Support Gem (Level 2)",
         },
         {
           text: "Find the entrance to The Heart of Keth",
@@ -844,7 +780,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Complete the Abyss</span>",
-          reward: "<span class='italic'>XP</span>",
+          reward: "XP",
         },
         { text: "Find and Activate all Ancient Seals" },
         {
@@ -863,7 +799,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Titan's Sword</span>",
-          reward: "<span class='italic'>Lesser Rune</span>",
+          reward: "Lesser Rune",
         },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Zalmarath, the Colossus</span>",
@@ -878,16 +814,15 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the The Forgotten Hollow</span>",
-          reward: "<span class='italic'>Artificer's Orb</span>",
+          reward: "Artificer's Orb",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Forgotten Corpses</span>",
-          reward: "<span class='italic'>Djinn Barya</span>",
+          reward: "Djinn Barya",
         },
         {
           text: "Find the Runestones",
-          reward: "<span class='italic'>Farrow Quest</span>",
-          show: false,
+          reward: "Farrow Quest",
           hide: true,
           condition: "There we go!",
         },
@@ -897,7 +832,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find the <span class='text-poe-quest'>Fallen Dekhara</span>",
           reward:
-            "<span class='text-poe-quest italic'>+2 Weapon Set Skill Points</span>",
+            "<span class='text-poe-quest'>+2 Weapon Set Skill Points</span>",
         },
         { text: "Find the entrance to Path of Mourning" },
       ],
@@ -908,7 +843,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Hushed Urn</span>",
-          reward: "<span class='italic'>Uncut Skill Gem (Level 8)</span>",
+          reward: "Uncut Skill Gem (Level 8)",
         },
         { text: "Find the entrance to The Spires of Deshar" },
       ],
@@ -923,7 +858,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           condition:
             "Character has received +10% to [Resistances|Lightning Resistance].",
           reward:
-            "<span class='text-poe-quest italic'>+10% to Lightning Resistance</span>",
+            "<span class='text-poe-quest'>+10% to Lightning Resistance</span>",
         },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Tor Gul, the Defiler</span>",
@@ -951,35 +886,33 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Kill <span class='text-poe-unique font-semibold'>Rootdredge</span></span>",
-          reward: "<span class='italic'>Uncut Skill Gem (Level 9)</span>",
+          reward: "Uncut Skill Gem (Level 9)",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Orok Campfire</span>",
-          reward: "<span class='italic'>Lesser Jeweller's Orb</span>",
+          reward: "Lesser Jeweller's Orb",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Hanging Tree</span>",
-          reward: "<span class='text-poe-magic italic'>Magic Ring</span>",
+          reward: "<span class='text-poe-magic'>Magic Ring</span>",
         },
         { text: "Find the entrance to Ziggurat Encampment" },
       ],
     },
   ],
   G3_town: [
-    { tasks: [{ text: "Travel to Kingsmarch (Act 4)" }], progress: 49 },
+    { tasks: [{ text: "Travel to Kingsmarch (Act 4)" }], preq: ["G4_town"] },
     {
-      preq: [],
       tasks: [
         { text: "Speak with Doryani" },
         { text: "Speak with Alva and Travel to Kingsmarch" },
       ],
       prev: "G3_17",
     },
-    { tasks: [{ text: "Return to The Black Chambers" }], progress: 48 },
-    { tasks: [{ text: "Return to the Aggorat" }], progress: 47 },
-    { tasks: [{ text: "Return to the Utzaal " }], progress: 46 },
+    { tasks: [{ text: "Return to The Black Chambers" }], preq: ["G3_17"] },
+    { tasks: [{ text: "Return to the Aggorat" }], preq: ["G3_16"] },
+    { tasks: [{ text: "Return to the Utzaal " }], preq: ["G3_14"] },
     {
-      preq: [],
       tasks: [
         { text: "Speak with Servi" },
         { text: "Use the Gateway" },
@@ -990,9 +923,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       ],
       prev: "G3_12",
     },
-    { tasks: [{ text: "Return to the Temple of Kopec" }], progress: 45 },
+    { tasks: [{ text: "Return to the Temple of Kopec" }], preq: ["G3_12"] },
     {
-      preq: [],
       tasks: [
         {
           text: "<span class='text-info italic'>Directions: Go downstairs</span>",
@@ -1004,7 +936,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       ],
       prev: "G3_11",
     },
-    { tasks: [{ text: "Return to the Apex of Filth" }], progress: 44 },
+    { tasks: [{ text: "Return to the Apex of Filth" }], preq: ["G3_11"] },
     {
       tasks: [
         { text: "Speak with Oswald" },
@@ -1012,8 +944,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       ],
       prev: "G3_9",
     },
-    { prev: "G3_7", tasks: [{ text: "Travel back to The Matlan Waterways" }] },
-    { tasks: [{ text: "Return to The Drowned City" }], progress: 43 },
+    { tasks: [{ text: "Return to The Drowned City" }], preq: ["G3_8"] },
     {
       tasks: [
         {
@@ -1022,25 +953,20 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         { text: "Speak with Alva" },
         { text: "Enter The Drowned City" },
       ],
-      preq: [],
       prev: "G3_2_2",
     },
-    { tasks: [{ text: "Return to The Matlan Waterways" }], progress: 42 },
-    { tasks: [{ text: "Return to the Jungle Ruins" }], progress: 41 },
+    { prev: "G3_7", tasks: [{ text: "Travel back to The Matlan Waterways" }] },
+    { tasks: [{ text: "Return to The Matlan Waterways" }], preq: ["G3_2_2"] },
     { tasks: [{ text: "Travel to the Jungle Ruins" }], prev: "G3_6_2" },
-    { tasks: [{ text: "Return to the Jiquani's Sanctum" }], progress: 40 },
-    { tasks: [{ text: "Return to the Jiquani's Machinarium" }], progress: 39 },
-    { tasks: [{ text: "Return to the Chimeral Wetlands" }], progress: 38 },
-    { tasks: [{ text: "Return to the Infested Barrens" }], progress: 37 },
-    { tasks: [{ text: "Return to the Jungle Ruins" }] },
+    { tasks: [{ text: "Return to the Jiquani's Sanctum" }], preq: ["G3_6_2"] },
     {
-      tasks: [
-        {
-          text: "Enter the Jungle Ruins",
-          reward: "<span class='italic'>located top-left</span>",
-        },
-      ],
+      tasks: [{ text: "Return to the Jiquani's Machinarium" }],
+      preq: ["G3_6_1"],
     },
+    { tasks: [{ text: "Return to the Chimeral Wetlands" }], preq: ["G3_5"] },
+    { tasks: [{ text: "Return to the Infested Barrens" }], preq: ["G3_2_1"] },
+    { tasks: [{ text: "Return to the Jungle Ruins" }], preq: ["G3_3"] },
+    { tasks: [{ text: "Enter the Jungle Ruins", reward: "located top-left" }] },
   ],
   G3_3: [
     {
@@ -1056,21 +982,22 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Find the Runestones",
-          reward: "<span class='italic'>Farrow Quest</span>",
+          reward: "Farrow Quest",
+          hide: true,
+          condition: "Nice spotting!",
         },
         {
           text: "Find the entrance to The Venom Crypts",
           hide: true,
           condition: "G3_4",
-          reward: "<span class='italic'>near the waypoint</span>",
-          show: false,
+          reward: "near the waypoint",
         },
         {
           text: "Kill the <span class='text-poe-unique font-semibold'>Mighty Silverfist</span>",
           hide: true,
           condition: "You have received 2 Passive Skill Points.",
           reward:
-            "<span class='text-poe-quest italic'>+2 Weapon Set Skill Points</span>",
+            "<span class='text-poe-quest'>+2 Weapon Set Skill Points</span>",
         },
         {
           text: "<span class='text-info italic'>Directions: If you find the Camp of Explorers helping them will show you the entrance to the Infested Barrens</span>",
@@ -1083,8 +1010,14 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       tasks: [
         {
+          text: "<span class='text-warning italic'>Optional: Complete the Abyss</span>",
+          reward: "XP",
+        },
+        {
           text: "Find the Runestones",
-          reward: "<span class='italic'>Farrow Quest</span>",
+          reward: "Farrow Quest",
+          hide: true,
+          condition: "Well Done!",
         },
         {
           text: "Find the <span class='text-poe-quest'>Corpse</span> in the Den of the Serpent Priestess",
@@ -1104,7 +1037,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         {
           text: "<span class='text-warning italic'>Optional: Find Larva Hollow</span>",
-          reward: "<span class='italic'>XP</span>",
+          reward: "XP",
         },
         { text: "Find Chimeral Wetlands" },
       ],
@@ -1116,14 +1049,13 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find the Runestones",
           condition: "Well done!",
-          reward: "<span class='italic'>Farrow Quest</span>",
+          reward: "Farrow Quest",
         },
         {
           text: "Kill the <span class='text-poe-unique font-semibold'>Ignagduk, the Bog Witch</span>",
           hide: true,
           condition: "Character has received +30 to [Spirit|Spirit].",
-          reward:
-            "<span class='text-poe-quest italic'>+30 to Maximum Spirit</span>",
+          reward: "<span class='text-poe-quest'>+30 to Maximum Spirit</span>",
         },
         { text: "Portal to Town" },
       ],
@@ -1133,11 +1065,16 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       tasks: [
         {
+          text: "<span class='text-warning italic'>Optional: Find the Ravaged Camp</span>",
+          reward:
+            "2 <span class='text-poe-magic'>magic</span> and 1 <span class='text-poe-rare'>rare</span> chest",
+        },
+        {
           text: "Kill the <span class='text-poe-unique font-semibold'>Xyclucian, the Chimera</span>",
         },
         {
           text: "Enter Jiquani's Machinarium",
-          reward: "<span class='italic'>left of the boss arena</span>",
+          reward: "left of the boss arena",
         },
       ],
     },
@@ -1168,8 +1105,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
           condition:
             "Character has received +10% to [Resistances|Fire Resistance].",
-          reward:
-            "<span class='text-poe-quest italic'>+10% to Fire Resistance</span>",
+          reward: "<span class='text-poe-quest'>+10% to Fire Resistance</span>",
         },
         { text: "Find the entrance to Jiquani's Sanctum" },
       ],
@@ -1187,7 +1123,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Activate the 2 Generators",
           hide: true,
           condition: "The Soul Core is charged! Why don't you do the honours?",
-          reward: "<span class='italic'>top-left and top-right</span>",
+          reward: "top-left and top-right",
         },
         {
           text: "Go back to the starting point and Activate the <span class='text-poe-quest'>Large Soul Core</span>",
@@ -1209,36 +1145,29 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Shaman's Hut</span>",
-          reward: "<span class='italic'>Gargantuan Life and Mana Flasks</span>",
+          reward:
+            "<span class='text-poe-rare'>Rare Item</span>/Gargantuan flask",
         },
         {
           text: "Keep forward until you reach the Ravaged Corpse Tablet",
           condition: "G3_7",
-          show: false,
           hide: true,
         },
         {
           text: "Summon and Speak with Servi",
-          reward: "<span class='text-poe-rare italic'>Rare Belt</span>",
+          reward: "<span class='text-poe-rare'>Rare Belt</span>",
           condition: "G3_7",
-          show: false,
           hide: true,
         },
         {
           text: "Enter The Azak Bog",
-          reward: "<span class='italic'>on the left</span>",
+          reward: "on the left",
           condition: "G3_7",
-          show: false,
           hide: true,
         },
-        { text: "Go right", condition: "G3_7", show: true, hide: false },
-        {
-          text: "Activate the Canal Mechanism",
-          condition: "G3_7",
-          show: true,
-          hide: false,
-        },
-        { text: "Portal to Town", show: true, hide: false, condition: "G3_7" },
+        { text: "Go right" },
+        { text: "Activate the Canal Mechanism" },
+        { text: "Portal to Town" },
       ],
     },
   ],
@@ -1247,12 +1176,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find Foul Quarters</span>",
-          reward: "<span class='italic'>Gold</span>",
+          reward: "Gold",
         },
         {
           text: "Find the The Molten Vault",
-          reward: "<span class='italic'>Reforging Bench</span>",
-          show: false,
+          reward: "Reforging Bench",
           hide: true,
           condition: "G3_9",
         },
@@ -1291,17 +1219,17 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "<span class='text-warning italic'>Optional: Find the Napuatzi's Quarters</span>",
           reward:
-            "<span class='italic'><span class='text-poe-quest'>Golden Idol</span> (vendors for 3000 Gold)</span>",
+            "<span class='text-poe-quest'>Golden Idol</span> (vendors for 3000 Gold)",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Azcapa's Quarters</span>",
           reward:
-            "<span class='italic'><span class='text-poe-quest'>Grand Idol</span> (vendors for 4000 Gold)</span>",
+            "<span class='text-poe-quest'>Grand Idol</span> (vendors for 4000 Gold)",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Uromoti's Quarters</span>",
           reward:
-            "<span class='italic'><span class='text-poe-quest'>Glorious Idol</span> (vendors for 6000 Gold)</span>",
+            "<span class='text-poe-quest'>Glorious Idol</span> (vendors for 6000 Gold)",
         },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Viper Napuatzi</span>",
@@ -1315,11 +1243,15 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Find the <span class='text-poe-quest'>Sacrificial Heart</span>",
+          hide: true,
+          condition: "You have received 2 Passive Skill Points.",
         },
         {
           text: "Find the Sacrificial Dais, Place and Stab the Sacrificial Heart",
           reward:
-            "<span class='text-poe-quest italic'>+2 Weapon Set Skill Points</span>",
+            "<span class='text-poe-quest'>+2 Weapon Set Skill Points</span>",
+          hide: true,
+          condition: "You have received 2 Passive Skill Points.",
         },
         { text: "Find the entrance to The Black Chambers" },
       ],
@@ -1345,18 +1277,8 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     },
     {
       tasks: [
-        {
-          text: "Enter Scorched Farmlands",
-          condition: "P1_4",
-          show: false,
-          hide: true,
-        },
-        {
-          text: "Return to Holten",
-          condition: "P1_4",
-          show: true,
-          hide: false,
-        },
+        { text: "Enter Scorched Farmlands", condition: "P1_4", hide: true },
+        { text: "Return to Holten", condition: "P1_4", show: true },
       ],
     },
   ],
@@ -1366,20 +1288,17 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Isolde of the White Shroud</span> and <span class='text-poe-unique font-semibold'>Heldra of the Black Pyre</span>",
           condition: "P1_2",
-          show: false,
           hide: true,
         },
         {
           text: "Find the entrance to Stones of Serle",
           condition: "P1_2",
-          show: false,
           hide: true,
         },
         {
           text: "Find the entrance to The Blackwood",
           condition: "P1_2",
           show: true,
-          hide: false,
         },
       ],
     },
@@ -1403,7 +1322,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find the entrance to Wolvenhold",
           condition: "P1_5",
-          show: false,
           hide: true,
         },
         { text: "Find the entrance to Holten Estate" },
@@ -1471,38 +1389,32 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-info'>Directions: Go Right and follow the dried river bed</span>",
-          show: false,
           hide: true,
           condition: "Character has received 5% increased maximum Life.",
         },
         {
           text: "Find and Defeat <span class='text-poe-unique font-semibold'>Akthi, the Final Sting</span> and <span class='text-poe-unique font-semibold'>Anundr, the Sandworm</span>",
-          show: false,
           hide: true,
           condition: "Character has received 5% increased maximum Life.",
         },
         {
           text: "<span class='text-info'>Directions: Go Northwest for the Skullmaw Stairway</span>",
-          show: false,
           hide: true,
           condition: "Character has received 5% increased maximum Life.",
         },
         {
           text: "Find the Skullmaw Stairway",
-          show: false,
           hide: true,
           condition: "Character has received 5% increased maximum Life.",
         },
         {
           text: "Take the <span class='text-poe-quest'>Molten One's Gift</span>",
-          show: false,
           hide: true,
           condition: "Character has received 5% increased maximum Life.",
         },
         {
           text: "Portal to Town",
           condition: "Character has received 5% increased maximum Life.",
-          show: false,
           hide: true,
         },
         { text: "Find the entrance to Pools of Khatal" },
@@ -1510,7 +1422,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "<span class='text-info'>Directions: Keep West from the West exit from The Khari Bazaar</span>",
           condition: "Character has received 5% increased maximum Life.",
           show: true,
-          hide: false,
         },
       ],
     },
@@ -1559,31 +1470,16 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     },
   ],
   P3_Town: [
-    { prev: "", tasks: [{ text: "Travel to Kingsmarch" }], preq: ["P3_7"] },
+    { tasks: [{ text: "Travel to Kingsmarch" }], preq: ["P3_7"] },
     {
       prev: "P3_4",
       tasks: [{ text: "Speak with Hilda" }, { text: "Travel to Glacial Tarn" }],
     },
     {
       tasks: [
-        {
-          text: "Enter Ashen Forest",
-          condition: "P3_3",
-          show: false,
-          hide: true,
-        },
-        {
-          text: "Speak with Hilda",
-          condition: "P3_4",
-          show: true,
-          hide: false,
-        },
-        {
-          text: "Return to Glacial Tarn",
-          condition: "P3_3",
-          show: true,
-          hide: false,
-        },
+        { text: "Enter Ashen Forest", condition: "P3_3", hide: true },
+        { text: "Speak with Hilda", condition: "P3_4", show: true },
+        { text: "Return to Glacial Tarn", condition: "P3_3", show: true },
       ],
     },
   ],
@@ -1593,7 +1489,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Find and Defeat <span class='text-poe-unique font-semibold'>Lythara, the Wayward Spear</span>",
-          show: false,
           hide: true,
           condition: "Character has received +40 to [Spirit|Spirit].",
         },
@@ -1606,7 +1501,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Find the entrance to Howling Caves",
-          show: false,
           hide: true,
           condition: "P3_4",
         },
@@ -1656,11 +1550,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       ],
     },
   ],
-  HideoutCanal: [{ tasks: [{ text: "" }] }],
-  HideoutLimestone: [{ tasks: [{ text: "" }] }],
-  HideoutShoreline: [{ tasks: [{ text: "" }] }],
-  HideoutFelled: [{ tasks: [{ text: "" }] }],
-  HideoutDreadnought: [{ tasks: [{ text: "" }] }],
   G2_12: [
     {
       tasks: [
@@ -1687,118 +1576,68 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     },
   ],
   G4_town: [
-    {
-      tasks: [{ text: "Speak with Tujen" }],
-      preq: ["G_Endgame_Town"],
-      prev: "",
-    },
+    { tasks: [{ text: "Speak with Tujen" }], preq: ["G_Endgame_Town"] },
     {
       tasks: [
-        {
-          text: "Set Sail to Ngakanu",
-          condition: "G4_11_2",
-          show: false,
-          hide: true,
-        },
-        {
-          text: "Speak with Kaimana",
-          condition: "G4_11_2",
-          show: true,
-          hide: false,
-        },
-        {
-          text: "Speak with The Hooded One",
-          condition: "G4_11_2",
-          show: true,
-          hide: false,
-        },
+        { text: "Speak with Kaimana" },
+        { text: "Speak with The Hooded One" },
       ],
-      preq: ["G4_10"],
+      prev: "G4_11_2",
     },
     {
-      preq: [],
+      tasks: [{ text: "Return to the Heart of the Tribe" }],
+      preq: ["G4_11_2"],
+    },
+    { tasks: [{ text: "Return to Ngakanu" }], preq: ["G4_11_1b"] },
+    { tasks: [{ text: "Return to The Excavation" }], preq: ["G4_10"] },
+    {
+      tasks: [
+        { text: "Speak with The Hooded One" },
+        { text: "Set Sail to Arastas" },
+      ],
+      prev: "G4_8a",
+    },
+    {
+      preq: ["G4_4_1"],
+      tasks: [
+        { text: "Return to Eye of Hinekora", condition: "G4_4_3", hide: true },
+        { text: "Speak with The Hooded One", show: true, condition: "G4_4_3" },
+        { text: "Set Sail to Arastas", show: true, condition: "G4_4_3" },
+      ],
+    },
+    { tasks: [{ text: "Return to Solitary Confinement" }], preq: ["G4_5_2"] },
+    { tasks: [{ text: "Return to the Abandoned Prison" }], preq: ["G4_5_1"] },
+    { tasks: [{ text: "Return to Shrike Island" }], preq: ["G4_7"] },
+    { tasks: [{ text: "Return to the Singing Caverns" }], preq: ["G4_3_2"] },
+    { tasks: [{ text: "Set Sail to Whakapanu Island" }], preq: ["G4_3_1"] },
+    {
       tasks: [
         { text: "Speak with Dannig" },
         { text: "Use the Waypoint to Journey's End" },
       ],
       prev: "G4_2_2",
     },
-    {
-      preq: ["G4_2_1", "G4_3_2", "G4_7", "G4_5_2"],
-      tasks: [
-        {
-          text: "Set Sail to Eye of Hinekora",
-          condition: "G4_4_3",
-          show: false,
-          hide: true,
-        },
-        {
-          text: "Speak with The Hooded One",
-          show: true,
-          hide: false,
-          condition: "G4_4_3",
-        },
-        {
-          text: "Set Sail to Arastas",
-          show: true,
-          hide: false,
-          condition: "G4_4_3",
-        },
-      ],
-    },
+    { tasks: [{ text: "Return to Journey's End" }], preq: ["G4_2_2"] },
+    { tasks: [{ text: "Return to Kedge Bay" }], preq: ["G4_2_1"] },
     {
       tasks: [
         {
-          text: "Set Sail to Kedge Bay",
+          text: "Return to the Volcanic Warrens",
           condition: "G4_2_1",
-          show: false,
-          hide: true,
-        },
-        {
-          text: "Set Sail to Whakapanu Island",
-          condition: "G4_3_2",
-          show: false,
-          hide: true,
-        },
-        {
-          text: "Set Sail to Shrike Island",
-          condition: "G4_7",
-          show: false,
-          hide: true,
-        },
-        {
-          text: "Set Sail to Abandoned Prison",
-          condition: "G4_5_2",
-          show: false,
           hide: true,
         },
       ],
       preq: ["G4_1_2"],
     },
-    { tasks: [{ text: "Return to the Isle of Kin" }], progress: 50 },
+    { tasks: [{ text: "Return to the Isle of Kin" }], preq: ["G4_1_1"] },
     {
       tasks: [
+        { text: "Speak with Doryani", condition: "G4_1_2", hide: true },
         {
-          text: "Speak with Doryani and Alva",
-          condition: "G4_1_2",
-          show: false,
-          hide: true,
+          text: "Speak with  Alva and Take the <span class='text-poe-quest'>Boat Charter</span> from Rog",
         },
-        {
-          text: "Speak with Rog and Take the <span class='text-poe-quest'>Boat Charter</span>",
-        },
-        {
-          text: "Speak with Makoru",
-          condition: "G4_1_2",
-          show: false,
-          hide: true,
-        },
-        {
-          text: "Set Sail to Isle of Kin",
-          condition: "G4_1_2",
-          show: false,
-          hide: true,
-        },
+        { text: "Speak with Makoru", condition: "G4_1_2", hide: true },
+        { text: "Set Sail to Isle of Kin", condition: "G4_1_2", hide: true },
       ],
     },
   ],
@@ -1808,50 +1647,38 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "<span class='text-warning italic'>Optional: Kill <span class='text-poe-unique'>The Blind Beast</span></span>",
           condition: "G4_1_2",
-          show: false,
           hide: true,
-          reward:
-            "<span class='text-poe-quest italic'>Blank Greater Rune</span>",
+          reward: "<span class='text-poe-quest'>Blank Greater Rune</span>",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Fossiled Formation</span>",
-          reward: "<span class='italic'>Lesser Jeweller's Orb</span>",
-          show: false,
+          reward: "Lesser Jeweller's Orb",
           hide: true,
           condition: "G4_1_2",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Beast Pen</span>",
-          reward: "<span class='italic'>Uncut Support Gem (level 4)</span>",
-          show: false,
+          reward: "Uncut Support Gem (level 4)",
           hide: true,
           condition: "G4_1_2",
         },
         {
           text: 'Find the <span class="text-poe-quest">Flayed Sailor</span> and take the <span class="text-poe-quest">Torn Map Piece</span>',
           condition: "G4_1_2",
-          show: false,
           hide: true,
-          reward: "<span class='italic'>Farrow Quest</span>",
+          reward: "Farrow Quest",
         },
         {
           text: "<span class='text-info italic'>If you have collected all 4 <span class=\"text-poe-quest\">Map Pieces</span> you can travel to Plunderer's Point</span>",
           condition: "G4_1_1, G4_2_1, G4_3_1, G4_7",
           show: true,
-          hide: false,
         },
         {
           text: "Find the entrance to the Volcanic Warrens",
           condition: "G4_1_2",
-          show: false,
           hide: true,
         },
-        {
-          text: "Set Sail to Kedge Bay",
-          condition: "G4_1_2",
-          show: true,
-          hide: false,
-        },
+        { text: "Set Sail to Kedge Bay", condition: "G4_1_2", show: true },
       ],
     },
   ],
@@ -1860,12 +1687,13 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Volcanic Nest</span>",
-          reward: "<span class='text-poe-rare italic'>Rare Ring</span>",
+          reward: "<span class='text-poe-rare'>Rare Ring</span>",
         },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Krutog, Lord of Kin</span>",
         },
         { text: "Return to Ship" },
+        { text: "Set Sail to Kedge Bay" },
       ],
     },
   ],
@@ -1874,43 +1702,33 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Crabshell Cavern</span>",
-          reward: "<span class='italic'>Uncut Support Gem (level 4)</span>",
+          reward: "Uncut Support Gem (level 4)",
           condition: "G4_3_2",
-          show: false,
           hide: true,
         },
         {
           text: 'Find the <span class="text-poe-quest">Petrified Pirate</span> and take the <span class="text-poe-quest">Frayed Map Piece</span>',
           condition: "G4_3_2",
-          show: false,
           hide: true,
-          reward: "<span class='italic'>Farrow Quest</span>",
+          reward: "Farrow Quest",
         },
         {
           text: 'Kill the <span class="text-poe-unique">Great White One</span>',
           condition: "G4_3_2",
-          show: false,
           hide: true,
-          reward: "<span class='text-poe-quest italic'>Shark Fin</span>",
+          reward: "<span class='text-poe-quest'>Shark Fin</span>",
         },
         {
           text: "<span class='text-info italic'>If you have collected all 4 <span class=\"text-poe-quest\">Map Pieces</span> you can travel to Plunderer's Point</span>",
           condition: "G4_1_1, G4_2_1, G4_3_1, G4_7",
           show: true,
-          hide: false,
         },
         {
           text: "Find the entrance to the Singing Caverns",
           condition: "G4_3_2",
-          show: false,
           hide: true,
         },
-        {
-          text: "Set Sail to Shrike Island",
-          condition: "G4_3_2",
-          show: true,
-          hide: false,
-        },
+        { text: "Set Sail to Shrike Island", condition: "G4_3_2", show: true },
       ],
     },
   ],
@@ -1919,17 +1737,18 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Beckoning Clam</span>",
-          reward: "<span class='italic'>Pearlescent Amulet</span>",
+          reward: "Pearlescent Amulet",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Egg Cave</span>",
-          reward: "<span class='italic'>Uncut Support Gem (level 4)</span>",
+          reward: "Uncut Support Gem (level 4)",
         },
         {
           text: "Find and Kill <span class='text-poe-unique font-semibold'>Diamora, Song of Death</span>",
         },
         { text: "Speak with Matiki" },
         { text: "Return to Ship" },
+        { text: "Set Sail to Shrike Island" },
       ],
     },
   ],
@@ -1938,13 +1757,12 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: 'Find the <span class="text-poe-quest">Corpse Nest</span> and take the <span class="text-poe-quest">Ragged Map Piece</span>',
-          reward: "<span class='italic'>Farrow Quest</span>",
+          reward: "Farrow Quest",
         },
         {
           text: "<span class='text-info italic'>If you have collected all 4 <span class=\"text-poe-quest\">Map Pieces</span> you can travel to Plunderer's Point</span>",
           condition: "G4_1_1, G4_2_1, G4_3_1, G4_7",
           show: true,
-          hide: false,
         },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Scourge of the Skies</span>",
@@ -1961,34 +1779,29 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Find the <span class='text-poe-quest'>Chapel Key</span>",
           condition:
             "Character has received 30% increased Life Recovery from [Flask|Flasks].",
-          show: false,
           hide: true,
         },
         {
           text: "Find the Chapel",
           condition:
             "Character has received 30% increased Life Recovery from [Flask|Flasks].",
-          show: false,
           hide: true,
         },
         {
           text: "Select a Blessing from the Goddess of Justice",
           condition:
             "Character has received 30% increased Life Recovery from [Flask|Flasks].",
-          show: false,
           hide: true,
         },
         {
           text: "Find the entrance to the Solitary Confinement",
           condition: "G4_5_2",
-          show: false,
           hide: true,
         },
         {
           text: "Set Sail to Eye of Hinekora",
           condition: "G4_5_2",
           show: true,
-          hide: false,
         },
       ],
     },
@@ -2001,6 +1814,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         },
         { text: "Speak with The Hooded One" },
         { text: "Return to Ship" },
+        { text: "Set Sail to Eye of Hinekora" },
       ],
     },
   ],
@@ -2010,59 +1824,44 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Enter the Passageway",
           condition: "Ahh! There you are!",
-          show: false,
           hide: true,
         },
         {
           text: "Speak with Matiki",
           condition: "Now we test your mettle... Rise, warriors of Ngamahu!",
-          show: false,
           hide: true,
         },
         {
           text: "Peer into the Well of Passing",
           condition: "Now we test your mettle... Rise, warriors of Ngamahu!",
-          show: false,
           hide: true,
         },
         {
           text: "Go through the Trials",
           condition:
             "The Ancestors see you. You are welcome... in our Halls of the Dead.",
-          show: false,
           hide: true,
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Shrouded Falls</span>",
-          reward: "<span class='italic'>Uncut Spirit Gem (level 12)</span>",
+          reward: "Uncut Spirit Gem (level 12)",
           condition: "G4_4_3",
-          show: false,
           hide: true,
         },
         {
           text: "Pay your respects",
           condition: "Character has received 5% increased maximum Mana.",
-          show: false,
           hide: true,
+          reward:
+            "<span class='text-poe-quest'>5% increased maximum Mana</span>",
         },
-        {
-          text: "Speak with Navali",
-          condition: "G4_4_3",
-          show: false,
-          hide: true,
-        },
+        { text: "Speak with Navali", condition: "G4_4_3", hide: true },
         {
           text: "Find the entrance to Halls of the Dead",
           condition: "G4_4_3",
-          show: false,
           hide: true,
         },
-        {
-          text: "Set Sail to Arastas",
-          condition: "G4_4_3",
-          show: true,
-          hide: false,
-        },
+        { text: "Set Sail to Arastas", condition: "G4_4_3", show: true },
       ],
     },
   ],
@@ -2073,34 +1872,28 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           text: "Complete Tawhoa's Test",
           condition:
             "The cycle of life continues. The lone traveller journeys on.",
-          show: false,
           hide: true,
           reward:
-            "<span class='text-poe-quest italic'>+5% Lightning Resistance</span>",
+            "<span class='text-poe-quest'>+5% Lightning Resistance</span>",
         },
         {
           text: "Complete Tasalio's Test",
           condition: "The sea holds many secrets for those who seek.",
-          show: false,
           hide: true,
-          reward:
-            "<span class='text-poe-quest italic'>+5% Cold Resistance</span>",
+          reward: "<span class='text-poe-quest'>+5% Cold Resistance</span>",
         },
         {
           text: "Complete Ngamahu's Test",
           condition: "The warrior emerges from the caldera, born anew.",
-          show: false,
           hide: true,
-          reward:
-            "<span class='text-poe-quest italic'>+5% Fire Resistance</span>",
+          reward: "<span class='text-poe-quest'>+5% Fire Resistance</span>",
         },
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Yama The White</span>",
           condition: "Ahhh! Okay, okay. Yama sees you. You are worthy.",
-          show: false,
           hide: true,
           reward:
-            "<span class='text-poe-quest italic'>+2 Weapon Set Skill Points</span>",
+            "<span class='text-poe-quest'>+2 Weapon Set Skill Points</span>",
         },
         { text: "Enter the Trial of the Ancestors" },
       ],
@@ -2112,11 +1905,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Speak with Navali",
           condition: "You have received 2 Passive Skill Points.",
-          show: false,
           hide: true,
         },
         { text: "Return to Ship" },
-        { text: "Set Sail to Arastas" },
       ],
     },
   ],
@@ -2129,38 +1920,25 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Speak with Missionary Lorandis and Follow him",
           condition: "Your timing is quite remarkable, you know!",
-          show: false,
           hide: true,
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Morning Bell</span>",
           condition: "Utopia demands...",
-          show: false,
           hide: true,
-          reward: "<span class='italic'>3 Regal Orbs</span>",
+          reward: "3 Regal Orbs",
         },
         {
           text: "<span class='text-warning italic'>Optional: Find the Evening Bell</span>",
-          reward: "<span class='italic'>3 Exalted Orbs</span>",
+          reward: "3 Exalted Orbs",
         },
         {
           text: "Find and Kill <span class='text-poe-unique font-semibold'>Torvian, Hand of the Saviour</span>",
           condition: "Utopia demands...",
-          show: false,
           hide: true,
         },
-        {
-          text: "Enter The Excavation",
-          condition: "G4_10",
-          show: false,
-          hide: true,
-        },
-        {
-          text: "Set Sail to Ngakanu",
-          condition: "G4_10",
-          show: true,
-          hide: false,
-        },
+        { text: "Enter The Excavation", condition: "G4_10", hide: true },
+        { text: "Set Sail to Ngakanu", condition: "G4_10", show: true },
       ],
     },
   ],
@@ -2169,28 +1947,24 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: 'Find the <span class="text-poe-quest">Dead Man\'s Chest</span> and take the <span class="text-poe-quest">Ripped Map Piece</span>',
-          show: false,
           hide: true,
           condition: "G4_2_2",
-          reward: "<span class='italic'>Farrow Quest</span>",
+          reward: "Farrow Quest",
         },
         {
           text: "<span class='text-info italic'>If you have collected all 4 <span class=\"text-poe-quest\">Map Pieces</span> you can travel to Plunderer's Point</span>",
           condition: "G4_1_1, G4_2_1, G4_3_1, G4_7",
           show: true,
-          hide: false,
         },
         {
           text: "Find the entrance to Journey's End",
           condition: "G4_2_2",
-          show: false,
           hide: true,
         },
         {
           text: "Set Sail to Whakapanu Island",
           condition: "G4_2_2",
           show: true,
-          hide: false,
         },
       ],
     },
@@ -2199,13 +1973,23 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       tasks: [
         {
+          text: "Summon and Speak with Tujen",
+          condition: "Heh heh... thank you kindly... I am finally free!",
+          hide: true,
+        },
+        {
+          text: "Speak with Freya",
+          condition: "Heh heh... thank you kindly... I am finally free!",
+          hide: true,
+        },
+        {
           text: "Click on Karui Totem",
           condition: "Heh heh... thank you kindly... I am finally free!",
-          show: false,
           hide: true,
         },
         { text: "Survive the Madness" },
         { text: "Return to Ship" },
+        { text: "Set Sail to Whakapanu Island" },
       ],
       prev: "G4_town",
     },
@@ -2214,7 +1998,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "Find and Kill <span class='text-poe-unique font-semibold'>Captain Hartun</span>",
           condition: "Do not... believe his lies...",
-          show: false,
           hide: true,
         },
         { text: "Portal to Town" },
@@ -2226,13 +2009,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Find and Kill <span class='text-poe-unique font-semibold'>Benedictus, First Herald of Utopia</span>",
-          show: false,
           hide: true,
           condition: "Hyaaahhh!",
         },
         { text: "Explore the Forge" },
         { text: "Portal to Town" },
-        { text: "Set Sail to Ngakanu" },
       ],
     },
   ],
@@ -2241,11 +2022,11 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "<span class='text-warning italic'>Optional: Find the Mad Butcher</span>",
-          reward: "<span class='italic'>Uncut Spirit Gem (level 13)</span>",
+          reward: "Uncut Spirit Gem (level 13)",
         },
         {
           text: "<span class='text-warning italic'>Optional: Complete the Abyss</span>",
-          reward: "<span class='italic'>XP</span>",
+          reward: "XP",
         },
         {
           text: "<span class='text-info italic'>Directions: Keep right</span>",
@@ -2259,7 +2040,6 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Defeat <span class='text-poe-unique font-semibold'>Tavakai, the Fallen</span>",
-          show: false,
           hide: true,
           condition: "What... what have I done?",
         },
@@ -2284,16 +2064,19 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
       tasks: [
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Mektul, the Forgemaster</span>",
-          reward: "",
         },
         {
           text: "Take <span class='text-poe-quest'>The Hammer of Kamasa</span>",
-          reward: "<span class='italic'>Unlocks the Reforging Bench</span>",
+          reward: "Unlocks the Reforging Bench",
         },
         { text: "Portal to Town" },
       ],
     },
   ],
+  ExpeditionSubArea_Kalguur_Act3: [{ tasks: [{ text: "" }] }],
+  G2_13: [{ tasks: [{ text: "" }] }],
+  Sanctum_1_Foyer_1: [{ tasks: [{ text: "" }] }],
+  G3_10: [{ tasks: [{ text: "" }] }],
 });
 
 const [quotes, setQuotes] = createStore<
@@ -2352,7 +2135,10 @@ const [quotes, setQuotes] = createStore<
     "Character has received +10% to [Resistances|Lightning Resistance]": true,
     "Character has received +10% to [Resistances|Lightning Resistance].": true,
   },
-  G3_3: { "You have received 2 Passive Skill Points.": true },
+  G3_3: {
+    "You have received 2 Passive Skill Points.": true,
+    "Nice spotting!": true,
+  },
   G3_6_1: {
     "Character has received +10% to [Resistances|Fire Resistance].": true,
   },
@@ -2420,6 +2206,11 @@ const [quotes, setQuotes] = createStore<
   G2_8: { "There we go!": true },
   G1_town: { G2_town: true, G3_town: true },
   G2_town: { G3_town: true },
+  G3_4: { "Well Done!": true },
+  G3_2_2: { "": true },
+  G3_16: { "You have received 2 Passive Skill Points.": true },
+  G1_4: { G1_5: true, "G1_5, G1_town": true },
+  G4_1_2: { G4_2_2: true, "": true },
 });
 
 const addTown = (town: string) => {
@@ -2482,6 +2273,8 @@ const deleteZone = (zone: string, index: number) => {
       s[zone].splice(index, 1);
     }),
   );
+
+  saveGuide();
 };
 
 const addTask = (zone: string, zoneIndex: number) => {
@@ -2490,6 +2283,8 @@ const addTask = (zone: string, zoneIndex: number) => {
       s[zone][zoneIndex].tasks.push({ text: "" });
     }),
   );
+
+  saveGuide();
 };
 
 const removeTask = (zone: string, zoneIndex: number, taskIndex: number) => {
@@ -2498,6 +2293,8 @@ const removeTask = (zone: string, zoneIndex: number, taskIndex: number) => {
       s[zone][zoneIndex].tasks.splice(taskIndex, 1);
     }),
   );
+
+  saveGuide();
 };
 
 const changeTask = (

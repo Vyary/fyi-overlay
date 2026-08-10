@@ -32,8 +32,8 @@ async function initTrayIcon() {
         },
       },
       {
-        id: "clear cache",
-        text: "Clear Cache",
+        id: "clear tracker",
+        text: "Clear Progression",
         action: async () => {
           localStorage.removeItem("tracker");
           await relaunch();
