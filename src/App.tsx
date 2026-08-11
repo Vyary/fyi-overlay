@@ -38,19 +38,19 @@ function App() {
     const initializeApp = async () => {
       const s = performance.now();
 
-      const entries = await store.entries();
-      const allData = Object.fromEntries(entries) as Record<string, any>;
-
       initTrayIcon();
       enablePassthrough();
-      getCurrentWindow().maximize();
       registerPasstroughShortcut();
+      getCurrentWindow().maximize();
 
-      loadFilePath(allData.filePath);
-      loadTracker(allData.tracker);
-      loadGuide(allData.guide, allData.quotes);
-      loadTowns(allData.towns);
-      loadCharacter(allData.char);
+      const entries = await store.entries();
+      const initStore = Object.fromEntries(entries) as Record<string, any>;
+
+      loadFilePath(initStore.filePath);
+      loadTracker(initStore.tracker);
+      loadGuide(initStore.guide, initStore.quotes);
+      loadTowns(initStore.towns);
+      loadCharacter(initStore.char);
 
       if (!filePath()) {
         togglePassthrough();
@@ -62,11 +62,15 @@ function App() {
 
       const end = performance.now();
       const duration = (end - s).toFixed(2);
-      info(`finished in ${duration}ms`);
+      info(`finished loading initial state in ${duration}ms`);
     };
 
-    const unlisten = await getCurrentWindow().onCloseRequested(async (e) => {
+    initializeApp();
+
+    await getCurrentWindow().onCloseRequested(async (e) => {
       e.preventDefault();
+
+      info("saving all state");
 
       unregisterAll();
 
@@ -84,10 +88,6 @@ function App() {
         await exit(1);
       }
     });
-
-    initializeApp();
-
-    onCleanup(() => unlisten());
   });
 
   return (

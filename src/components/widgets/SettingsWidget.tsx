@@ -33,19 +33,19 @@ function SettingsWidget() {
 
   onMount(async () => {
     const ssw = (await store.get("showSw")) as boolean;
-    if (ssw) setShowSw(ssw);
+    setShowSw(ssw);
 
     const au = (await store.get("autoUpdate")) as boolean;
-    if (au) setAutoUpdate(au);
+    setAutoUpdate(au);
 
     const rtl = (await store.get("RTL")) as boolean;
-    if (rtl) setRTL(rtl);
+    setRTL(rtl);
 
     const ts = (await store.get("textSize")) as number;
     setTextSlider(ts);
 
     const inv = (await store.get("showInventory")) as boolean;
-    if (inv) setShowInventory(inv);
+    setShowInventory(inv);
   });
 
   return (

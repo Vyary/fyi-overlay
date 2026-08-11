@@ -37,13 +37,13 @@ function BaseWidget(props: {
 
   const loadState = async (name: string) => {
     const p = (await store.get(`${name}Pos`)) as { x: number; y: number };
-    if (p) setPos(p);
+    setPos(p);
 
     const s = (await store.get(`${name}Width`)) as { w: number };
-    if (s) setWidth(s);
+    setWidth(s);
 
     const tr = (await store.get(`${name}Transparency`)) as number;
-    if (tr) setTransparency(tr);
+    setTransparency(tr);
   };
 
   const cleanUp = (name: string) => {
