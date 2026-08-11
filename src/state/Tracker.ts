@@ -1,4 +1,5 @@
 import { createStore, produce, reconcile } from "solid-js/store";
+import { store } from "./Store";
 
 interface Tracker {
   zone: string;
@@ -15,6 +16,15 @@ const [tracker, setTracker] = createStore<Tracker>({
   history: [],
   flags: {},
 });
+
+const saveTracker = async () => {
+  await store.set("tracker", tracker);
+};
+
+const loadTracker = async () => {
+  const t = (await store.get("tracker")) as Tracker;
+  if (t) setTracker(reconcile(t));
+};
 
 const setZone = (zone: string) => {
   setTracker(
@@ -35,15 +45,6 @@ const setFlag = (quote: string) => {
     setTracker("flags", tracker.zone, {});
   }
   setTracker("flags", tracker.zone, quote, true);
-};
-
-const saveTracker = () => {
-  localStorage.setItem("tracker", JSON.stringify(tracker));
-};
-
-const loadTracker = () => {
-  const t = localStorage.getItem("tracker");
-  if (t) setTracker(reconcile(JSON.parse(t)));
 };
 
 export { tracker, setZone, setZoneLevel, setFlag, saveTracker, loadTracker };
