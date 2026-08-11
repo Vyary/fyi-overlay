@@ -22,8 +22,7 @@ const saveTracker = async () => {
   await store.save();
 };
 
-const loadTracker = async () => {
-  const t = (await store.get("tracker")) as Tracker;
+const loadTracker = async (t: Tracker) => {
   if (t) setTracker(reconcile(t));
 };
 

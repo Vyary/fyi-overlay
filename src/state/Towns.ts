@@ -114,8 +114,7 @@ const saveTowns = async () => {
   await store.save();
 };
 
-const loadTowns = async () => {
-  const t = (await store.get("towns")) as Record<string, string>;
+const loadTowns = async (t: Record<string, string>) => {
   if (t) setTowns(reconcile(t));
 };
 

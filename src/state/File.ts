@@ -6,6 +6,7 @@ import { setFlag, setZone, setZoneLevel, tracker } from "./Tracker";
 import { addTown, quotes } from "./Guide";
 import { character, updateCharacterLevel } from "./Character";
 import { store } from "./Store";
+import { error, info } from "@tauri-apps/plugin-log";
 
 const [filePath, setFilePath] = createSignal("");
 const [watching, setWatching] = createSignal(false);
@@ -55,21 +56,21 @@ const startTailing = async () => {
 
       if (character.name != "" && quote.includes(character.name)) {
         quote = quote.replace(character.name, "Character");
-        console.log(quote);
+        info(quote);
       }
       if (quotes?.[tracker.zone]?.[quote]) {
         setFlag(quote);
-        console.log("quote found");
+        info("quote found");
       }
     } catch (e) {
-      console.log(e);
+      error("tailing file: " + e);
     }
   });
 
   setWatching(true);
 
-  await invoke("tail_file", { filePath: filePath() }).catch((err) => {
-    console.error(err);
+  await invoke("tail_file", { filePath: filePath() }).catch((e) => {
+    error("invoking tail_file: " + e);
   });
 };
 
@@ -89,24 +90,34 @@ const selectFile = async () => {
     })) || "";
 
   if (!selected) {
-    console.log("Client file selecting cancelled");
+    info("client file selecting cancelled");
     return;
   }
 
   if (selected.endsWith("\\Client.txt") || selected.endsWith("/Client.txt")) {
     setFilePath(selected);
     if (selected) {
-      await store.set("filePath", selected);
-      await store.save();
+      saveFilePath(selected);
     }
 
     startTailing();
   }
 };
 
+const saveFilePath = async (filePath: string) => {
+  await store.set("filePath", filePath);
+  await store.save();
+};
+
+const loadFilePath = async (fp: string) => {
+  if (fp) setFilePath(fp);
+};
+
 export {
   filePath,
   setFilePath,
+  saveFilePath,
+  loadFilePath,
   watching,
   setWatching,
   startTailing,

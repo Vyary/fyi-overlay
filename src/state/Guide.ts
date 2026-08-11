@@ -3,6 +3,7 @@ import { save } from "@tauri-apps/plugin-dialog";
 import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { createStore, produce, reconcile } from "solid-js/store";
 import { store } from "./Store";
+import { error, info } from "@tauri-apps/plugin-log";
 
 export interface Guide {
   prev?: string;
@@ -2219,14 +2220,11 @@ const saveGuide = async () => {
   await store.save();
 };
 
-const loadGuide = async () => {
-  const g = (await store.get("guide")) as Record<string, Guide[]>;
+const loadGuide = async (
+  g: Record<string, Guide[]>,
+  q: Record<string, Record<string, boolean>>,
+) => {
   if (g) setGuide(reconcile(g));
-
-  const q = (await store.get("quotes")) as Record<
-    string,
-    Record<string, boolean>
-  >;
   if (q) setQuotes(reconcile(q));
 };
 
@@ -2453,7 +2451,7 @@ const exportGuide = async () => {
     });
 
     if (!filePath) {
-      console.log("Export cancelled");
+      info("export cancelled");
       return;
     }
 
@@ -2462,7 +2460,7 @@ const exportGuide = async () => {
       JSON.stringify({ guide: guide, quotes: quotes }),
     );
   } catch (e) {
-    console.log(e);
+    error("exporting guide: " + e);
   }
 };
 
@@ -2480,7 +2478,7 @@ const importGuide = async () => {
     });
 
     if (!filePath) {
-      console.log("Import cancelled");
+      info("import cancelled");
       return;
     }
 
@@ -2492,7 +2490,7 @@ const importGuide = async () => {
 
     saveGuide();
   } catch (e) {
-    console.log(e);
+    error("importing guide: " + e);
   }
 };
 

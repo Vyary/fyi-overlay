@@ -2,6 +2,7 @@ import { register, unregister } from "@tauri-apps/plugin-global-shortcut";
 import { createStore } from "solid-js/store";
 import { activeSw, resetTimer, startTimer, stopTimer } from "./StopwatchWidget";
 import { store } from "../../state/Store";
+import { error } from "@tauri-apps/plugin-log";
 
 const buildShortcutString = (state: Record<string, any>) => {
   const mods = Object.entries(state)
@@ -39,7 +40,7 @@ const registerStopwatchShortcut = async () => {
       }
     });
   } catch (e) {
-    console.log("failed to register stopwatch toggle shortcut: " + e);
+    error("failed to register stopwatch toggle shortcut: " + e);
     return false;
   }
 };
@@ -48,7 +49,7 @@ const updateStopwatchShortcut = async (e: any, input: boolean = false) => {
   try {
     await unregister(buildShortcutString(SwSc));
   } catch (e) {
-    console.log("failed to unregister stopwatch toggle shortcut: " + e);
+    error("failed to unregister stopwatch toggle shortcut: " + e);
   }
 
   setSwSc(e.target.value, e.target.checked);
@@ -81,7 +82,7 @@ const registerStopwatchShortcutReset = async () => {
       }
     });
   } catch (e) {
-    console.log("failed to register stopwatch reset shortcut: " + e);
+    error("failed to register stopwatch reset shortcut: " + e);
     return false;
   }
 };
@@ -90,7 +91,7 @@ const updateStopwatchShortcutReset = async (e: any, input: boolean = false) => {
   try {
     await unregister(buildShortcutString(SwScReset));
   } catch (e) {
-    console.log("failed to unregister stopwatch reset shortcut: " + e);
+    error("failed to unregister stopwatch reset shortcut: " + e);
   }
 
   setSwScReset(e.target.value, e.target.checked);

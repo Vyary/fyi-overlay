@@ -4,10 +4,10 @@ import { register } from "@tauri-apps/plugin-global-shortcut";
 import { For, onMount, Show } from "solid-js";
 import { fetch } from "@tauri-apps/plugin-http";
 import { ItemInfo, ItemRecord, ItemsRecord } from "./itemsRecord.ts";
-import { load } from "@tauri-apps/plugin-store";
 import { BaseWidget } from "./BaseWidget.tsx";
 import { createStore } from "solid-js/store";
 import { store } from "../../state/Store.ts";
+import { error, info } from "@tauri-apps/plugin-log";
 
 export interface CurrencyResponse {
   core: {
@@ -56,8 +56,6 @@ const fetchOverview = async () => {
       ItemsRecord[item.name] = item;
     }
   }
-
-  console.log(ItemsRecord);
 };
 
 const fetchItemData = async (league: string, type: string, id: string) => {
@@ -67,8 +65,8 @@ const fetchItemData = async (league: string, type: string, id: string) => {
       method: "GET",
     },
   );
-  console.log(
-    `https://poe.ninja/poe2/api/economy/exchange/current/details?league=${league}&type=${type}&id=${id}`,
+  info(
+    `fetchItemData link: https://poe.ninja/poe2/api/economy/exchange/current/details?league=${league}&type=${type}&id=${id}`,
   );
 
   const data = await response.json();
@@ -144,13 +142,10 @@ function InventoryWidget(props: { shortcut: string }) {
     if (!dItem.prices) {
       dItem.prices = { divine: 0, exalted: 0, chaos: 0 };
     }
-    console.log(details);
-    console.log(details["pairs"].filter((i: any) => i.id == "divine"));
     const dPrice = details["pairs"].filter((i: any) => i.id == "divine")[0][
       "history"
     ][0]["rate"];
     dItem.prices.divine = dPrice;
-    console.log(`${dItem.quantity} x ${dPrice} = ${dItem.prices.divine}`);
 
     setInventory(dItem.id, dItem);
     setInventory(dItem.id, "quantity", dItem.quantity);
@@ -170,7 +165,7 @@ function InventoryWidget(props: { shortcut: string }) {
         }
       });
     } catch (e) {
-      console.log("failed to register copy shortcut: " + e);
+      error("failed to register copy shortcut: " + e);
     }
 
     const inv = (await store.get("inventory")) as ItemRecord;

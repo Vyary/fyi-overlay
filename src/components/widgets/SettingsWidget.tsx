@@ -26,7 +26,7 @@ const [showSw, setShowSw] = createSignal(false);
 const [showInventory, setShowInventory] = createSignal(false);
 const [autoUpdate, setAutoUpdate] = createSignal(true);
 
-function SettingsWidget({}) {
+function SettingsWidget() {
   const [PtScErr, setPtScErr] = createSignal(false);
   const [SwScErr, setSwScErr] = createSignal(false);
   const [SwScResetErr, setSwScResetErr] = createSignal(false);
