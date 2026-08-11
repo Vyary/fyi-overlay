@@ -2,6 +2,7 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { save } from "@tauri-apps/plugin-dialog";
 import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { createStore, produce, reconcile } from "solid-js/store";
+import { store } from "./Store";
 
 export interface Guide {
   prev?: string;
@@ -2212,6 +2213,23 @@ const [quotes, setQuotes] = createStore<
   G4_1_2: { G4_2_2: true, "": true },
 });
 
+const saveGuide = async () => {
+  await store.set("guide", guide);
+  await store.set("quotes", quotes);
+  await store.save();
+};
+
+const loadGuide = async () => {
+  const g = (await store.get("guide")) as Record<string, Guide[]>;
+  if (g) setGuide(reconcile(g));
+
+  const q = (await store.get("quotes")) as Record<
+    string,
+    Record<string, boolean>
+  >;
+  if (q) setQuotes(reconcile(q));
+};
+
 const addTown = (town: string) => {
   if (!guide[town]) {
     setGuide(town, [
@@ -2379,6 +2397,8 @@ const changeAction = (
       }
     }),
   );
+
+  saveGuide();
 };
 
 const changeDoneQuote = (
@@ -2418,19 +2438,6 @@ const changePreq = (zone: string, zoneIndex: number, text: string) => {
   );
 
   saveGuide();
-};
-
-const saveGuide = () => {
-  localStorage.setItem("guide", JSON.stringify(guide));
-  localStorage.setItem("quotes", JSON.stringify(quotes));
-};
-
-const loadGuide = () => {
-  const g = localStorage.getItem("guide");
-  if (g) setGuide(reconcile(JSON.parse(g)));
-
-  const q = localStorage.getItem("quotes");
-  if (q) setQuotes(reconcile(JSON.parse(q)));
 };
 
 const exportGuide = async () => {
@@ -2482,6 +2489,8 @@ const importGuide = async () => {
 
     setGuide(reconcile(file["guide"]));
     setQuotes(reconcile(file["quotes"]));
+
+    saveGuide();
   } catch (e) {
     console.log(e);
   }

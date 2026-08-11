@@ -6,6 +6,7 @@ import {
 } from "./StopwatchShortcutState";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { BaseWidget } from "./BaseWidget";
+import { store } from "../../state/Store";
 
 const [countSw, setCountSw] = createSignal(0);
 const [activeSw, setActiveSw] = createSignal(false);
@@ -33,14 +34,15 @@ const resetTimer = () => {
   setCountSw(0);
 };
 
-const loadStateSw = () => {
-  const t = localStorage.getItem("timer");
-  if (t) setCountSw(Number(t));
+const loadStateSw = async () => {
+  const t = (await store.get("timer")) as number;
+  if (t) setCountSw(t);
 };
 
-const cleanUp = () => {
+const cleanUp = async () => {
   clearInterval(interval);
-  localStorage.setItem("timer", countSw().toString());
+  await store.set("timer", countSw());
+  await store.save();
   unregisterStopwatchShortcuts();
 };
 

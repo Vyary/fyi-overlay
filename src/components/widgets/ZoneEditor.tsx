@@ -29,8 +29,8 @@ function ZoneEditor() {
       defaultWidth={{ w: 550 }}
       defaultTransparency={100}
     >
-      <div class="py-3 px-4 max-h-200 overflow-y-auto min-w-170">
-        <div class="sticky top-0 z-10 backdrop-blur-md flex gap-4 items-center justify-between">
+      <div class="px-4 pl-3 pr-1 max-h-200 overflow-y-auto min-w-170">
+        <div class="sticky top-0 z-10 backdrop-blur-md flex gap-4 items-center justify-between px-2 py-1">
           <div class="flex flex-col">
             <span class="text-sm font-semibold truncate">
               {towns[tracker.zone]}
@@ -62,7 +62,7 @@ function ZoneEditor() {
             const [showConfirm, setShowConfirm] = createSignal(false);
             return (
               <div class="bg-base-200/40 rounded-xl border border-base-content/5 p-4 flex flex-col gap-4 card ">
-                <div class="flex items-center gap-2">
+                <div class="flex items-end gap-2">
                   <div class="flex flex-col gap-1 text-base-content/40">
                     <button
                       class="hover:text-base-content transition-colors"

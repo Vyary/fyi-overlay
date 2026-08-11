@@ -6,8 +6,8 @@ import { fetch } from "@tauri-apps/plugin-http";
 import { ItemInfo, ItemRecord, ItemsRecord } from "./itemsRecord.ts";
 import { load } from "@tauri-apps/plugin-store";
 import { BaseWidget } from "./BaseWidget.tsx";
-import { passthrough } from "../../state/Passthrough.ts";
 import { createStore } from "solid-js/store";
+import { store } from "../../state/Store.ts";
 
 export interface CurrencyResponse {
   core: {
@@ -122,7 +122,6 @@ const parseItem = async () => {
 
 function InventoryWidget(props: { shortcut: string }) {
   const [inventory, setInventory] = createStore<ItemRecord>({});
-  let store: any;
 
   const sorted = () => {
     const items = Object.values(inventory);
@@ -174,7 +173,6 @@ function InventoryWidget(props: { shortcut: string }) {
       console.log("failed to register copy shortcut: " + e);
     }
 
-    store = await load("inventory.json", { autoSave: true });
     const inv = (await store.get("inventory")) as ItemRecord;
     if (inv) {
       setInventory(inv);

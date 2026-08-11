@@ -1,4 +1,5 @@
 import { createStore, reconcile } from "solid-js/store";
+import { store } from "./Store";
 
 interface Character {
   name: string;
@@ -18,13 +19,14 @@ const updateCharacterLevel = (level: number) => {
   setCharacter("level", level);
 };
 
-const saveCharacter = () => {
-  localStorage.setItem("char", JSON.stringify(character));
+const saveCharacter = async () => {
+  await store.set("char", character);
+  await store.save();
 };
 
-const loadCharacter = () => {
-  const c = localStorage.getItem("char");
-  if (c) setCharacter(reconcile(JSON.parse(c)))
+const loadCharacter = async () => {
+  const c = (await store.get("char")) as Character;
+  if (c) setCharacter(reconcile(c));
 };
 
 export {

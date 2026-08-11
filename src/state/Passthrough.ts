@@ -2,6 +2,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { register, unregister } from "@tauri-apps/plugin-global-shortcut";
 import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
+import { store } from "./Store";
 
 const [passthrough, setPassthrough] = createSignal(false);
 
@@ -34,8 +35,8 @@ const [PtSc, setPtSc] = createStore({
 });
 
 const registerPasstroughShortcut = async () => {
-  const sc = localStorage.getItem("OverlayToggle");
-  if (sc) setPtSc(JSON.parse(sc));
+  const sc = await store.get("OverlayToggle");
+  if (sc) setPtSc(sc);
 
   try {
     await register(buildShortcutString(PtSc), (e) => {
@@ -62,7 +63,8 @@ const updatePasstroughShortcut = async (e: any, input: boolean = false) => {
     setPtSc(e.target.placeholder, e.target.value.toUpperCase());
   }
 
-  localStorage.setItem("OverlayToggle", JSON.stringify(PtSc));
+  await store.set("OverlayToggle", PtSc);
+  await store.save();
 
   registerPasstroughShortcut();
 };
