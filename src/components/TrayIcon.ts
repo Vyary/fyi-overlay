@@ -35,7 +35,7 @@ async function initTrayIcon() {
         id: "clear tracker",
         text: "Clear Progression",
         action: async () => {
-          localStorage.removeItem("tracker");
+          store.delete("tracker");
           await relaunch();
         },
       },
@@ -43,7 +43,6 @@ async function initTrayIcon() {
         id: "clear all data",
         text: "Clear All Data",
         action: async () => {
-          localStorage.clear();
           store.clear();
           await relaunch();
         },
@@ -52,7 +51,7 @@ async function initTrayIcon() {
         id: "reset file path",
         text: "Reset file path",
         action: async () => {
-          localStorage.removeItem("filePath");
+          store.delete("filePath");
           await relaunch();
         },
       },

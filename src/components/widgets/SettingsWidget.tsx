@@ -13,6 +13,7 @@ import {
 } from "./StopwatchShortcutState";
 import { character, setCharacterName } from "../../state/Character";
 import { BaseWidget } from "./BaseWidget";
+import { store } from "../../state/Store";
 
 const [textSlider, setTextSlider] = createSignal(2);
 const sizes = ["text-xs", "text-sm", "text-base", "text-lg", "text-lg"];
@@ -30,18 +31,21 @@ function SettingsWidget({}) {
   const [SwScErr, setSwScErr] = createSignal(false);
   const [SwScResetErr, setSwScResetErr] = createSignal(false);
 
-  onMount(() => {
-    const ssw = localStorage.getItem("showSw");
-    if (ssw) setShowSw(JSON.parse(ssw));
+  onMount(async () => {
+    const ssw = (await store.get("showSw")) as boolean;
+    if (ssw) setShowSw(ssw);
 
-    const au = localStorage.getItem("autoUpdate");
-    if (au) setAutoUpdate(JSON.parse(au));
+    const au = (await store.get("autoUpdate")) as boolean;
+    if (au) setAutoUpdate(au);
 
-    const rtl = localStorage.getItem("RTL");
-    if (rtl) setRTL(JSON.parse(rtl));
+    const rtl = (await store.get("RTL")) as boolean;
+    if (rtl) setRTL(rtl);
 
-    const ts = localStorage.getItem("textSize");
-    if (ts) setTextSlider(Number(ts));
+    const ts = (await store.get("textSize")) as number;
+    setTextSlider(ts);
+
+    const inv = (await store.get("showInventory")) as boolean;
+    if (inv) setShowInventory(inv);
   });
 
   return (
@@ -174,10 +178,11 @@ function SettingsWidget({}) {
           <div class="flex items-center justify-between">
             <span
               class="cursor-pointer text-sm"
-              onClick={() => {
+              onClick={async () => {
                 const isEnabled = !showSw();
                 setShowSw(isEnabled);
-                localStorage.setItem("showSw", JSON.stringify(isEnabled));
+                await store.set("showSw", isEnabled);
+                await store.save();
               }}
             >
               <div class="flex flex-col">
@@ -190,10 +195,11 @@ function SettingsWidget({}) {
             <input
               type="checkbox"
               checked={showSw()}
-              onClick={() => {
+              onClick={async () => {
                 const isEnabled = !showSw();
                 setShowSw(isEnabled);
-                localStorage.setItem("showSw", JSON.stringify(isEnabled));
+                await store.set("showSw", isEnabled);
+                await store.save();
               }}
               class="toggle toggle-sm"
             />
@@ -306,13 +312,11 @@ function SettingsWidget({}) {
           <div class="flex items-center justify-between">
             <span
               class="cursor-pointer text-sm"
-              onClick={() => {
+              onClick={async () => {
                 const isEnabled = !showInventory();
                 setShowInventory(isEnabled);
-                localStorage.setItem(
-                  "showInventory",
-                  JSON.stringify(isEnabled),
-                );
+                await store.set("showInventory", isEnabled);
+                await store.save();
               }}
             >
               <div class="flex flex-col">
@@ -325,13 +329,11 @@ function SettingsWidget({}) {
             <input
               type="checkbox"
               checked={showInventory()}
-              onClick={() => {
+              onClick={async () => {
                 const isEnabled = !showInventory();
                 setShowInventory(isEnabled);
-                localStorage.setItem(
-                  "showInventory",
-                  JSON.stringify(isEnabled),
-                );
+                await store.set("showInventory", isEnabled);
+                await store.save();
               }}
               class="toggle toggle-sm"
             />
@@ -340,10 +342,11 @@ function SettingsWidget({}) {
           <div class="flex items-center justify-between">
             <span
               class="cursor-pointer text-sm"
-              onClick={() => {
+              onClick={async () => {
                 const isEnabled = !RTL();
                 setRTL(isEnabled);
-                localStorage.setItem("RTL", JSON.stringify(isEnabled));
+                await store.set("RTL", isEnabled);
+                await store.save();
               }}
             >
               <div class="flex flex-col">
@@ -356,10 +359,11 @@ function SettingsWidget({}) {
             <input
               type="checkbox"
               checked={RTL()}
-              onClick={() => {
+              onClick={async () => {
                 const isEnabled = !RTL();
                 setRTL(isEnabled);
-                localStorage.setItem("RTL", JSON.stringify(isEnabled));
+                await store.set("RTL", isEnabled);
+                await store.save();
               }}
               class="toggle toggle-sm"
             />
@@ -379,9 +383,10 @@ function SettingsWidget({}) {
             max="4"
             value={textSlider()}
             class="range range-xs"
-            onInput={(e) => {
+            onInput={async (e) => {
               setTextSlider(Number(e.currentTarget.value));
-              localStorage.setItem("textSize", textSlider().toString());
+              await store.set("textSize", textSlider());
+              await store.save();
             }}
           />
         </div>
@@ -391,10 +396,11 @@ function SettingsWidget({}) {
         <div class="flex items-center justify-between">
           <span
             class="cursor-pointer text-sm"
-            onClick={() => {
+            onClick={async () => {
               const isEnabled = !autoUpdate();
               setAutoUpdate(isEnabled);
-              localStorage.setItem("autoUpdate", JSON.stringify(isEnabled));
+              await store.set("autoUpdate", isEnabled);
+              await store.save();
             }}
           >
             Auto Update
@@ -402,10 +408,11 @@ function SettingsWidget({}) {
           <input
             type="checkbox"
             checked={autoUpdate()}
-            onClick={() => {
+            onClick={async () => {
               const isEnabled = !autoUpdate();
               setAutoUpdate(isEnabled);
-              localStorage.setItem("autoUpdate", JSON.stringify(isEnabled));
+              await store.set("autoUpdate", isEnabled);
+              await store.save();
             }}
             class="toggle toggle-sm"
           />

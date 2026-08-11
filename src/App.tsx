@@ -1,4 +1,4 @@
-import { onMount, Show } from "solid-js";
+import { onCleanup, onMount, Show } from "solid-js";
 import "./App.css";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { ZoneWidget } from "./components/widgets/ZoneWidget";
@@ -23,33 +23,52 @@ import { loadTowns, saveTowns } from "./state/Towns";
 import { loadCharacter, saveCharacter } from "./state/Character";
 import { Inventory } from "./components/widgets/InventoryWidget";
 import { Stopwatch } from "./components/widgets/StopwatchWidget";
+import { store } from "./state/Store";
+import { exit } from "@tauri-apps/plugin-process";
 
 function App() {
   onMount(async () => {
-    initTrayIcon();
-    getCurrentWindow().maximize();
-    registerPasstroughShortcut();
+    const initializeApp = async () => {
+      initTrayIcon();
+      getCurrentWindow().maximize();
+      registerPasstroughShortcut();
 
-    loadTracker();
-    loadGuide();
-    loadTowns();
-    loadCharacter();
+      loadTracker();
+      loadGuide();
+      loadTowns();
+      loadCharacter();
 
-    const fp = localStorage.getItem("filePath");
-    if (fp) setFilePath(fp);
-    if (filePath()) {
-      startTailing();
-      enablePassthrough();
-    }
+      const fp = (await store.get("filePath")) as string;
+      if (fp) setFilePath(fp);
+      if (filePath()) {
+        startTailing();
+        enablePassthrough();
+      }
+    };
 
-    const unlisten = await getCurrentWindow().onCloseRequested(async () => {
-      saveTracker();
-      saveGuide();
-      saveTowns();
-      saveCharacter();
+    const unlisten = await getCurrentWindow().onCloseRequested(async (e) => {
+      e.preventDefault();
+
       unregisterAll();
+
+      try {
+        await Promise.all([
+          saveTracker(),
+          saveGuide(),
+          saveTowns(),
+          saveCharacter(),
+        ]);
+
+        await exit(0);
+      } catch (error) {
+        console.error("Failed to save data before closing:", error);
+        await exit(1);
+      }
     });
-    return () => unlisten();
+
+    initializeApp();
+
+    onCleanup(() => unlisten());
   });
 
   return (

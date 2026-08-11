@@ -1,6 +1,7 @@
 import { createSignal, JSX, onCleanup, onMount, Show } from "solid-js";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { passthrough } from "../../state/Passthrough";
+import { store } from "../../state/Store";
 
 function BaseWidget(props: {
   name: string;
@@ -19,27 +20,30 @@ function BaseWidget(props: {
     props.defaultTransparency,
   );
 
-  const savePosition = (name: string) => {
-    localStorage.setItem(`${name}Pos`, JSON.stringify(pos()));
+  const savePosition = async (name: string) => {
+    await store.set(`${name}Pos`, pos());
+    await store.save();
   };
 
-  const saveWidth = (name: string) => {
-    localStorage.setItem(`${name}Width`, JSON.stringify(width()));
+  const saveWidth = async (name: string) => {
+    await store.set(`${name}Width`, width());
+    await store.save();
   };
 
-  const saveTransparency = (name: string) => {
-    localStorage.setItem(`${name}Transparency`, transparency().toString());
+  const saveTransparency = async (name: string) => {
+    await store.set(`${name}Transparency`, transparency());
+    await store.save();
   };
 
-  const loadState = (name: string) => {
-    const p = localStorage.getItem(`${name}Pos`);
-    if (p) setPos(JSON.parse(p));
+  const loadState = async (name: string) => {
+    const p = (await store.get(`${name}Pos`)) as { x: number; y: number };
+    if (p) setPos(p);
 
-    const s = localStorage.getItem(`${name}Width`);
-    if (s) setWidth(JSON.parse(s));
+    const s = (await store.get(`${name}Width`)) as { w: number };
+    if (s) setWidth(s);
 
-    const tr = localStorage.getItem(`${name}Transparency`);
-    if (tr) setTransparency(Number(tr));
+    const tr = (await store.get(`${name}Transparency`)) as number;
+    if (tr) setTransparency(tr);
   };
 
   const cleanUp = (name: string) => {

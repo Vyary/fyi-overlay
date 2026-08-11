@@ -1,6 +1,7 @@
 import { register, unregister } from "@tauri-apps/plugin-global-shortcut";
 import { createStore } from "solid-js/store";
 import { activeSw, resetTimer, startTimer, stopTimer } from "./StopwatchWidget";
+import { store } from "../../state/Store";
 
 const buildShortcutString = (state: Record<string, any>) => {
   const mods = Object.entries(state)
@@ -21,8 +22,8 @@ const [SwSc, setSwSc] = createStore({
 });
 
 const registerStopwatchShortcut = async () => {
-  const sc = localStorage.getItem("StopwatchToggle");
-  if (sc) setSwSc(JSON.parse(sc));
+  const sc = await store.get("StopwatchToggle");
+  if (sc) setSwSc(sc);
 
   try {
     await register(buildShortcutString(SwSc), (e) => {
@@ -56,7 +57,8 @@ const updateStopwatchShortcut = async (e: any, input: boolean = false) => {
     setSwSc(e.target.placeholder, e.target.value.toUpperCase());
   }
 
-  localStorage.setItem("StopwatchToggle", JSON.stringify(SwSc));
+  await store.set("StopwatchToggle", SwSc);
+  await store.save();
 
   registerStopwatchShortcut();
 };
@@ -69,8 +71,8 @@ const [SwScReset, setSwScReset] = createStore({
 });
 
 const registerStopwatchShortcutReset = async () => {
-  const sc = localStorage.getItem("StopwatchReset");
-  if (sc) setSwScReset(JSON.parse(sc));
+  const sc = await store.get("StopwatchReset");
+  if (sc) setSwScReset(sc);
 
   try {
     await register(buildShortcutString(SwScReset), (e) => {
@@ -97,7 +99,8 @@ const updateStopwatchShortcutReset = async (e: any, input: boolean = false) => {
     setSwScReset(e.target.placeholder, e.target.value.toUpperCase());
   }
 
-  localStorage.setItem("StopwatchReset", JSON.stringify(SwScReset));
+  await store.set("StopwatchReset", SwScReset);
+  await store.save();
 
   registerStopwatchShortcutReset();
 };

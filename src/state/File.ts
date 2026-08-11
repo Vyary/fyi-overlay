@@ -5,6 +5,7 @@ import { createSignal } from "solid-js";
 import { setFlag, setZone, setZoneLevel, tracker } from "./Tracker";
 import { addTown, quotes } from "./Guide";
 import { character, updateCharacterLevel } from "./Character";
+import { store } from "./Store";
 
 const [filePath, setFilePath] = createSignal("");
 const [watching, setWatching] = createSignal(false);
@@ -95,7 +96,8 @@ const selectFile = async () => {
   if (selected.endsWith("\\Client.txt") || selected.endsWith("/Client.txt")) {
     setFilePath(selected);
     if (selected) {
-      localStorage.setItem("filePath", selected);
+      await store.set("filePath", selected);
+      await store.save();
     }
 
     startTailing();

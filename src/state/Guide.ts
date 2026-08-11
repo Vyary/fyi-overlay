@@ -2220,14 +2220,14 @@ const saveGuide = async () => {
 };
 
 const loadGuide = async () => {
-  const g2 = (await store.get("guide")) as Record<string, Guide[]>;
-  if (g2) setGuide(reconcile(g2));
+  const g = (await store.get("guide")) as Record<string, Guide[]>;
+  if (g) setGuide(reconcile(g));
 
-  const q2 = (await store.get("quotes")) as Record<
+  const q = (await store.get("quotes")) as Record<
     string,
     Record<string, boolean>
   >;
-  if (q2) setQuotes(reconcile(q2));
+  if (q) setQuotes(reconcile(q));
 };
 
 const addTown = (town: string) => {

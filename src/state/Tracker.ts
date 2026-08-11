@@ -19,6 +19,7 @@ const [tracker, setTracker] = createStore<Tracker>({
 
 const saveTracker = async () => {
   await store.set("tracker", tracker);
+  await store.save();
 };
 
 const loadTracker = async () => {
