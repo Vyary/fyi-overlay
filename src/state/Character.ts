@@ -24,8 +24,7 @@ const saveCharacter = async () => {
   await store.save();
 };
 
-const loadCharacter = async () => {
-  const c = (await store.get("char")) as Character;
+const loadCharacter = async (c: Character) => {
   if (c) setCharacter(reconcile(c));
 };
 

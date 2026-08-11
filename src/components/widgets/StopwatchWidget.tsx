@@ -36,7 +36,7 @@ const resetTimer = () => {
 
 const loadStateSw = async () => {
   const t = (await store.get("timer")) as number;
-  if (t) setCountSw(t);
+  setCountSw(t);
 };
 
 const cleanUp = async () => {

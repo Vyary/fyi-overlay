@@ -26,26 +26,17 @@ const [showSw, setShowSw] = createSignal(false);
 const [showInventory, setShowInventory] = createSignal(false);
 const [autoUpdate, setAutoUpdate] = createSignal(true);
 
-function SettingsWidget({}) {
+function SettingsWidget() {
   const [PtScErr, setPtScErr] = createSignal(false);
   const [SwScErr, setSwScErr] = createSignal(false);
   const [SwScResetErr, setSwScResetErr] = createSignal(false);
 
   onMount(async () => {
-    const ssw = (await store.get("showSw")) as boolean;
-    if (ssw) setShowSw(ssw);
-
-    const au = (await store.get("autoUpdate")) as boolean;
-    if (au) setAutoUpdate(au);
-
-    const rtl = (await store.get("RTL")) as boolean;
-    if (rtl) setRTL(rtl);
-
-    const ts = (await store.get("textSize")) as number;
-    setTextSlider(ts);
-
-    const inv = (await store.get("showInventory")) as boolean;
-    if (inv) setShowInventory(inv);
+    setShowSw((await store.get("showSw")) ?? showSw());
+    setAutoUpdate((await store.get("autoUpdate")) ?? autoUpdate());
+    setRTL((await store.get("RTL")) ?? RTL());
+    setTextSlider((await store.get("textSize")) ?? textSlider());
+    setShowInventory((await store.get("showInventory")) ?? showInventory());
   });
 
   return (

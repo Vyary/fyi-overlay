@@ -22,6 +22,7 @@
     "fs:allow-read-text-file",
     "clipboard-manager:allow-read-text",
     "store:default",
+    "log:default",
     {
           "identifier": "http:default",
           "allow": [{ "url": "https://poe.ninja/*" }]

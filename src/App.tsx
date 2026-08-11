@@ -1,4 +1,4 @@
-import { onCleanup, onMount, Show } from "solid-js";
+import { onCleanup, onMount, Show, Suspense } from "solid-js";
 import "./App.css";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { ZoneWidget } from "./components/widgets/ZoneWidget";
@@ -13,9 +13,15 @@ import {
   enablePassthrough,
   passthrough,
   registerPasstroughShortcut,
+  togglePassthrough,
 } from "./state/Passthrough";
 import { unregisterAll } from "@tauri-apps/plugin-global-shortcut";
-import { filePath, setFilePath, showOverlay, startTailing } from "./state/File";
+import {
+  filePath,
+  loadFilePath,
+  showOverlay,
+  startTailing,
+} from "./state/File";
 import Updater from "./components/Updater";
 import { loadTracker, saveTracker } from "./state/Tracker";
 import { loadGuide, saveGuide } from "./state/Guide";
@@ -23,31 +29,48 @@ import { loadTowns, saveTowns } from "./state/Towns";
 import { loadCharacter, saveCharacter } from "./state/Character";
 import { Inventory } from "./components/widgets/InventoryWidget";
 import { Stopwatch } from "./components/widgets/StopwatchWidget";
-import { store } from "./state/Store";
 import { exit } from "@tauri-apps/plugin-process";
+import { error, info } from "@tauri-apps/plugin-log";
+import { store } from "./state/Store";
 
 function App() {
   onMount(async () => {
     const initializeApp = async () => {
+      const s = performance.now();
+
       initTrayIcon();
-      getCurrentWindow().maximize();
+      enablePassthrough();
       registerPasstroughShortcut();
+      getCurrentWindow().maximize();
 
-      loadTracker();
-      loadGuide();
-      loadTowns();
-      loadCharacter();
+      const entries = await store.entries();
+      const initStore = Object.fromEntries(entries) as Record<string, any>;
 
-      const fp = (await store.get("filePath")) as string;
-      if (fp) setFilePath(fp);
+      loadFilePath(initStore.filePath);
+      loadTracker(initStore.tracker);
+      loadGuide(initStore.guide, initStore.quotes);
+      loadTowns(initStore.towns);
+      loadCharacter(initStore.char);
+
+      if (!filePath()) {
+        togglePassthrough();
+      }
+
       if (filePath()) {
         startTailing();
-        enablePassthrough();
       }
+
+      const end = performance.now();
+      const duration = (end - s).toFixed(2);
+      info(`finished loading initial state in ${duration}ms`);
     };
 
-    const unlisten = await getCurrentWindow().onCloseRequested(async (e) => {
+    initializeApp();
+
+    await getCurrentWindow().onCloseRequested(async (e) => {
       e.preventDefault();
+
+      info("saving all state");
 
       unregisterAll();
 
@@ -60,15 +83,11 @@ function App() {
         ]);
 
         await exit(0);
-      } catch (error) {
-        console.error("Failed to save data before closing:", error);
+      } catch (e) {
+        error(`Failed to save data before closing: ${e}`);
         await exit(1);
       }
     });
-
-    initializeApp();
-
-    onCleanup(() => unlisten());
   });
 
   return (
@@ -85,15 +104,21 @@ function App() {
           hidden: passthrough(),
         }}
       >
-        <SettingsWidget />
+        <Suspense>
+          <SettingsWidget />
+        </Suspense>
 
         <Show when={showInventory()}>
-          <Inventory shortcut="F2" />
+          <Suspense>
+            <Inventory shortcut="F2" />
+          </Suspense>
         </Show>
       </div>
 
       <Show when={autoUpdate()}>
-        <Updater />
+        <Suspense>
+          <Updater />
+        </Suspense>
       </Show>
 
       <div
@@ -101,10 +126,14 @@ function App() {
           hidden: !showOverlay() && passthrough(),
         }}
       >
-        <ZoneWidget />
+        <Suspense>
+          <ZoneWidget />
+        </Suspense>
 
         <Show when={showSw()}>
-          <Stopwatch />
+          <Suspense>
+            <Stopwatch />
+          </Suspense>
         </Show>
       </div>
     </main>

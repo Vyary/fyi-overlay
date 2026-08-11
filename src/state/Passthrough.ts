@@ -3,6 +3,7 @@ import { register, unregister } from "@tauri-apps/plugin-global-shortcut";
 import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
 import { store } from "./Store";
+import { error } from "@tauri-apps/plugin-log";
 
 const [passthrough, setPassthrough] = createSignal(false);
 
@@ -45,7 +46,7 @@ const registerPasstroughShortcut = async () => {
       }
     });
   } catch (e) {
-    console.log("failed to register passthrough toggle shortcut: " + e);
+    error("failed to register passthrough toggle shortcut: " + e);
     return false;
   }
 };
@@ -54,7 +55,7 @@ const updatePasstroughShortcut = async (e: any, input: boolean = false) => {
   try {
     await unregister(buildShortcutString(PtSc));
   } catch (e) {
-    console.log("failed to unregister passthrough toggle shortcut: " + e);
+    error("failed to unregister passthrough toggle shortcut: " + e);
   }
 
   setPtSc(e.target.value, e.target.checked);

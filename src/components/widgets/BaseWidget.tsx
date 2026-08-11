@@ -36,14 +36,9 @@ function BaseWidget(props: {
   };
 
   const loadState = async (name: string) => {
-    const p = (await store.get(`${name}Pos`)) as { x: number; y: number };
-    if (p) setPos(p);
-
-    const s = (await store.get(`${name}Width`)) as { w: number };
-    if (s) setWidth(s);
-
-    const tr = (await store.get(`${name}Transparency`)) as number;
-    if (tr) setTransparency(tr);
+    setPos((await store.get(`${name}Pos`)) ?? pos());
+    setWidth((await store.get(`${name}Width`)) ?? width());
+    setTransparency((await store.get(`${name}Transparency`)) ?? transparency());
   };
 
   const cleanUp = (name: string) => {
