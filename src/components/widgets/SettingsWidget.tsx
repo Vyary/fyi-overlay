@@ -32,20 +32,11 @@ function SettingsWidget() {
   const [SwScResetErr, setSwScResetErr] = createSignal(false);
 
   onMount(async () => {
-    const ssw = (await store.get("showSw")) as boolean;
-    setShowSw(ssw);
-
-    const au = (await store.get("autoUpdate")) as boolean;
-    setAutoUpdate(au);
-
-    const rtl = (await store.get("RTL")) as boolean;
-    setRTL(rtl);
-
-    const ts = (await store.get("textSize")) as number;
-    setTextSlider(ts);
-
-    const inv = (await store.get("showInventory")) as boolean;
-    setShowInventory(inv);
+    setShowSw((await store.get("showSw")) ?? showSw());
+    setAutoUpdate((await store.get("autoUpdate")) ?? autoUpdate());
+    setRTL((await store.get("RTL")) ?? RTL());
+    setTextSlider((await store.get("textSize")) ?? textSlider());
+    setShowInventory((await store.get("showInventory")) ?? showInventory());
   });
 
   return (
