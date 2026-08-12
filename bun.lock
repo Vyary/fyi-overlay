@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "fyi-overlay",
+      "name": "Qutm",
       "dependencies": {
         "@tailwindcss/vite": "^4.3.0",
         "@tauri-apps/api": "^2.11.0",
