@@ -52,25 +52,29 @@ function Layouts() {
     ],
   });
 
+  let containerRef!: HTMLDivElement;
+
   const [iconIndex, setIconIndex] = createSignal(0);
-  let offset = { x: 0, y: 0 };
 
   const onMove = (e: MouseEvent) => {
+    const rect = containerRef.getBoundingClientRect();
+
     setLayouts(
       tracker.zone,
       0,
       "icons",
       iconIndex(),
       "x",
-      e.clientX - offset.x,
+      (e.clientX - rect.left) / rect.width,
     );
+
     setLayouts(
       tracker.zone,
       0,
       "icons",
       iconIndex(),
       "y",
-      e.clientY - offset.y,
+      (e.clientY - rect.top) / rect.height,
     );
   };
 
@@ -79,11 +83,8 @@ function Layouts() {
     window.removeEventListener("mouseup", onUp);
   };
 
-  const onDown = (e: MouseEvent) => {
-    offset = {
-      x: e.clientX - layouts[tracker.zone][0].icons[iconIndex()].x,
-      y: e.clientY - layouts[tracker.zone][0].icons[iconIndex()].y,
-    };
+  const onDown = (_e: MouseEvent, index: number) => {
+    setIconIndex(index);
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
   };
@@ -96,7 +97,7 @@ function Layouts() {
       defaultTransparency={100}
       transparencySlider={true}
     >
-      <div class="relative">
+      <div ref={containerRef} class="relative">
         <img
           src={layouts?.[tracker.zone][0].image}
           class="w-70 h-70 opacity-0"
@@ -112,7 +113,9 @@ function Layouts() {
                 top: `${icon.y * 100}%`,
                 transform: "translate(-50%, -50%)",
               }}
-              onMouseDown={onDown}
+              onMouseDown={(e) => {
+                onDown(e, i());
+              }}
             />
           )}
         </For>
