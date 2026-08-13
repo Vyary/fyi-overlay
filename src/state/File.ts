@@ -4,7 +4,12 @@ import { listen } from "@tauri-apps/api/event";
 import { createSignal } from "solid-js";
 import { setFlag, setZone, setZoneLevel, tracker } from "./Tracker";
 import { addTown, quotes } from "./Guide";
-import { character, updateCharacterLevel } from "./Character";
+import {
+  character,
+  updateCharacterClass,
+  setCharacterName,
+  updateCharacterLevel,
+} from "./Character";
 import { store } from "./Store";
 import { error, info } from "@tauri-apps/plugin-log";
 
@@ -16,33 +21,60 @@ const startTailing = async () => {
   await listen("tail-line", (event) => {
     try {
       const line = event.payload as string;
-      if (line.includes("[WINDOW] Gained focus")) {
+
+      info("Line: " + line);
+
+      if (
+        line.includes("[STARTUP] Game Start") ||
+        line.includes("[WINDOW] Gained focus")
+      ) {
         setShowOverlay(true);
+        return;
       }
 
-      if (line.includes("[WINDOW] Lost focus")) {
+      if (
+        line.includes("[WINDOW] Lost focus") ||
+        line.includes("Closing game gracefully")
+      ) {
         setShowOverlay(false);
+        return;
       }
 
-      if (line.includes("Closing game gracefully")) {
-        setShowOverlay(false);
+      if (line.includes("Set Source")) {
+        setShowOverlay(!line.includes("unknown"));
+        return;
       }
 
       if (line.includes("area")) {
         const match = line.match(/level (?<level>\d+) area "(?<zone>\w+)"/)!;
-        const { level, zone } = match.groups!;
+        if (match?.groups) {
+          const { level, zone } = match.groups;
 
-        if (!zone.toLowerCase().includes("hideout")) {
-          setZone(zone);
-          setZoneLevel(Number(level));
-          addTown(zone);
+          if (!zone.toLowerCase().includes("hideout")) {
+            setZone(zone);
+            setZoneLevel(Number(level));
+            addTown(zone);
+          }
         }
+
+        return;
       }
 
-      if (line.includes(character.name) && line.includes("is now level")) {
-        const match = line.match(/level (?<charLevel>\d*)/)!;
-        const { charLevel } = match?.groups!;
-        updateCharacterLevel(Number(charLevel));
+      if (line.includes("is now level")) {
+        const levelMatch = line.match(
+          /: (?<charName>\w*) \((?<charClass>\w*)\) is now level (?<charLevel>\d*)/,
+        )!;
+
+        if (levelMatch?.groups) {
+          const { charName, charClass, charLevel } = levelMatch.groups;
+          if (!character.name) setCharacterName(charName);
+          if (character.name == charName) {
+            updateCharacterClass(charClass);
+            updateCharacterLevel(Number(charLevel));
+          }
+        }
+
+        return;
       }
 
       // if (line.includes("LOADING SCREEN")) {
@@ -51,16 +83,18 @@ const startTailing = async () => {
       //   addTownName(tracker.zone, zoneName);
       // }
 
-      const quoteArray = line.split(": ");
-      let quote = quoteArray[quoteArray.length - 1];
+      const zoneQuotes = quotes?.[tracker.zone];
+      if (zoneQuotes) {
+        const quoteArray = line.split(": ");
+        let quote = quoteArray[quoteArray.length - 1];
 
-      if (character.name != "" && quote.includes(character.name)) {
-        quote = quote.replace(character.name, "Character");
-        info(quote);
-      }
-      if (quotes?.[tracker.zone]?.[quote]) {
-        setFlag(quote);
-        info("quote found");
+        if (character.name && quote.includes(character.name)) {
+          quote = quote.replace(character.name, "Character");
+        }
+
+        if (zoneQuotes[quote]) {
+          setFlag(quote);
+        }
       }
     } catch (e) {
       error("tailing file: " + e);
