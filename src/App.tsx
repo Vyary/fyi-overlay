@@ -32,6 +32,7 @@ import { Stopwatch } from "./components/widgets/StopwatchWidget";
 import { exit } from "@tauri-apps/plugin-process";
 import { error, info } from "@tauri-apps/plugin-log";
 import { store } from "./state/Store";
+import { Layouts } from "./components/Layouts";
 
 function App() {
   onMount(async () => {
@@ -100,13 +101,17 @@ function App() {
       }}
     >
       <div
-        classList={{
-          hidden: passthrough(),
-        }}
+        classList={
+          {
+            // hidden: passthrough(),
+          }
+        }
       >
         <Suspense>
           <SettingsWidget />
         </Suspense>
+
+        <Layouts />
 
         <Show when={showInventory()}>
           <Suspense>

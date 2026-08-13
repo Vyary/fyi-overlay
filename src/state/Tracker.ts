@@ -10,7 +10,7 @@ interface Tracker {
 }
 
 const [tracker, setTracker] = createStore<Tracker>({
-  zone: "",
+  zone: "G1_2",
   zoneLevel: 0,
   prevZone: "",
   history: [],
