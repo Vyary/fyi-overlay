@@ -126,7 +126,7 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
     {
       tasks: [
         {
-          text: "Speak with Farrow",
+          text: "Help with Farrow",
           hide: true,
           condition: "Thanks for the help.",
         },
@@ -279,7 +279,9 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
         {
           text: "<span class='text-warning italic'>Optional: Use Respawn at Checkpoint to Skip the Animation</span>",
           hide: true,
-          condition: "I must make them <i>{suffer!} ",
+          condition:
+            "Isabel... Torcall... Calum... the family of Count Lachlann of Ogham... My family! This doesn't make any sense! They're <i>{dead!} Those bastard Eternals... I must make them pay... I must make them <i>{suffer!}",
+          show: false,
         },
         {
           text: "Kill <span class='text-poe-unique font-semibold'>Lachlann of Endless Lament</span>",
@@ -412,7 +414,10 @@ const [guide, setGuide] = createStore<Record<string, Guide[]>>({
           hide: true,
         },
         {
-          text: '<span class="text-info italic">If you have found all 3 Runestones sites you can go back to The Grelwood and enter the Lost Catacombs</span>',
+          text: '<span class="text-info italic">If you have found all 3 Runestones sites, you can go back to <br>The Grelwood. There, you can enter the Lost Catacombs</span>',
+          show: false,
+          hide: true,
+          condition: "That's it! The last one!",
         },
         { text: "Find the entrance to the Ogham Village" },
       ],
@@ -2102,6 +2107,7 @@ const [quotes, setQuotes] = createStore<
     "At last! It's open! Praise the First Ones!": true,
     "I must make them <i>{suffer!} ": true,
     "Together... at last...": true,
+    "Isabel... Torcall... Calum... the family of Count Lachlann of Ogham... My family! This doesn't make any sense! They're <i>{dead!} Those bastard Eternals... I must make them pay... I must make them <i>{suffer!}": true,
   },
   G1_11: {
     "You have received 2 Passive Skill Points.": true,
@@ -2133,7 +2139,6 @@ const [quotes, setQuotes] = createStore<
   },
   G2_9_2: {
     "Character has received 30% increased [Charm] Charges gained.": true,
-    "Character has received +10% to [Resistances|Lightning Resistance]": true,
     "Character has received +10% to [Resistances|Lightning Resistance].": true,
   },
   G3_3: {

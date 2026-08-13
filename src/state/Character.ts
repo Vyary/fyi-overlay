@@ -4,11 +4,13 @@ import { store } from "./Store";
 interface Character {
   name: string;
   level: number;
+  class: string;
 }
 
 const [character, setCharacter] = createStore<Character>({
   name: "",
   level: 0,
+  class: "",
 });
 
 const setCharacterName = (name: string) => {
@@ -17,6 +19,10 @@ const setCharacterName = (name: string) => {
 
 const updateCharacterLevel = (level: number) => {
   setCharacter("level", level);
+};
+
+const updateCharacterClass = (c: string) => {
+  setCharacter("class", c);
 };
 
 const saveCharacter = async () => {
@@ -32,6 +38,7 @@ export {
   character,
   setCharacterName,
   updateCharacterLevel,
+  updateCharacterClass,
   saveCharacter,
   loadCharacter,
 };

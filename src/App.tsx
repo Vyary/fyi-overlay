@@ -1,4 +1,4 @@
-import { onCleanup, onMount, Show, Suspense } from "solid-js";
+import { onMount, Show, Suspense } from "solid-js";
 import "./App.css";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { ZoneWidget } from "./components/widgets/ZoneWidget";
