@@ -71,6 +71,15 @@ async function initTrayIcon() {
     menu,
     menuOnLeftClick: false,
     icon: await defaultWindowIcon(),
+    action: async (event: any) => {
+      switch (event.type) {
+        case "DoubleClick":
+          if (event.button === "Left") {
+            togglePassthrough();
+          }
+          break;
+      }
+    },
   };
 
   await TrayIcon.new(options);
