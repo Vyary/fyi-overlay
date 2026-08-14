@@ -1,11 +1,10 @@
 import { createSignal, For } from "solid-js";
-import { BaseWidget } from "./widgets/BaseWidget";
+import { BaseWidget } from "./BaseWidget";
 import { createStore } from "solid-js/store";
-import { tracker } from "../state/Tracker";
+import { tracker } from "../../state/Tracker";
 
 type LayoutIcon = {
   id: string;
-  type: "entrance" | "exit" | "boss";
   x: number;
   y: number;
 };
@@ -17,12 +16,37 @@ type ZoneLayout = {
   icons: LayoutIcon[];
 };
 
-const getIconImage = (icon: string) => {
-  return "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lSZXJvbGxSYXJlIiwic2NhbGUiOjF9XQ/46a2347805/CurrencyRerollRare.png";
-};
-
-function Layouts() {
+function LayoutWidget() {
   const [layouts, setLayouts] = createStore<Record<string, ZoneLayout[]>>({
+    G1_town: [
+      {
+        id: "clearfell-1",
+        name: "Layout 1",
+        image: "https://i.ytimg.com/vi_webp/ARFSbodxJZU/sddefault.webp",
+        icons: [
+          {
+            id: "entrance",
+            x: 0.13,
+            y: 0.81,
+          },
+          {
+            id: "boss",
+            x: 0.22,
+            y: 0.24,
+          },
+          {
+            id: "waypoint",
+            x: 0.5,
+            y: 0.5,
+          },
+          {
+            id: "rustobelisk",
+            x: 0.1,
+            y: 0.1,
+          },
+        ],
+      },
+    ],
     G1_2: [
       {
         id: "clearfell-1",
@@ -31,21 +55,28 @@ function Layouts() {
         icons: [
           {
             id: "entrance",
-            type: "entrance",
             x: 0.23,
             y: 0.81,
           },
           {
             id: "boss",
-            type: "boss",
             x: 0.72,
             y: 0.24,
           },
           {
-            id: "boss",
-            type: "boss",
+            id: "campsite",
             x: 0.5,
             y: 0.5,
+          },
+          {
+            id: "waypoint",
+            x: 0.8,
+            y: 0.5,
+          },
+          {
+            id: "entrance",
+            x: 0.83,
+            y: 0.81,
           },
         ],
       },
@@ -83,7 +114,8 @@ function Layouts() {
     window.removeEventListener("mouseup", onUp);
   };
 
-  const onDown = (_e: MouseEvent, index: number) => {
+  const onDown = (e: MouseEvent, index: number) => {
+    e.preventDefault();
     setIconIndex(index);
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
@@ -97,16 +129,19 @@ function Layouts() {
       defaultTransparency={100}
       transparencySlider={true}
     >
-      <div ref={containerRef} class="relative">
+      <div ref={containerRef} class="relative w-[280px] h-[280px]">
         <img
           src={layouts?.[tracker.zone][0].image}
-          class="w-70 h-70 opacity-0"
+          draggable={false}
+          class="w-full h-full opacity-0"
         />
 
         <For each={layouts?.[tracker.zone][0].icons}>
           {(icon, i) => (
             <img
-              src={getIconImage(icon.type)}
+              src={
+                new URL(`../../assets/${icon.id}.webp`, import.meta.url).href
+              }
               class="absolute w-6 h-6"
               style={{
                 left: `${icon.x * 100}%`,
@@ -124,4 +159,4 @@ function Layouts() {
   );
 }
 
-export { Layouts };
+export { LayoutWidget };
