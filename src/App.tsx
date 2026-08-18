@@ -108,7 +108,9 @@ function App() {
       >
         <ErrorBoundary
           fallback={(error, reset) => (
-            <ErrorMessage name="SettingsWidget" error={error} reset={reset} />
+            <Show when={!passthrough()}>
+              <ErrorMessage name="SettingsWidget" error={error} reset={reset} />
+            </Show>
           )}
         >
           <Suspense>
@@ -119,7 +121,9 @@ function App() {
         <Show when={showInventory()}>
           <ErrorBoundary
             fallback={(error, reset) => (
-              <ErrorMessage name="Inventory " error={error} reset={reset} />
+              <Show when={!passthrough()}>
+                <ErrorMessage name="Inventory " error={error} reset={reset} />
+              </Show>
             )}
           >
             <Suspense>
@@ -132,7 +136,9 @@ function App() {
       <Show when={autoUpdate()}>
         <ErrorBoundary
           fallback={(error, reset) => (
-            <ErrorMessage name="Updater " error={error} reset={reset} />
+            <Show when={!passthrough()}>
+              <ErrorMessage name="Updater " error={error} reset={reset} />
+            </Show>
           )}
         >
           <Suspense>
@@ -148,7 +154,9 @@ function App() {
       >
         <ErrorBoundary
           fallback={(error, reset) => (
-            <ErrorMessage name="ZoneWidget " error={error} reset={reset} />
+            <Show when={!passthrough()}>
+              <ErrorMessage name="ZoneWidget " error={error} reset={reset} />
+            </Show>
           )}
         >
           <Suspense>
@@ -158,7 +166,9 @@ function App() {
 
         <ErrorBoundary
           fallback={(error, reset) => (
-            <ErrorMessage name="LayoutWidget" error={error} reset={reset} />
+            <Show when={!passthrough()}>
+              <ErrorMessage name="LayoutWidget" error={error} reset={reset} />
+            </Show>
           )}
         >
           <Suspense>
@@ -169,7 +179,9 @@ function App() {
         <Show when={showSw()}>
           <ErrorBoundary
             fallback={(error, reset) => (
-              <ErrorMessage name="Stopwatch" error={error} reset={reset} />
+              <Show when={!passthrough()}>
+                <ErrorMessage name="Stopwatch" error={error} reset={reset} />
+              </Show>
             )}
           >
             <Suspense>
