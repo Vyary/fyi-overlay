@@ -204,6 +204,10 @@ const addLayout = (zone: string) => {
   }
 };
 
+const exportLayouts = () => {};
+
+const importLayouts = () => {};
+
 function LayoutWidget() {
   const [iconIndex, setIconIndex] = createSignal(0);
   const [layoutIndex, setLayoutIndex] = createSignal(0);
@@ -537,4 +541,4 @@ function LayoutWidget() {
   );
 }
 
-export { LayoutWidget, layouts, addLayout };
+export { LayoutWidget, addLayout, exportLayouts, importLayouts };
