@@ -349,7 +349,7 @@ function LayoutWidget() {
   return (
     <BaseWidget
       name="layout"
-      defaultPos={{ x: 575, y: 15 }}
+      defaultPos={{ x: 1375, y: 5 }}
       defaultWidth={{ w: 550 }}
       defaultTransparency={100}
       transparencySlider={true}
@@ -450,7 +450,7 @@ function LayoutWidget() {
                   class="btn btn-sm flex-1 hover:text-success hover:bg-success/10"
                   onClick={() => {
                     addExtraLayout();
-                    setLayoutIndex(layoutIndex() + 1);
+                    setLayoutIndex(layouts?.[tracker.zone]?.length - 1);
                   }}
                 >
                   <svg

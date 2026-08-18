@@ -7,6 +7,7 @@ import {
   autoUpdate,
   SettingsWidget,
   showInventory,
+  showLayout,
   showSw,
 } from "./components/widgets/SettingsWidget";
 import {
@@ -172,7 +173,9 @@ function App() {
           )}
         >
           <Suspense>
-            <LayoutWidget />
+            <Show when={showLayout()}>
+              <LayoutWidget />
+            </Show>
           </Suspense>
         </ErrorBoundary>
 

@@ -25,7 +25,7 @@ function ZoneEditor() {
   return (
     <BaseWidget
       name="editor"
-      defaultPos={{ x: 575, y: 15 }}
+      defaultPos={{ x: 570, y: 15 }}
       defaultWidth={{ w: 550 }}
       defaultTransparency={100}
     >
