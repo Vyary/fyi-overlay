@@ -25,7 +25,7 @@ function ZoneEditor() {
   return (
     <BaseWidget
       name="editor"
-      defaultPos={{ x: 575, y: 15 }}
+      defaultPos={{ x: 570, y: 15 }}
       defaultWidth={{ w: 550 }}
       defaultTransparency={100}
     >
@@ -44,7 +44,7 @@ function ZoneEditor() {
             <input
               type="text"
               list="towns"
-              placeholder="Search or Select Zone..."
+              placeholder="Select Zone..."
               class="input input-sm input-bordered w-full max-w-xs"
               onChange={(e) => setZone(e.currentTarget.value)}
             />

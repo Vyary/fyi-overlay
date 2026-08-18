@@ -1,4 +1,4 @@
-import { onMount, Show, Suspense } from "solid-js";
+import { ErrorBoundary, onMount, Show, Suspense } from "solid-js";
 import "./App.css";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { ZoneWidget } from "./components/widgets/ZoneWidget";
@@ -7,6 +7,7 @@ import {
   autoUpdate,
   SettingsWidget,
   showInventory,
+  showLayout,
   showSw,
 } from "./components/widgets/SettingsWidget";
 import {
@@ -32,6 +33,8 @@ import { Stopwatch } from "./components/widgets/StopwatchWidget";
 import { exit } from "@tauri-apps/plugin-process";
 import { error, info } from "@tauri-apps/plugin-log";
 import { store } from "./state/Store";
+import { ErrorMessage } from "./components/ErrorMessage";
+import { LayoutWidget } from "./components/widgets/LayoutWidget";
 
 function App() {
   onMount(async () => {
@@ -104,21 +107,45 @@ function App() {
           hidden: passthrough(),
         }}
       >
-        <Suspense>
-          <SettingsWidget />
-        </Suspense>
+        <ErrorBoundary
+          fallback={(error, reset) => (
+            <Show when={!passthrough()}>
+              <ErrorMessage name="SettingsWidget" error={error} reset={reset} />
+            </Show>
+          )}
+        >
+          <Suspense>
+            <SettingsWidget />
+          </Suspense>
+        </ErrorBoundary>
 
         <Show when={showInventory()}>
-          <Suspense>
-            <Inventory shortcut="F2" />
-          </Suspense>
+          <ErrorBoundary
+            fallback={(error, reset) => (
+              <Show when={!passthrough()}>
+                <ErrorMessage name="Inventory " error={error} reset={reset} />
+              </Show>
+            )}
+          >
+            <Suspense>
+              <Inventory shortcut="F2" />
+            </Suspense>
+          </ErrorBoundary>
         </Show>
       </div>
 
       <Show when={autoUpdate()}>
-        <Suspense>
-          <Updater />
-        </Suspense>
+        <ErrorBoundary
+          fallback={(error, reset) => (
+            <Show when={!passthrough()}>
+              <ErrorMessage name="Updater " error={error} reset={reset} />
+            </Show>
+          )}
+        >
+          <Suspense>
+            <Updater />
+          </Suspense>
+        </ErrorBoundary>
       </Show>
 
       <div
@@ -126,14 +153,44 @@ function App() {
           hidden: !showOverlay() && passthrough(),
         }}
       >
-        <Suspense>
-          <ZoneWidget />
-        </Suspense>
+        <ErrorBoundary
+          fallback={(error, reset) => (
+            <Show when={!passthrough()}>
+              <ErrorMessage name="ZoneWidget " error={error} reset={reset} />
+            </Show>
+          )}
+        >
+          <Suspense>
+            <ZoneWidget />
+          </Suspense>
+        </ErrorBoundary>
+
+        <ErrorBoundary
+          fallback={(error, reset) => (
+            <Show when={!passthrough()}>
+              <ErrorMessage name="LayoutWidget" error={error} reset={reset} />
+            </Show>
+          )}
+        >
+          <Suspense>
+            <Show when={showLayout()}>
+              <LayoutWidget />
+            </Show>
+          </Suspense>
+        </ErrorBoundary>
 
         <Show when={showSw()}>
-          <Suspense>
-            <Stopwatch />
-          </Suspense>
+          <ErrorBoundary
+            fallback={(error, reset) => (
+              <Show when={!passthrough()}>
+                <ErrorMessage name="Stopwatch" error={error} reset={reset} />
+              </Show>
+            )}
+          >
+            <Suspense>
+              <Stopwatch />
+            </Suspense>
+          </ErrorBoundary>
         </Show>
       </div>
     </main>

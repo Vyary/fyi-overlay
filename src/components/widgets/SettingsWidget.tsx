@@ -25,9 +25,10 @@ const textSize = () => sizes[textSlider()];
 const textSizeSmall = () =>
   sizes[textSlider() - 1 >= 0 ? textSlider() - 1 : textSlider()];
 
-const [RTL, setRTL] = createSignal(false);
 const [showSw, setShowSw] = createSignal(false);
 const [showInventory, setShowInventory] = createSignal(false);
+const [RTL, setRTL] = createSignal(false);
+const [showLayout, setShowLayout] = createSignal(false);
 const [autoUpdate, setAutoUpdate] = createSignal(true);
 
 function SettingsWidget() {
@@ -41,12 +42,13 @@ function SettingsWidget() {
     setRTL((await store.get("RTL")) ?? RTL());
     setTextSlider((await store.get("textSize")) ?? textSlider());
     setShowInventory((await store.get("showInventory")) ?? showInventory());
+    setShowLayout((await store.get("showLayout")) ?? showLayout());
   });
 
   return (
     <BaseWidget
       name="settings"
-      defaultPos={{ x: 1565, y: 15 }}
+      defaultPos={{ x: 1640, y: 5 }}
       defaultWidth={{ w: 340 }}
       defaultTransparency={100}
     >
@@ -376,6 +378,36 @@ function SettingsWidget() {
               class="toggle toggle-sm"
             />
           </div>
+
+          <div class="flex items-center justify-between">
+            <span
+              class="cursor-pointer text-sm"
+              onClick={async () => {
+                const isEnabled = !showLayout();
+                setShowLayout(isEnabled);
+                await store.set("showLayout", isEnabled);
+                await store.save();
+              }}
+            >
+              <div class="flex flex-col">
+                <span class="text-sm font-medium">Layout</span>
+                <span class="text-xs text-base-content/50">
+                  Layout Widget showing points of interest
+                </span>
+              </div>
+            </span>
+            <input
+              type="checkbox"
+              checked={showLayout()}
+              onClick={async () => {
+                const isEnabled = !showLayout();
+                setShowLayout(isEnabled);
+                await store.set("showLayout", isEnabled);
+                await store.save();
+              }}
+              class="toggle toggle-sm"
+            />
+          </div>
         </div>
 
         <div class="divider my-0 opacity-50"></div>
@@ -448,6 +480,7 @@ export {
   RTL,
   showSw,
   showInventory,
+  showLayout,
   autoUpdate,
   textSize,
   textSizeSmall,

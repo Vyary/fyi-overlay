@@ -37,6 +37,7 @@ function BaseWidget(props: {
 
   const loadState = async (name: string) => {
     setPos((await store.get(`${name}Pos`)) ?? pos());
+    console.log(`${name}Pos: ` + JSON.stringify(pos()));
     setWidth((await store.get(`${name}Width`)) ?? width());
     setTransparency((await store.get(`${name}Transparency`)) ?? transparency());
   };
