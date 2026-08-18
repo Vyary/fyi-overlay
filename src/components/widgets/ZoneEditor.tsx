@@ -44,7 +44,7 @@ function ZoneEditor() {
             <input
               type="text"
               list="towns"
-              placeholder="Search or Select Zone..."
+              placeholder="Select Zone..."
               class="input input-sm input-bordered w-full max-w-xs"
               onChange={(e) => setZone(e.currentTarget.value)}
             />

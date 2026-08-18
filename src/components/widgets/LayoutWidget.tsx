@@ -204,9 +204,31 @@ const addLayout = (zone: string) => {
   }
 };
 
+const addExtraLayout = () => {
+  setLayouts(
+    produce(
+      (s) =>
+        (s[tracker.zone] = [
+          ...s[tracker.zone],
+          {
+            name: "1",
+            image: "",
+            icons: [],
+            lines: [],
+          },
+        ]),
+    ),
+  );
+};
+
 function LayoutWidget() {
   const [iconIndex, setIconIndex] = createSignal(0);
   const [layoutIndex, setLayoutIndex] = createSignal(0);
+  const [selecting, setSelecting] = createSignal<boolean>(false);
+  const [startIcon, setStartIcon] = createSignal<number>();
+  const [iconType, setIconType] = createSignal("");
+
+  const icons = ["waypoint", "boss", "campsite", "entrance"];
   let containerRef!: HTMLDivElement;
 
   const onIconMove = (e: MouseEvent) => {
@@ -244,18 +266,49 @@ function LayoutWidget() {
   };
 
   const addIcon = () => {
+    if (iconType() === "") return;
+
     setLayouts(
       produce(
         (s) =>
           (s[tracker.zone][layoutIndex()]["icons"] = [
             ...s[tracker.zone][layoutIndex()]["icons"],
-            { id: "waypoint", x: 0.5, y: 0.5 },
+            { id: iconType(), x: 0.5, y: 0.5 },
+          ]),
+      ),
+    );
+
+    setIconType("");
+  };
+
+  const addLine = (start: number | undefined, end: number) => {
+    if (start === undefined) return;
+
+    setLayouts(
+      produce(
+        (s) =>
+          (s[tracker.zone][layoutIndex()]["lines"] = [
+            ...s[tracker.zone][layoutIndex()]["lines"],
+            { fromIconId: start, toIconId: end },
           ]),
       ),
     );
   };
 
-  const addLine = () => {};
+  const linker = (index: number) => {
+    {
+      if (selecting()) {
+        if (startIcon() === undefined) {
+          setStartIcon(index);
+          return;
+        }
+
+        addLine(startIcon(), index);
+        setSelecting(false);
+        setStartIcon(undefined);
+      }
+    }
+  };
 
   const saveLayouts = () => {
     localStorage.setItem("layouts", JSON.stringify(layouts));
@@ -281,85 +334,138 @@ function LayoutWidget() {
       <Show
         when={layouts[tracker.zone]}
         fallback={
-          <div class="px-5 py-3" onClick={() => addLayout(tracker.zone)}>
-            No Zone Layout
+          <div
+            class="flex items-center justify-center px-5 py-8 text-sm text-base-content/50 cursor-pointer hover:text-base-content/70 transition-colors"
+            onClick={() => addLayout(tracker.zone)}
+          >
+            No Zone Layout — click to add
           </div>
         }
       >
-        <div ref={containerRef} class="relative w-[280px] h-[280px]">
-          <img
-            src={layouts?.[tracker.zone]?.[layoutIndex()].image}
-            draggable={false}
-            class="w-full h-full opacity-0"
-          />
-
-          <svg
-            class="absolute inset-0 w-full h-full pointer-events-none"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
+        <div class="flex flex-col gap-3 p-3">
+          <div
+            ref={containerRef}
+            class="relative w-[240px] h-[240px] mx-auto rounded-lg overflow-hidden"
           >
-            <For each={layouts?.[tracker.zone]?.[layoutIndex()].lines}>
-              {(line) => {
-                const from = () =>
-                  layouts[tracker.zone]?.[layoutIndex()].icons[line.fromIconId];
-                const to = () =>
-                  layouts[tracker.zone]?.[layoutIndex()].icons[line.toIconId];
-                return (
-                  <Show when={from() && to()}>
-                    <line
-                      x1={from()!.x * 100}
-                      y1={from()!.y * 100}
-                      x2={to()!.x * 100}
-                      y2={to()!.y * 100}
-                      stroke="rgba(255,255,255,0.85)"
-                      stroke-width="0.5"
-                      vector-effect="non-scaling-stroke"
-                    />
-                  </Show>
-                );
-              }}
-            </For>
-          </svg>
+            <img
+              src={layouts?.[tracker.zone]?.[layoutIndex()].image}
+              draggable={false}
+              class="w-full h-full opacity-0"
+            />
 
-          <For each={layouts?.[tracker.zone]?.[layoutIndex()].icons}>
-            {(icon, i) => (
-              <img
-                src={
-                  new URL(`../../assets/${icon.id}.webp`, import.meta.url).href
-                }
-                class="absolute w-6 h-6"
-                style={{
-                  left: `${icon.x * 100}%`,
-                  top: `${icon.y * 100}%`,
-                  transform: "translate(-50%, -50%)",
+            <svg
+              class="absolute inset-0 w-full h-full pointer-events-none"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+            >
+              <For each={layouts?.[tracker.zone]?.[layoutIndex()].lines}>
+                {(line) => {
+                  const from = () =>
+                    layouts[tracker.zone]?.[layoutIndex()].icons[
+                      line.fromIconId
+                    ];
+                  const to = () =>
+                    layouts[tracker.zone]?.[layoutIndex()].icons[line.toIconId];
+                  return (
+                    <Show when={from() && to()}>
+                      <line
+                        x1={from()!.x * 100}
+                        y1={from()!.y * 100}
+                        x2={to()!.x * 100}
+                        y2={to()!.y * 100}
+                        stroke="rgba(255,255,255,0.85)"
+                        stroke-width="0.5"
+                        vector-effect="non-scaling-stroke"
+                      />
+                    </Show>
+                  );
                 }}
-                onMouseDown={(e) => {
-                  onDown(e, i());
-                }}
-              />
-            )}
-          </For>
-        </div>
-        <Show when={!passthrough()}>
-          <select class="select select-sm bg-base-300">
-            <For each={layouts?.[tracker.zone]}>
-              {(l, i) => (
-                <option
-                  selected={i() == layoutIndex()}
-                  onClick={() => setLayoutIndex(i())}
-                >
-                  {l.name}
-                </option>
+              </For>
+            </svg>
+
+            <For each={layouts?.[tracker.zone]?.[layoutIndex()].icons}>
+              {(icon, i) => (
+                <img
+                  src={
+                    new URL(`../../assets/${icon.id}.webp`, import.meta.url)
+                      .href
+                  }
+                  class="absolute w-6 h-6 drop-shadow-md"
+                  classList={{
+                    "cursor-move": !selecting(),
+                    "cursor-pointer ring-2 ring-primary rounded-full":
+                      selecting(),
+                  }}
+                  style={{
+                    left: `${icon.x * 100}%`,
+                    top: `${icon.y * 100}%`,
+                    transform: "translate(-50%, -50%)",
+                  }}
+                  onMouseDown={(e) => onDown(e, i())}
+                  onClick={() => linker(i())}
+                />
               )}
             </For>
-          </select>
-          <button class="btn" onClick={saveLayouts}>
-            Save Layouts
-          </button>
-          <button class="btn" onClick={addIcon}>
-            add icon
-          </button>
-        </Show>
+          </div>
+
+          <Show when={!passthrough()}>
+            <div class="flex flex-col gap-2 pt-1 border-t border-base-content/10">
+              <div class="inline-flex items-center justify-center gap-2">
+                <select class="select select-sm select-bordered w-full bg-base-200">
+                  <For each={layouts?.[tracker.zone]}>
+                    {(l, i) => (
+                      <option
+                        selected={i() == layoutIndex()}
+                        onClick={() => setLayoutIndex(i())}
+                      >
+                        {i() + 1}
+                      </option>
+                    )}
+                  </For>
+                </select>
+                <button class="btn btn-sm flex-1" onClick={addExtraLayout}>
+                  +
+                </button>
+              </div>
+
+              <div class="form-control w-full">
+                <input
+                  type="text"
+                  list="icons"
+                  placeholder="Select icon type..."
+                  class="input input-sm input-bordered w-full bg-base-200"
+                  value={iconType()}
+                  onChange={(e) => setIconType(e.currentTarget.value)}
+                />
+                <datalist id="icons">
+                  <For each={icons}>
+                    {(i) => <option value={i}>{i}</option>}
+                  </For>
+                </datalist>
+              </div>
+
+              <div class="flex gap-2">
+                <button class="btn btn-sm btn-primary flex-1" onClick={addIcon}>
+                  Add Icon
+                </button>
+                <button
+                  class="btn btn-sm flex-1"
+                  classList={{ "btn-active btn-secondary": selecting() }}
+                  onClick={() => setSelecting(true)}
+                >
+                  {selecting() ? "Selecting…" : "Add Line"}
+                </button>
+              </div>
+
+              <button
+                class="btn btn-sm btn-outline btn-block mt-1"
+                onClick={saveLayouts}
+              >
+                Save Layouts
+              </button>
+            </div>
+          </Show>
+        </div>
       </Show>
     </BaseWidget>
   );
