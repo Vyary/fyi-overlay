@@ -3,6 +3,10 @@ import { BaseWidget } from "./BaseWidget";
 import { createStore, produce, reconcile } from "solid-js/store";
 import { tracker } from "../../state/Tracker";
 import { passthrough } from "../../state/Passthrough";
+import { open } from "@tauri-apps/plugin-dialog";
+import { save } from "@tauri-apps/plugin-dialog";
+import { error, info } from "@tauri-apps/plugin-log";
+import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 
 type LayoutIcon = {
   id: string;
@@ -204,9 +208,61 @@ const addLayout = (zone: string) => {
   }
 };
 
-const exportLayouts = () => {};
+const saveLayouts = () => {
+  localStorage.setItem("layouts", JSON.stringify(layouts));
+};
 
-const importLayouts = () => {};
+const exportLayouts = async () => {
+  try {
+    const filePath = await save({
+      filters: [
+        {
+          name: "JSON",
+          extensions: ["json"],
+        },
+      ],
+      defaultPath: "layouts.json",
+    });
+
+    if (!filePath) {
+      info("layouts export cancelled");
+      return;
+    }
+
+    await writeTextFile(filePath, JSON.stringify(layouts));
+  } catch (e) {
+    error("exporting layouts: " + e);
+  }
+};
+
+const importLayouts = async () => {
+  try {
+    const filePath = await open({
+      multiple: false,
+      directory: false,
+      filters: [
+        {
+          name: "JSON",
+          extensions: ["json"],
+        },
+      ],
+    });
+
+    if (!filePath) {
+      info("layouts import cancelled");
+      return;
+    }
+
+    const rawFile = await readTextFile(filePath);
+    const file = JSON.parse(rawFile);
+
+    setLayouts(reconcile(file));
+
+    saveLayouts();
+  } catch (e) {
+    error("importing layouts: " + e);
+  }
+};
 
 function LayoutWidget() {
   const [iconIndex, setIconIndex] = createSignal(0);
@@ -335,10 +391,6 @@ function LayoutWidget() {
         }
       }),
     );
-  };
-
-  const saveLayouts = () => {
-    localStorage.setItem("layouts", JSON.stringify(layouts));
   };
 
   const loadLayouts = () => {
