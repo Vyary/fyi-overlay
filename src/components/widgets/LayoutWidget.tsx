@@ -204,23 +204,6 @@ const addLayout = (zone: string) => {
   }
 };
 
-const addExtraLayout = () => {
-  setLayouts(
-    produce(
-      (s) =>
-        (s[tracker.zone] = [
-          ...s[tracker.zone],
-          {
-            name: "1",
-            image: "",
-            icons: [],
-            lines: [],
-          },
-        ]),
-    ),
-  );
-};
-
 function LayoutWidget() {
   const [iconIndex, setIconIndex] = createSignal(0);
   const [layoutIndex, setLayoutIndex] = createSignal(0);
@@ -310,6 +293,46 @@ function LayoutWidget() {
     }
   };
 
+  const addExtraLayout = () => {
+    setLayouts(
+      produce(
+        (s) =>
+          (s[tracker.zone] = [
+            ...s[tracker.zone],
+            {
+              name: "1",
+              image: "",
+              icons: [],
+              lines: [],
+            },
+          ]),
+      ),
+    );
+  };
+
+  const deleteLayout = (index: number) => {
+    setLayouts(
+      produce((s) => {
+        const filtered = s[tracker.zone].filter((_, i) => i !== index);
+
+        if (filtered.length > 0) {
+          s[tracker.zone] = filtered;
+        }
+
+        if (filtered.length === 0) {
+          s[tracker.zone] = [
+            {
+              name: "1",
+              image: "",
+              icons: [],
+              lines: [],
+            },
+          ];
+        }
+      }),
+    );
+  };
+
   const saveLayouts = () => {
     localStorage.setItem("layouts", JSON.stringify(layouts));
   };
@@ -320,7 +343,7 @@ function LayoutWidget() {
   };
 
   onMount(() => {
-    // loadLayouts();
+    loadLayouts();
   });
 
   return (
@@ -423,8 +446,51 @@ function LayoutWidget() {
                     )}
                   </For>
                 </select>
-                <button class="btn btn-sm flex-1" onClick={addExtraLayout}>
-                  +
+                <button
+                  class="btn btn-sm flex-1 hover:text-success hover:bg-success/10"
+                  onClick={() => {
+                    addExtraLayout();
+                    setLayoutIndex(layoutIndex() + 1);
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                  </svg>
+                </button>
+                <button
+                  class="btn btn-sm flex-1 hover:text-error hover:bg-error/10"
+                  onClick={() => {
+                    const index = layoutIndex();
+                    setLayoutIndex(index - 1 >= 0 ? index - 1 : 0);
+                    deleteLayout(index);
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class=""
+                  >
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                  </svg>
                 </button>
               </div>
 
