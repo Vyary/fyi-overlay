@@ -86,6 +86,10 @@ async function initTrayIcon() {
           text: "Quit Application",
           action: async () => await getCurrentWindow().close(),
         },
+        {
+          id: "",
+          text: "",
+        },
       ],
     });
 

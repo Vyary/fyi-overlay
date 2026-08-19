@@ -10,6 +10,7 @@ import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 
 type LayoutIcon = {
   id: string;
+  label?: string;
   x: number;
   y: number;
 };
@@ -21,7 +22,7 @@ type LayoutLine = {
 
 type ZoneLayout = {
   name: string;
-  image: string;
+  image?: string;
   icons: LayoutIcon[];
   lines: LayoutLine[];
 };
@@ -30,22 +31,23 @@ const [layouts, setLayouts] = createStore<Record<string, ZoneLayout[]>>({
   G1_town: [
     {
       name: "1",
-      image: "https://i.ytimg.com/vi_webp/ARFSbodxJZU/sddefault.webp",
       icons: [
         {
           id: "entrance",
-          x: 0.13,
-          y: 0.81,
+          label: "The Riverbank",
+          x: 0.1625,
+          y: 0.775,
         },
         {
           id: "waypoint",
-          x: 0.4642857142857143,
-          y: 0.7535714285714286,
+          x: 0.5916666666666667,
+          y: 0.7291666666666666,
         },
         {
           id: "entrance",
-          x: 0.7,
-          y: 0.325,
+          label: "Clearfell",
+          x: 0.8458333333333333,
+          y: 0.1625,
         },
       ],
       lines: [
@@ -59,32 +61,41 @@ const [layouts, setLayouts] = createStore<Record<string, ZoneLayout[]>>({
   G1_2: [
     {
       name: "1",
-      image: "",
       icons: [
         {
           id: "entrance",
-          x: 0.20357142857142857,
-          y: 0.85,
+          label: "Clearfell Encampment",
+          x: 0.19166666666666668,
+          y: 0.625,
         },
         {
           id: "campsite",
-          x: 0.8107142857142857,
-          y: 0.4107142857142857,
+          label: "Campsite",
+          x: 0.8875,
+          y: 0.4,
         },
         {
           id: "boss",
-          x: 0.6857142857142857,
-          y: 0.8571428571428571,
+          label: "Biera",
+          x: 0.4791666666666667,
+          y: 0.9291666666666667,
         },
         {
           id: "waypoint",
-          x: 0.875,
-          y: 0.6928571428571428,
+          x: 0.75,
+          y: 0.825,
         },
         {
           id: "entrance",
-          x: 0.48214285714285715,
-          y: 0.225,
+          label: "The Grelwood",
+          x: 0.5375,
+          y: 0.09583333333333334,
+        },
+        {
+          id: "entrance",
+          label: "Mud Barrow",
+          x: 0.8541666666666666,
+          y: 0.7958333333333333,
         },
       ],
       lines: [
@@ -102,93 +113,79 @@ const [layouts, setLayouts] = createStore<Record<string, ZoneLayout[]>>({
         },
       ],
     },
+  ],
+  G1_3: [
     {
-      name: "2",
+      name: "1",
       image: "",
       icons: [
         {
           id: "entrance",
-          x: 0.20357142857142857,
-          y: 0.85,
-        },
-        {
-          id: "campsite",
-          x: 0.5892857142857143,
-          y: 0.7464285714285714,
+          label: "Clearfell",
+          x: 0.16666666666666666,
+          y: 0.1625,
         },
         {
           id: "boss",
-          x: 0.8142857142857143,
-          y: 0.5142857142857142,
-        },
-        {
-          id: "waypoint",
-          x: 0.20714285714285716,
-          y: 0.4142857142857143,
-        },
-        {
-          id: "entrance",
-          x: 0.8178571428571428,
-          y: 0.21428571428571427,
+          label: "The Devourer",
+          x: 0.8041666666666667,
+          y: 0.8125,
         },
       ],
       lines: [
         {
           fromIconId: 0,
           toIconId: 1,
-        },
-        {
-          fromIconId: 1,
-          toIconId: 2,
-        },
-        {
-          fromIconId: 2,
-          toIconId: 4,
         },
       ],
     },
+  ],
+  G1_4: [
     {
-      name: "3",
+      name: "1",
       image: "",
       icons: [
         {
           id: "entrance",
-          x: 0.20357142857142857,
-          y: 0.85,
+          label: "Clearfell",
+          x: 0.65,
+          y: 0.10416666666666667,
         },
         {
-          id: "campsite",
-          x: 0.2642857142857143,
-          y: 0.5107142857142857,
+          id: "checkpoint",
+          label: "",
+          x: 0.525,
+          y: 0.3333333333333333,
         },
         {
-          id: "boss",
-          x: 0.8142857142857143,
-          y: 0.5142857142857142,
+          id: "checkpoint",
+          label: "",
+          x: 0.8333333333333334,
+          y: 0.5291666666666667,
         },
         {
-          id: "waypoint",
-          x: 0.575,
-          y: 0.7785714285714286,
+          id: "checkpoint",
+          label: "",
+          x: 0.21666666666666667,
+          y: 0.5541666666666667,
+        },
+        {
+          id: "checkpoint",
+          label: "",
+          x: 0.5333333333333333,
+          y: 0.75,
         },
         {
           id: "entrance",
-          x: 0.8178571428571428,
-          y: 0.21428571428571427,
+          label: "The Red Vale",
+          x: 0.8041666666666667,
+          y: 0.9041666666666667,
         },
       ],
       lines: [
         {
           fromIconId: 0,
-          toIconId: 1,
-        },
-        {
-          fromIconId: 1,
-          toIconId: 2,
-        },
-        {
-          fromIconId: 2,
-          toIconId: 4,
+          toIconId: 5,
         },
       ],
     },
@@ -270,8 +267,9 @@ function LayoutWidget() {
   const [selecting, setSelecting] = createSignal<boolean>(false);
   const [startIcon, setStartIcon] = createSignal<number>();
   const [iconType, setIconType] = createSignal("");
+  const [iconLabel, setIconLabel] = createSignal("");
 
-  const icons = ["waypoint", "boss", "campsite", "entrance"];
+  const icons = ["waypoint", "boss", "campsite", "entrance", "checkpoint"];
   let containerRef!: HTMLDivElement;
 
   const onIconMove = (e: MouseEvent) => {
@@ -308,6 +306,14 @@ function LayoutWidget() {
     window.addEventListener("mouseup", onUp);
   };
 
+  const changeLayoutName = (name: string) => {
+    setLayouts(
+      produce((s) => {
+        s[tracker.zone][layoutIndex()].name = name;
+      }),
+    );
+  };
+
   const addIcon = () => {
     if (iconType() === "") return;
 
@@ -316,12 +322,13 @@ function LayoutWidget() {
         (s) =>
           (s[tracker.zone][layoutIndex()]["icons"] = [
             ...s[tracker.zone][layoutIndex()]["icons"],
-            { id: iconType(), x: 0.5, y: 0.5 },
+            { id: iconType(), label: iconLabel(), x: 0.5, y: 0.5 },
           ]),
       ),
     );
 
     setIconType("");
+    setIconLabel("");
   };
 
   const addLine = (start: number | undefined, end: number) => {
@@ -374,7 +381,6 @@ function LayoutWidget() {
     setLayouts(
       produce((s) => {
         const filtered = s[tracker.zone].filter((_, i) => i !== index);
-
         if (filtered.length > 0) {
           s[tracker.zone] = filtered;
         }
@@ -399,7 +405,7 @@ function LayoutWidget() {
   };
 
   onMount(() => {
-    loadLayouts();
+    // loadLayouts();
   });
 
   return (
@@ -407,7 +413,7 @@ function LayoutWidget() {
       name="layout"
       defaultPos={{ x: 1375, y: 5 }}
       defaultWidth={{ w: 550 }}
-      defaultTransparency={100}
+      defaultTransparency={25}
       transparencySlider={true}
     >
       <Show
@@ -427,7 +433,7 @@ function LayoutWidget() {
             class="relative w-[240px] h-[240px] mx-auto rounded-lg overflow-hidden"
           >
             <img
-              src={layouts?.[tracker.zone]?.[layoutIndex()].image}
+              src={layouts?.[tracker.zone]?.[layoutIndex()]?.image}
               draggable={false}
               class="w-full h-full opacity-0"
             />
@@ -464,44 +470,61 @@ function LayoutWidget() {
 
             <For each={layouts?.[tracker.zone]?.[layoutIndex()].icons}>
               {(icon, i) => (
-                <img
-                  src={
-                    new URL(`../../assets/${icon.id}.webp`, import.meta.url)
-                      .href
-                  }
-                  class="absolute w-6 h-6 drop-shadow-md"
-                  classList={{
-                    "cursor-move": !selecting(),
-                    "cursor-pointer ring-2 ring-primary rounded-full":
-                      selecting(),
-                  }}
+                <div
+                  class="absolute flex flex-col items-center pointer-events-none"
                   style={{
                     left: `${icon.x * 100}%`,
                     top: `${icon.y * 100}%`,
                     transform: "translate(-50%, -50%)",
                   }}
-                  onMouseDown={(e) => onDown(e, i())}
-                  onClick={() => linker(i())}
-                />
+                >
+                  <Show when={icon.label}>
+                    <span class="text-[9px] font-medium text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] whitespace-nowrap select-none">
+                      {icon.label}
+                    </span>
+                  </Show>
+
+                  <img
+                    src={
+                      new URL(`../../assets/${icon.id}.webp`, import.meta.url)
+                        .href
+                    }
+                    class="w-5 h-5 drop-shadow-md pointer-events-auto"
+                    classList={{
+                      "cursor-move": !selecting(),
+                      "cursor-pointer ring-2 ring-primary rounded-full":
+                        selecting(),
+                    }}
+                    onMouseDown={(e) => onDown(e, i())}
+                    onClick={() => linker(i())}
+                  />
+                </div>
               )}
             </For>
           </div>
 
           <Show when={!passthrough()}>
-            <div class="flex flex-col gap-2 pt-1 border-t border-base-content/10">
+            <div class="flex flex-col gap-2 pt-1 border-t border-base-content/10 max-w-[240px]">
+              <select class="select select-sm select-bordered w-full bg-base-200">
+                <For each={layouts?.[tracker.zone]}>
+                  {(l, i) => (
+                    <option
+                      selected={i() == layoutIndex()}
+                      onClick={() => setLayoutIndex(i())}
+                    >
+                      {l.name}
+                    </option>
+                  )}
+                </For>
+              </select>
               <div class="inline-flex items-center justify-center gap-2">
-                <select class="select select-sm select-bordered w-full bg-base-200">
-                  <For each={layouts?.[tracker.zone]}>
-                    {(l, i) => (
-                      <option
-                        selected={i() == layoutIndex()}
-                        onClick={() => setLayoutIndex(i())}
-                      >
-                        {i() + 1}
-                      </option>
-                    )}
-                  </For>
-                </select>
+                <input
+                  type="text"
+                  placeholder="Icon Label..."
+                  class="input input-sm input-bordered w-full bg-base-200"
+                  value={layouts?.[tracker.zone][layoutIndex()].name}
+                  onChange={(e) => changeLayoutName(e.currentTarget.value)}
+                />
                 <button
                   class="btn btn-sm flex-1 hover:text-success hover:bg-success/10"
                   onClick={() => {
@@ -550,20 +573,30 @@ function LayoutWidget() {
                 </button>
               </div>
 
-              <div class="form-control w-full">
+              <div class="flex gap-2">
+                <div class="form-control w-full">
+                  <input
+                    type="text"
+                    list="icons"
+                    placeholder="Select icon type..."
+                    class="input input-sm input-bordered w-full bg-base-200"
+                    value={iconType()}
+                    onChange={(e) => setIconType(e.currentTarget.value)}
+                  />
+                  <datalist id="icons">
+                    <For each={icons}>
+                      {(i) => <option value={i}>{i}</option>}
+                    </For>
+                  </datalist>
+                </div>
+
                 <input
                   type="text"
-                  list="icons"
-                  placeholder="Select icon type..."
+                  placeholder="Icon Label..."
                   class="input input-sm input-bordered w-full bg-base-200"
-                  value={iconType()}
-                  onChange={(e) => setIconType(e.currentTarget.value)}
+                  value={iconLabel()}
+                  onChange={(e) => setIconLabel(e.currentTarget.value)}
                 />
-                <datalist id="icons">
-                  <For each={icons}>
-                    {(i) => <option value={i}>{i}</option>}
-                  </For>
-                </datalist>
               </div>
 
               <div class="flex gap-2">
@@ -573,7 +606,7 @@ function LayoutWidget() {
                 <button
                   class="btn btn-sm flex-1"
                   classList={{ "btn-active btn-secondary": selecting() }}
-                  onClick={() => setSelecting(true)}
+                  onClick={() => setSelecting(!selecting())}
                 >
                   {selecting() ? "Selecting…" : "Add Line"}
                 </button>
