@@ -1,268 +1,20 @@
-import { createSignal, For, onMount, Show } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import { BaseWidget } from "./BaseWidget";
-import { createStore, produce, reconcile } from "solid-js/store";
 import { tracker } from "../../state/Tracker";
 import { passthrough } from "../../state/Passthrough";
-import { open } from "@tauri-apps/plugin-dialog";
-import { save } from "@tauri-apps/plugin-dialog";
-import { error, info } from "@tauri-apps/plugin-log";
-import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
-
-type LayoutIcon = {
-  id: string;
-  x: number;
-  y: number;
-};
-
-type LayoutLine = {
-  fromIconId: number;
-  toIconId: number;
-};
-
-type ZoneLayout = {
-  name: string;
-  image: string;
-  icons: LayoutIcon[];
-  lines: LayoutLine[];
-};
-
-const [layouts, setLayouts] = createStore<Record<string, ZoneLayout[]>>({
-  G1_town: [
-    {
-      name: "1",
-      image: "https://i.ytimg.com/vi_webp/ARFSbodxJZU/sddefault.webp",
-      icons: [
-        {
-          id: "entrance",
-          x: 0.13,
-          y: 0.81,
-        },
-        {
-          id: "waypoint",
-          x: 0.4642857142857143,
-          y: 0.7535714285714286,
-        },
-        {
-          id: "entrance",
-          x: 0.7,
-          y: 0.325,
-        },
-      ],
-      lines: [
-        {
-          fromIconId: 0,
-          toIconId: 2,
-        },
-      ],
-    },
-  ],
-  G1_2: [
-    {
-      name: "1",
-      image: "",
-      icons: [
-        {
-          id: "entrance",
-          x: 0.20357142857142857,
-          y: 0.85,
-        },
-        {
-          id: "campsite",
-          x: 0.8107142857142857,
-          y: 0.4107142857142857,
-        },
-        {
-          id: "boss",
-          x: 0.6857142857142857,
-          y: 0.8571428571428571,
-        },
-        {
-          id: "waypoint",
-          x: 0.875,
-          y: 0.6928571428571428,
-        },
-        {
-          id: "entrance",
-          x: 0.48214285714285715,
-          y: 0.225,
-        },
-      ],
-      lines: [
-        {
-          fromIconId: 0,
-          toIconId: 1,
-        },
-        {
-          fromIconId: 1,
-          toIconId: 2,
-        },
-        {
-          fromIconId: 2,
-          toIconId: 4,
-        },
-      ],
-    },
-    {
-      name: "2",
-      image: "",
-      icons: [
-        {
-          id: "entrance",
-          x: 0.20357142857142857,
-          y: 0.85,
-        },
-        {
-          id: "campsite",
-          x: 0.5892857142857143,
-          y: 0.7464285714285714,
-        },
-        {
-          id: "boss",
-          x: 0.8142857142857143,
-          y: 0.5142857142857142,
-        },
-        {
-          id: "waypoint",
-          x: 0.20714285714285716,
-          y: 0.4142857142857143,
-        },
-        {
-          id: "entrance",
-          x: 0.8178571428571428,
-          y: 0.21428571428571427,
-        },
-      ],
-      lines: [
-        {
-          fromIconId: 0,
-          toIconId: 1,
-        },
-        {
-          fromIconId: 1,
-          toIconId: 2,
-        },
-        {
-          fromIconId: 2,
-          toIconId: 4,
-        },
-      ],
-    },
-    {
-      name: "3",
-      image: "",
-      icons: [
-        {
-          id: "entrance",
-          x: 0.20357142857142857,
-          y: 0.85,
-        },
-        {
-          id: "campsite",
-          x: 0.2642857142857143,
-          y: 0.5107142857142857,
-        },
-        {
-          id: "boss",
-          x: 0.8142857142857143,
-          y: 0.5142857142857142,
-        },
-        {
-          id: "waypoint",
-          x: 0.575,
-          y: 0.7785714285714286,
-        },
-        {
-          id: "entrance",
-          x: 0.8178571428571428,
-          y: 0.21428571428571427,
-        },
-      ],
-      lines: [
-        {
-          fromIconId: 0,
-          toIconId: 1,
-        },
-        {
-          fromIconId: 1,
-          toIconId: 2,
-        },
-        {
-          fromIconId: 2,
-          toIconId: 4,
-        },
-      ],
-    },
-  ],
-});
-
-const addLayout = (zone: string) => {
-  if (!layouts[zone]) {
-    setLayouts(zone, [
-      {
-        name: "1",
-        image: "",
-        icons: [],
-        lines: [],
-      },
-    ]);
-  }
-};
-
-const saveLayouts = () => {
-  localStorage.setItem("layouts", JSON.stringify(layouts));
-};
-
-const exportLayouts = async () => {
-  try {
-    const filePath = await save({
-      filters: [
-        {
-          name: "JSON",
-          extensions: ["json"],
-        },
-      ],
-      defaultPath: "layouts.json",
-    });
-
-    if (!filePath) {
-      info("layouts export cancelled");
-      return;
-    }
-
-    await writeTextFile(filePath, JSON.stringify(layouts));
-  } catch (e) {
-    error("exporting layouts: " + e);
-  }
-};
-
-const importLayouts = async () => {
-  try {
-    const filePath = await open({
-      multiple: false,
-      directory: false,
-      filters: [
-        {
-          name: "JSON",
-          extensions: ["json"],
-        },
-      ],
-    });
-
-    if (!filePath) {
-      info("layouts import cancelled");
-      return;
-    }
-
-    const rawFile = await readTextFile(filePath);
-    const file = JSON.parse(rawFile);
-
-    setLayouts(reconcile(file));
-
-    saveLayouts();
-  } catch (e) {
-    error("importing layouts: " + e);
-  }
-};
+import sc from "../../assets/sc.jpg";
+import {
+  addEmptyLayout,
+  addIcon,
+  addLayout,
+  addLine,
+  changeIconLocation,
+  changeLayoutName,
+  copyLayout,
+  deleteLayout,
+  layouts,
+  saveLayouts,
+} from "../../state/Layouts";
 
 function LayoutWidget() {
   const [iconIndex, setIconIndex] = createSignal(0);
@@ -270,30 +22,23 @@ function LayoutWidget() {
   const [selecting, setSelecting] = createSignal<boolean>(false);
   const [startIcon, setStartIcon] = createSignal<number>();
   const [iconType, setIconType] = createSignal("");
+  const [iconLabel, setIconLabel] = createSignal("");
 
-  const icons = ["waypoint", "boss", "campsite", "entrance"];
+  const icons = [
+    "waypoint",
+    "boss",
+    "campsite",
+    "entrance",
+    "checkpoint",
+    "myplayer",
+    "rustobelisk",
+    "runes",
+  ];
   let containerRef!: HTMLDivElement;
 
   const onIconMove = (e: MouseEvent) => {
     const rect = containerRef.getBoundingClientRect();
-
-    setLayouts(
-      tracker.zone,
-      layoutIndex(),
-      "icons",
-      iconIndex(),
-      "x",
-      (e.clientX - rect.left) / rect.width,
-    );
-
-    setLayouts(
-      tracker.zone,
-      layoutIndex(),
-      "icons",
-      iconIndex(),
-      "y",
-      (e.clientY - rect.top) / rect.height,
-    );
+    changeIconLocation(layoutIndex(), iconIndex(), e, rect);
   };
 
   const onUp = () => {
@@ -308,36 +53,6 @@ function LayoutWidget() {
     window.addEventListener("mouseup", onUp);
   };
 
-  const addIcon = () => {
-    if (iconType() === "") return;
-
-    setLayouts(
-      produce(
-        (s) =>
-          (s[tracker.zone][layoutIndex()]["icons"] = [
-            ...s[tracker.zone][layoutIndex()]["icons"],
-            { id: iconType(), x: 0.5, y: 0.5 },
-          ]),
-      ),
-    );
-
-    setIconType("");
-  };
-
-  const addLine = (start: number | undefined, end: number) => {
-    if (start === undefined) return;
-
-    setLayouts(
-      produce(
-        (s) =>
-          (s[tracker.zone][layoutIndex()]["lines"] = [
-            ...s[tracker.zone][layoutIndex()]["lines"],
-            { fromIconId: start, toIconId: end },
-          ]),
-      ),
-    );
-  };
-
   const linker = (index: number) => {
     {
       if (selecting()) {
@@ -346,75 +61,26 @@ function LayoutWidget() {
           return;
         }
 
-        addLine(startIcon(), index);
+        addLine(layoutIndex(), startIcon(), index);
         setSelecting(false);
         setStartIcon(undefined);
       }
     }
   };
 
-  const addExtraLayout = () => {
-    setLayouts(
-      produce(
-        (s) =>
-          (s[tracker.zone] = [
-            ...s[tracker.zone],
-            {
-              name: "1",
-              image: "",
-              icons: [],
-              lines: [],
-            },
-          ]),
-      ),
-    );
-  };
-
-  const deleteLayout = (index: number) => {
-    setLayouts(
-      produce((s) => {
-        const filtered = s[tracker.zone].filter((_, i) => i !== index);
-
-        if (filtered.length > 0) {
-          s[tracker.zone] = filtered;
-        }
-
-        if (filtered.length === 0) {
-          s[tracker.zone] = [
-            {
-              name: "1",
-              image: "",
-              icons: [],
-              lines: [],
-            },
-          ];
-        }
-      }),
-    );
-  };
-
-  const loadLayouts = () => {
-    const l = localStorage.getItem("layouts");
-    if (l) setLayouts(reconcile(JSON.parse(l)));
-  };
-
-  onMount(() => {
-    loadLayouts();
-  });
-
   return (
     <BaseWidget
       name="layout"
       defaultPos={{ x: 1375, y: 5 }}
       defaultWidth={{ w: 550 }}
-      defaultTransparency={100}
+      defaultTransparency={25}
       transparencySlider={true}
     >
       <Show
         when={layouts[tracker.zone]}
         fallback={
           <div
-            class="flex items-center justify-center px-5 py-8 text-sm text-base-content/50 cursor-pointer hover:text-base-content/70 transition-colors"
+            class="flex items-center px-5 py-8 justify-center text-sm text-base-content/50 cursor-pointer hover:text-base-content/70 transition-colors"
             onClick={() => addLayout(tracker.zone)}
           >
             No Zone Layout — click to add
@@ -424,12 +90,13 @@ function LayoutWidget() {
         <div class="flex flex-col gap-3 p-3">
           <div
             ref={containerRef}
-            class="relative w-[240px] h-[240px] mx-auto rounded-lg overflow-hidden"
+            class="relative w-60 h-60 mx-auto rounded-lg overflow-hidden"
           >
             <img
-              src={layouts?.[tracker.zone]?.[layoutIndex()].image}
+              // src={layouts?.[tracker.zone]?.[layoutIndex()]?.image}
+              src={sc}
               draggable={false}
-              class="w-full h-full opacity-0"
+              class="w-full h-full opacity-30"
             />
 
             <svg
@@ -437,7 +104,7 @@ function LayoutWidget() {
               viewBox="0 0 100 100"
               preserveAspectRatio="none"
             >
-              <For each={layouts?.[tracker.zone]?.[layoutIndex()].lines}>
+              <For each={layouts?.[tracker.zone]?.[layoutIndex()]?.lines}>
                 {(line) => {
                   const from = () =>
                     layouts[tracker.zone]?.[layoutIndex()].icons[
@@ -462,50 +129,92 @@ function LayoutWidget() {
               </For>
             </svg>
 
-            <For each={layouts?.[tracker.zone]?.[layoutIndex()].icons}>
+            <For each={layouts?.[tracker.zone]?.[layoutIndex()]?.icons}>
               {(icon, i) => (
-                <img
-                  src={
-                    new URL(`../../assets/${icon.id}.webp`, import.meta.url)
-                      .href
-                  }
-                  class="absolute w-6 h-6 drop-shadow-md"
-                  classList={{
-                    "cursor-move": !selecting(),
-                    "cursor-pointer ring-2 ring-primary rounded-full":
-                      selecting(),
-                  }}
+                <div
+                  class="absolute flex flex-col items-center pointer-events-none"
                   style={{
                     left: `${icon.x * 100}%`,
                     top: `${icon.y * 100}%`,
                     transform: "translate(-50%, -50%)",
                   }}
-                  onMouseDown={(e) => onDown(e, i())}
-                  onClick={() => linker(i())}
-                />
+                >
+                  <Show when={icon.label}>
+                    <span class="text-[9px] font-medium text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] whitespace-nowrap select-none">
+                      {icon.label}
+                    </span>
+                  </Show>
+
+                  <img
+                    src={
+                      new URL(`../../assets/${icon.id}.webp`, import.meta.url)
+                        .href
+                    }
+                    class="w-5 h-5 drop-shadow-md pointer-events-auto"
+                    classList={{
+                      "cursor-move": !selecting(),
+                      "cursor-pointer ring-2 ring-primary rounded-full":
+                        selecting(),
+                    }}
+                    onMouseDown={(e) => onDown(e, i())}
+                    onClick={() => linker(i())}
+                  />
+                </div>
               )}
             </For>
           </div>
 
           <Show when={!passthrough()}>
-            <div class="flex flex-col gap-2 pt-1 border-t border-base-content/10">
+            <div class="flex flex-col gap-2 pt-1 border-t border-base-content/10 max-w-60">
+              <select class="select select-sm select-bordered w-full bg-base-200">
+                <For each={layouts?.[tracker.zone]}>
+                  {(l, i) => (
+                    <option
+                      selected={i() == layoutIndex()}
+                      onClick={() => setLayoutIndex(i())}
+                    >
+                      {l.name}
+                    </option>
+                  )}
+                </For>
+              </select>
               <div class="inline-flex items-center justify-center gap-2">
-                <select class="select select-sm select-bordered w-full bg-base-200">
-                  <For each={layouts?.[tracker.zone]}>
-                    {(l, i) => (
-                      <option
-                        selected={i() == layoutIndex()}
-                        onClick={() => setLayoutIndex(i())}
-                      >
-                        {i() + 1}
-                      </option>
-                    )}
-                  </For>
-                </select>
+                <input
+                  type="text"
+                  placeholder="Icon Label..."
+                  class="input input-sm input-bordered w-full bg-base-200"
+                  value={layouts?.[tracker.zone][layoutIndex()].name}
+                  onChange={(e) =>
+                    changeLayoutName(layoutIndex(), e.currentTarget.value)
+                  }
+                />
                 <button
                   class="btn btn-sm flex-1 hover:text-success hover:bg-success/10"
                   onClick={() => {
-                    addExtraLayout();
+                    copyLayout(layoutIndex());
+                    setLayoutIndex(layouts?.[tracker.zone]?.length - 1);
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-copy-icon lucide-copy"
+                  >
+                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                  </svg>
+                </button>
+                <button
+                  class="btn btn-sm flex-1 hover:text-success hover:bg-success/10"
+                  onClick={() => {
+                    addEmptyLayout();
                     setLayoutIndex(layouts?.[tracker.zone]?.length - 1);
                   }}
                 >
@@ -550,30 +259,47 @@ function LayoutWidget() {
                 </button>
               </div>
 
-              <div class="form-control w-full">
+              <div class="flex gap-2">
+                <div class="form-control w-full">
+                  <input
+                    type="text"
+                    list="icons"
+                    placeholder="Select icon type..."
+                    class="input input-sm input-bordered w-full bg-base-200"
+                    value={iconType()}
+                    onChange={(e) => setIconType(e.currentTarget.value)}
+                  />
+                  <datalist id="icons">
+                    <For each={icons}>
+                      {(i) => <option value={i}>{i}</option>}
+                    </For>
+                  </datalist>
+                </div>
+
                 <input
                   type="text"
-                  list="icons"
-                  placeholder="Select icon type..."
+                  placeholder="Icon Label..."
                   class="input input-sm input-bordered w-full bg-base-200"
-                  value={iconType()}
-                  onChange={(e) => setIconType(e.currentTarget.value)}
+                  value={iconLabel()}
+                  onChange={(e) => setIconLabel(e.currentTarget.value)}
                 />
-                <datalist id="icons">
-                  <For each={icons}>
-                    {(i) => <option value={i}>{i}</option>}
-                  </For>
-                </datalist>
               </div>
 
               <div class="flex gap-2">
-                <button class="btn btn-sm btn-primary flex-1" onClick={addIcon}>
+                <button
+                  class="btn btn-sm btn-primary flex-1"
+                  onClick={() => {
+                    addIcon(layoutIndex(), iconType(), iconLabel());
+                    setIconType("");
+                    setIconLabel("");
+                  }}
+                >
                   Add Icon
                 </button>
                 <button
                   class="btn btn-sm flex-1"
                   classList={{ "btn-active btn-secondary": selecting() }}
-                  onClick={() => setSelecting(true)}
+                  onClick={() => setSelecting(!selecting())}
                 >
                   {selecting() ? "Selecting…" : "Add Line"}
                 </button>
@@ -593,4 +319,4 @@ function LayoutWidget() {
   );
 }
 
-export { LayoutWidget, addLayout, exportLayouts, importLayouts };
+export { LayoutWidget };

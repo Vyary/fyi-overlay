@@ -12,7 +12,6 @@ import {
 } from "./Character";
 import { store } from "./Store";
 import { error, info } from "@tauri-apps/plugin-log";
-import { addLayout } from "../components/widgets/LayoutWidget";
 
 const [filePath, setFilePath] = createSignal("");
 const [watching, setWatching] = createSignal(false);
@@ -52,7 +51,7 @@ const startTailing = async () => {
           const { level, zone } = match.groups;
 
           if (!zone.toLowerCase().includes("hideout")) {
-            addLayout(zone);
+            // addLayout(zone);
             setZone(zone);
             setZoneLevel(Number(level));
             addTown(zone);
