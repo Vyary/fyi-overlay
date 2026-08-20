@@ -55,7 +55,7 @@ function App() {
       loadGuide(initStore.guide, initStore.quotes);
       loadTowns(initStore.towns);
       loadCharacter(initStore.char);
-      loadLayouts();
+      loadLayouts(initStore.layouts);
 
       if (!filePath()) {
         togglePassthrough();
