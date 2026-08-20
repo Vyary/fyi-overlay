@@ -6,7 +6,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { togglePassthrough } from "../state/Passthrough";
 import { exportGuide, importGuide } from "../state/Guide";
 import { store } from "../state/Store";
-import { exportLayouts, importLayouts } from "./widgets/LayoutWidget";
+import { exportLayouts, importLayouts } from "../state/Layouts";
 
 async function initTrayIcon() {
   try {

@@ -35,6 +35,7 @@ import { error, info } from "@tauri-apps/plugin-log";
 import { store } from "./state/Store";
 import { ErrorMessage } from "./components/ErrorMessage";
 import { LayoutWidget } from "./components/widgets/LayoutWidget";
+import { loadLayouts } from "./state/Layouts";
 
 function App() {
   onMount(async () => {
@@ -54,6 +55,7 @@ function App() {
       loadGuide(initStore.guide, initStore.quotes);
       loadTowns(initStore.towns);
       loadCharacter(initStore.char);
+      loadLayouts();
 
       if (!filePath()) {
         togglePassthrough();
