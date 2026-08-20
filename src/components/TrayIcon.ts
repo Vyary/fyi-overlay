@@ -7,6 +7,7 @@ import { togglePassthrough } from "../state/Passthrough";
 import { exportGuide, importGuide } from "../state/Guide";
 import { store } from "../state/Store";
 import { exportLayouts, importLayouts } from "../state/Layouts";
+import { exportTowns } from "../state/Towns";
 
 async function initTrayIcon() {
   try {
@@ -57,6 +58,11 @@ async function initTrayIcon() {
           id: "import_layouts",
           text: "Import Layouts",
           action: async () => importLayouts(),
+        },
+        {
+          id: "export_towns",
+          text: "Export Towns",
+          action: async () => exportTowns(),
         },
       ],
     });
