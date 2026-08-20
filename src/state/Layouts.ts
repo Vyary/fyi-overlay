@@ -5,6 +5,7 @@ import { error, info } from "@tauri-apps/plugin-log";
 import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { tracker } from "./Tracker";
 import layoutsjson from "../assets/layouts.json";
+import { store } from "./Store";
 
 type LayoutIcon = {
   id: string;
@@ -150,14 +151,13 @@ const deleteLayout = (index: number) => {
   );
 };
 
-const saveLayouts = () => {
-  localStorage.setItem("layouts", JSON.stringify(layouts));
+const saveLayouts = async () => {
+  await store.set("layouts", layouts);
+  await store.save();
 };
 
-const loadLayouts = () => {
-  const l = localStorage.getItem("layouts");
-  if (l) setLayouts(reconcile(JSON.parse(l)));
-
+const loadLayouts = (l: Record<string, ZoneLayout[]>) => {
+  if (l) setLayouts(reconcile(l));
   if (!l) setLayouts(reconcile(layoutsjson));
 };
 
