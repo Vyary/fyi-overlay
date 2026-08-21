@@ -2,12 +2,13 @@ import { TrayIcon } from "@tauri-apps/api/tray";
 import { Menu, PredefinedMenuItem, Submenu } from "@tauri-apps/api/menu";
 import { relaunch } from "@tauri-apps/plugin-process";
 import { defaultWindowIcon } from "@tauri-apps/api/app";
-import { getCurrentWindow } from "@tauri-apps/api/window";
+import { getAllWindows, getCurrentWindow } from "@tauri-apps/api/window";
 import { togglePassthrough } from "../state/Passthrough";
 import { exportGuide, importGuide } from "../state/Guide";
 import { store } from "../state/Store";
 import { exportLayouts, importLayouts } from "../state/Layouts";
 import { exportTowns } from "../state/Towns";
+import { info } from "@tauri-apps/plugin-log";
 
 async function initTrayIcon() {
   try {
@@ -90,7 +91,13 @@ async function initTrayIcon() {
         {
           id: "quit",
           text: "Quit Application",
-          action: async () => await getCurrentWindow().close(),
+          action: async () => {
+            const windows = await getAllWindows();
+            for (const win of windows) {
+              info(win.label);
+              await win.close();
+            }
+          },
         },
         {
           id: "",

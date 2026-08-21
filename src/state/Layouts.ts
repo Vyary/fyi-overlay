@@ -78,6 +78,17 @@ const changeLayoutName = (layoutIndex: number, name: string) => {
   );
 };
 
+const changeDefaultLayout = (layoutIndex: number) => {
+  setLayouts(
+    produce((s) => {
+      [s[tracker.zone][layoutIndex], s[tracker.zone][0]] = [
+        s[tracker.zone][0],
+        s[tracker.zone][layoutIndex],
+      ];
+    }),
+  );
+};
+
 const addIcon = (layoutIndex: number, iconType: string, iconLabel: string) => {
   if (iconType === "") return;
 
@@ -126,6 +137,14 @@ const addLine = (
           { fromIconId: start, toIconId: end },
         ]),
     ),
+  );
+};
+
+const deleteLines = (layoutIndex: number) => {
+  setLayouts(
+    produce((s) => {
+      s[tracker.zone][layoutIndex]["lines"] = [];
+    }),
   );
 };
 
@@ -219,9 +238,11 @@ export {
   addEmptyLayout,
   copyLayout,
   changeLayoutName,
+  changeDefaultLayout,
   addIcon,
   changeIconLocation,
   addLine,
+  deleteLines,
   deleteLayout,
   saveLayouts,
   loadLayouts,
