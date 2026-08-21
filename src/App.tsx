@@ -35,7 +35,7 @@ import { error, info } from "@tauri-apps/plugin-log";
 import { store } from "./state/Store";
 import { ErrorMessage } from "./components/ErrorMessage";
 import { LayoutWidget } from "./components/widgets/LayoutWidget";
-import { loadLayouts } from "./state/Layouts";
+import { loadLayouts, saveLayouts } from "./state/Layouts";
 
 function App() {
   onMount(async () => {
@@ -85,6 +85,7 @@ function App() {
           saveGuide(),
           saveTowns(),
           saveCharacter(),
+          saveLayouts(),
         ]);
 
         await exit(0);

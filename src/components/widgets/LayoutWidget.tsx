@@ -8,10 +8,12 @@ import {
   addIcon,
   addLayout,
   addLine,
+  changeDefaultLayout,
   changeIconLocation,
   changeLayoutName,
   copyLayout,
   deleteLayout,
+  deleteLines,
   layouts,
   saveLayouts,
 } from "../../state/Layouts";
@@ -33,6 +35,13 @@ function LayoutWidget() {
     "myplayer",
     "rustobelisk",
     "runes",
+    "reward generic",
+    "labyrinth door",
+    "dryadic ritual",
+    "ritual",
+    "lute",
+    "crop circle",
+    "tools",
   ];
   let containerRef!: HTMLDivElement;
 
@@ -166,28 +175,60 @@ function LayoutWidget() {
 
           <Show when={!passthrough()}>
             <div class="flex flex-col gap-2 pt-1 border-t border-base-content/10 max-w-60">
-              <select class="select select-sm select-bordered w-full bg-base-200">
-                <For each={layouts?.[tracker.zone]}>
-                  {(l, i) => (
-                    <option
-                      selected={i() == layoutIndex()}
-                      onClick={() => setLayoutIndex(i())}
-                    >
-                      {l.name}
-                    </option>
-                  )}
-                </For>
-              </select>
               <div class="inline-flex items-center justify-center gap-2">
+                <select class="select select-sm select-bordered w-full bg-base-200">
+                  <For each={layouts?.[tracker.zone]}>
+                    {(l, i) => (
+                      <option
+                        selected={i() == layoutIndex()}
+                        onClick={() => setLayoutIndex(i())}
+                      >
+                        {l?.name}
+                      </option>
+                    )}
+                  </For>
+                </select>
                 <input
                   type="text"
                   placeholder="Icon Label..."
                   class="input input-sm input-bordered w-full bg-base-200"
-                  value={layouts?.[tracker.zone][layoutIndex()].name}
+                  value={layouts?.[tracker.zone][layoutIndex()]?.name}
                   onChange={(e) =>
                     changeLayoutName(layoutIndex(), e.currentTarget.value)
                   }
                 />
+              </div>
+              <div class="inline-flex items-center justify-center gap-2">
+                <button
+                  class="btn btn-sm flex-1 hover:text-success hover:bg-success/10"
+                  onClick={() => {
+                    changeDefaultLayout(layoutIndex());
+                    setLayoutIndex(0);
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-replace-all-icon lucide-replace-all"
+                  >
+                    <path d="M14 14a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1" />
+                    <path d="M14 4a1 1 0 0 1 1-1" />
+                    <path d="M15 10a1 1 0 0 1-1-1" />
+                    <path d="M19 14a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1" />
+                    <path d="M21 4a1 1 0 0 0-1-1" />
+                    <path d="M21 9a1 1 0 0 1-1 1" />
+                    <path d="m3 7 3 3 3-3" />
+                    <path d="M6 10V5a2 2 0 0 1 2-2h2" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                  </svg>
+                </button>
                 <button
                   class="btn btn-sm flex-1 hover:text-success hover:bg-success/10"
                   onClick={() => {
@@ -294,14 +335,20 @@ function LayoutWidget() {
                     setIconLabel("");
                   }}
                 >
-                  Add Icon
+                  + Icon
                 </button>
                 <button
                   class="btn btn-sm flex-1"
                   classList={{ "btn-active btn-secondary": selecting() }}
                   onClick={() => setSelecting(!selecting())}
                 >
-                  {selecting() ? "Selecting…" : "Add Line"}
+                  {selecting() ? "Selecting…" : "+ Line"}
+                </button>
+                <button
+                  class="btn btn-sm flex-1 hover:text-error hover:bg-error/10"
+                  onClick={() => deleteLines(layoutIndex())}
+                >
+                  - Lines
                 </button>
               </div>
 

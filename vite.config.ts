@@ -1,4 +1,5 @@
 import tailwindcss from "@tailwindcss/vite";
+import { resolve } from "@tauri-apps/api/path";
 import { defineConfig } from "vite";
 import solid from "vite-plugin-solid";
 

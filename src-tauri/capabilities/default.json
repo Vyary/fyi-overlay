@@ -8,7 +8,6 @@
     "opener:default",
     "core:window:allow-set-ignore-cursor-events",
     "core:window:allow-close",
-    "core:window:allow-destroy",
     "global-shortcut:allow-register",
     "global-shortcut:allow-unregister",
     "global-shortcut:allow-unregister-all",
@@ -16,13 +15,14 @@
     "dialog:allow-save",
     "core:window:allow-maximize",
     "core:app:allow-default-window-icon",
-    "process:allow-restart",
+    "process:default",
     "updater:default",
     "fs:allow-write-text-file",
     "fs:allow-read-text-file",
     "clipboard-manager:allow-read-text",
     "store:default",
     "log:default",
+    "core:event:default",
     {
           "identifier": "http:default",
           "allow": [{ "url": "https://poe.ninja/*" }]
