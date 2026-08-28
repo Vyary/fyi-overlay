@@ -29,16 +29,17 @@ const saveGuide = async () => {
   await store.save();
 };
 
-const loadGuide = async (
-  g: Record<string, Guide[]>,
-  q: Record<string, Record<string, boolean>>,
-) => {
+const loadGuide = async () => {
+  const g = await store.get<Record<string, Guide[]>>("guide");
+  const q = await store.get<Record<string, Record<string, boolean>>>("quotes");
+
   if (g) setGuide(reconcile(g));
   if (q) setQuotes(reconcile(q));
 
   if (!g) {
     setGuide(reconcile(guideQuotesjson["guide"]));
     setQuotes(reconcile(guideQuotesjson["quotes"]));
+    saveGuide();
   }
 };
 

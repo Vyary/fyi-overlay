@@ -173,11 +173,16 @@ const deleteLayout = (index: number) => {
 const saveLayouts = async () => {
   await store.set("layouts", layouts);
   await store.save();
+  localStorage.setItem("layouts", JSON.stringify(layouts));
 };
 
-const loadLayouts = (l: Record<string, ZoneLayout[]>) => {
+const loadLayouts = async () => {
+  const l = await store.get<Record<string, ZoneLayout[]>>("layouts");
   if (l) setLayouts(reconcile(l));
-  if (!l) setLayouts(reconcile(layoutsjson));
+  if (!l) {
+    setLayouts(reconcile(layoutsjson));
+    saveLayouts();
+  }
 };
 
 const exportLayouts = async () => {

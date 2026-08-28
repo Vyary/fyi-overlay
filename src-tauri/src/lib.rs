@@ -2,8 +2,9 @@ use enigo::{
     Direction::{Click, Press, Release},
     Enigo, Key, Keyboard, Settings,
 };
-use std::time::Duration;
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 use tauri::{Emitter, Window};
+use tauri_plugin_log::log::info;
 use tokio::fs::File;
 use tokio::io::{AsyncBufReadExt, AsyncSeekExt, BufReader, SeekFrom};
 
@@ -48,11 +49,19 @@ pub fn run() {
         .plugin(
             tauri_plugin_log::Builder::new()
                 .target(tauri_plugin_log::Target::new(
-                    tauri_plugin_log::TargetKind::Stdout,
+                    tauri_plugin_log::TargetKind::LogDir {
+                        file_name: Some("logs".to_string()),
+                    },
                 ))
                 .level(tauri_plugin_log::log::LevelFilter::Info)
                 .build(),
         )
+        .setup(|_| {
+            if let Ok(duration) = SystemTime::now().duration_since(UNIX_EPOCH) {
+                info!("{}", duration.as_millis());
+            }
+            Ok(())
+        })
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())

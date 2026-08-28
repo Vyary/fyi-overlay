@@ -14,15 +14,9 @@ import {
   enablePassthrough,
   passthrough,
   registerPasstroughShortcut,
-  togglePassthrough,
 } from "./state/Passthrough";
 import { unregisterAll } from "@tauri-apps/plugin-global-shortcut";
-import {
-  filePath,
-  loadFilePath,
-  showOverlay,
-  startTailing,
-} from "./state/File";
+import { loadFilePath, showOverlay } from "./state/File";
 import Updater from "./components/Updater";
 import { loadTracker, saveTracker } from "./state/Tracker";
 import { loadGuide, saveGuide } from "./state/Guide";
@@ -32,13 +26,14 @@ import { Inventory } from "./components/widgets/InventoryWidget";
 import { Stopwatch } from "./components/widgets/StopwatchWidget";
 import { exit } from "@tauri-apps/plugin-process";
 import { error, info } from "@tauri-apps/plugin-log";
-import { store } from "./state/Store";
 import { ErrorMessage } from "./components/ErrorMessage";
 import { LayoutWidget } from "./components/widgets/LayoutWidget";
 import { loadLayouts, saveLayouts } from "./state/Layouts";
 
 function App() {
   onMount(async () => {
+    info(Date.now().toString());
+
     const initializeApp = async () => {
       const s = performance.now();
 
@@ -47,27 +42,16 @@ function App() {
       registerPasstroughShortcut();
       getCurrentWindow().maximize();
 
-      const entries = await store.entries();
-      const initStore = Object.fromEntries(entries) as Record<string, any>;
+      loadFilePath();
+      loadTracker();
+      loadCharacter();
+      loadGuide();
+      loadTowns();
+      loadLayouts();
 
-      loadFilePath(initStore.filePath);
-      loadTracker(initStore.tracker);
-      loadGuide(initStore.guide, initStore.quotes);
-      loadTowns(initStore.towns);
-      loadCharacter(initStore.char);
-      loadLayouts(initStore.layouts);
-
-      if (!filePath()) {
-        togglePassthrough();
-      }
-
-      if (filePath()) {
-        startTailing();
-      }
-
-      const end = performance.now();
-      const duration = (end - s).toFixed(2);
-      info(`finished loading initial state in ${duration}ms`);
+      info(
+        `finished loading initial state in ${(performance.now() - s).toFixed(2)}ms`,
+      );
     };
 
     initializeApp();
