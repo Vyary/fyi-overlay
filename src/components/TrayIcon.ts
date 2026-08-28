@@ -94,7 +94,6 @@ async function initTrayIcon() {
           action: async () => {
             const windows = await getAllWindows();
             for (const win of windows) {
-              info(win.label);
               await win.close();
             }
           },

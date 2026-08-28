@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    fyi_overlay_lib::run()
+    qutm_lib::run()
 }

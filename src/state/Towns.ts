@@ -16,9 +16,13 @@ const saveTowns = async () => {
   await store.save();
 };
 
-const loadTowns = async (t: Record<string, string>) => {
+const loadTowns = async () => {
+  const t = await store.get<Record<string, string>>("towns");
   if (t) setTowns(reconcile(t));
-  if (!t) setTowns(reconcile(townsjson));
+  if (!t) {
+    setTowns(reconcile(townsjson));
+    saveTowns();
+  }
 };
 
 const exportTowns = async () => {

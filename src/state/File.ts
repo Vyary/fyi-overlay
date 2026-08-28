@@ -12,6 +12,7 @@ import {
 } from "./Character";
 import { store } from "./Store";
 import { error, info } from "@tauri-apps/plugin-log";
+import { togglePassthrough } from "./Passthrough";
 
 const [filePath, setFilePath] = createSignal("");
 const [watching, setWatching] = createSignal(false);
@@ -22,7 +23,7 @@ const startTailing = async () => {
     try {
       const line = event.payload as string;
 
-      info("Line: " + line);
+      info("\n ➡️" + line.split(": "));
 
       if (
         line.includes("[STARTUP] Game Start") ||
@@ -130,8 +131,8 @@ const selectFile = async () => {
   }
 
   if (selected.endsWith("\\Client.txt") || selected.endsWith("/Client.txt")) {
-    setFilePath(selected);
     if (selected) {
+      setFilePath(selected);
       saveFilePath(selected);
     }
 
@@ -144,8 +145,14 @@ const saveFilePath = async (filePath: string) => {
   await store.save();
 };
 
-const loadFilePath = async (fp: string) => {
-  if (fp) setFilePath(fp);
+const loadFilePath = async () => {
+  const fp = await store.get<string>("filePath");
+  if (fp) {
+    setFilePath(fp);
+    startTailing();
+  }
+
+  if (!filePath()) togglePassthrough();
 };
 
 export {
