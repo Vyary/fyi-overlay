@@ -2,7 +2,7 @@ import { createSignal, For, Show } from "solid-js";
 import { BaseWidget } from "./BaseWidget";
 import { tracker } from "../../state/Tracker";
 import { passthrough } from "../../state/Passthrough";
-import sc from "../../assets/sc.jpg";
+import sc from "../../assets/sc.png";
 import {
   addEmptyLayout,
   addIcon,
@@ -42,6 +42,15 @@ function LayoutWidget() {
     "lute",
     "crop circle",
     "tools",
+    "raided camp",
+    "map device",
+    "empty",
+    "abyss",
+    "rune stone 1",
+    "rune stone 2",
+    "rune stone 3",
+    "ancient seal",
+    "quest",
   ];
   let containerRef!: HTMLDivElement;
 
@@ -105,7 +114,7 @@ function LayoutWidget() {
               // src={layouts?.[tracker.zone]?.[layoutIndex()]?.image}
               src={sc}
               draggable={false}
-              class="w-full h-full opacity-30"
+              class="w-full h-full opacity-0"
             />
 
             <svg
@@ -124,10 +133,10 @@ function LayoutWidget() {
                   return (
                     <Show when={from() && to()}>
                       <line
-                        x1={from()!.x * 100}
-                        y1={from()!.y * 100}
-                        x2={to()!.x * 100}
-                        y2={to()!.y * 100}
+                        x1={from()!.x * 101}
+                        y1={from()!.y * 101}
+                        x2={to()!.x * 101}
+                        y2={to()!.y * 101}
                         stroke="rgba(255,255,255,0.85)"
                         stroke-width="0.5"
                         vector-effect="non-scaling-stroke"
