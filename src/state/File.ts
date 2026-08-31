@@ -26,7 +26,7 @@ const startTailing = async () => {
       info("\n ➡️" + line.split(": "));
 
       if (
-        line.includes("[STARTUP] Game Start") ||
+        line.includes("[STARTUP] Loading Start") ||
         line.includes("[WINDOW] Gained focus")
       ) {
         setShowOverlay(true);
