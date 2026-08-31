@@ -51,6 +51,10 @@ function LayoutWidget() {
     "rune stone 3",
     "ancient seal",
     "quest",
+    "runestone 4",
+    "stone altar",
+    "generator",
+    "incursion vault",
   ];
   let containerRef!: HTMLDivElement;
 
@@ -97,12 +101,14 @@ function LayoutWidget() {
       <Show
         when={layouts[tracker.zone]}
         fallback={
-          <div
-            class="flex items-center px-5 py-8 justify-center text-sm text-base-content/50 cursor-pointer hover:text-base-content/70 transition-colors"
-            onClick={() => addLayout(tracker.zone)}
-          >
-            No Zone Layout — click to add
-          </div>
+          <Show when={tracker.zone !== ""}>
+            <div
+              class="flex items-center px-5 py-8 justify-center text-sm text-base-content/50 cursor-pointer hover:text-base-content/70 transition-colors"
+              onClick={() => addLayout(tracker.zone)}
+            >
+              No Zone Layout — click to add
+            </div>
+          </Show>
         }
       >
         <div class="flex flex-col gap-3 p-3">

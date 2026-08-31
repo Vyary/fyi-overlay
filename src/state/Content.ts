@@ -41,7 +41,7 @@ const content = createMemo<Guide>(
   {
     prev: "",
     preq: [],
-    tasks: [{ text: "Awaiting game data... Enter a new zone" }],
+    tasks: [],
   },
 );
 
