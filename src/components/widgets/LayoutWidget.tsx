@@ -164,7 +164,7 @@ function LayoutWidget() {
                   }}
                 >
                   <Show when={icon.label}>
-                    <span class="text-[9px] font-medium text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] whitespace-nowrap select-none">
+                    <span class="text-[9px] font-medium text-white whitespace-nowrap select-none">
                       {icon.label}
                     </span>
                   </Show>
